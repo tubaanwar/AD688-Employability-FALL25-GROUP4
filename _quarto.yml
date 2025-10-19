@@ -7,11 +7,18 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
+        text: "Home"
+      - href: research_introduction.qmd
+        text: "Research"
+      - href: data_analysis.qmd
+        text: "Data Analysis"
+      - href: career_plan.qmd
+        text: "Career Strategy"
       - href: about.qmd
-        text: About Team
+        text: "About Team"
 
 format:
   html:
     theme: cosmo
     toc: true
+    number-sections: true

@@ -1,47 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "",
-    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
-  },
-  {
-    "objectID": "index.html#project-overview",
-    "href": "index.html#project-overview",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "",
-    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
-  },
-  {
-    "objectID": "index.html#data-source",
-    "href": "index.html#data-source",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Data Source",
-    "text": "Data Source\nWe will utilize the Lightcast 2024 dataset, which includes: - Job posting volumes for analytics, data science, and ML roles by industry and location - Salary data across data-related positions and geographies - Skill requirements extracted from job descriptions - Hiring trends across time periods - Company size and industry classifications - Emerging role titles and job requirements"
-  },
-  {
-    "objectID": "index.html#analysis-approach",
-    "href": "index.html#analysis-approach",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Analysis Approach",
-    "text": "Analysis Approach\nOur team will:\n\nClean and preprocess the Lightcast data using Python (pandas, NumPy)\nExtract and categorize skills mentioned in job descriptions for analytics and ML roles\nCompare trends across industries, geographies, and job levels\nAnalyze salary patterns to understand compensation for different skill combinations\nIdentify emerging roles and how job requirements are evolving\nVisualize findings through interactive dashboards using Plotly and Matplotlib\nDevelop career strategy recommendations based on market insights"
-  },
-  {
-    "objectID": "index.html#expected-findings",
-    "href": "index.html#expected-findings",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Expected Findings",
-    "text": "Expected Findings\nWe anticipate discovering that: - Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills - Generative AI and prompt engineering are emerging as newly valued competencies - Finance, healthcare, and technology sectors lead in analytics hiring - Soft skills like communication and domain expertise are increasingly emphasized - Analytics roles offer strong job security and career growth potential - Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics"
-  },
-  {
-    "objectID": "index.html#deliverables-future-phases",
-    "href": "index.html#deliverables-future-phases",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Deliverables (Future Phases)",
-    "text": "Deliverables (Future Phases)\n\nExploratory Data Analysis (EDA) with visualizations\nInteractive dashboards showing skill trends, industry hiring patterns, and salary insights\nCareer pathway recommendations for different specializations\nPersonal career action plans for each team member"
-  },
-  {
     "objectID": "data_analysis.html",
     "href": "data_analysis.html",
     "title": "Data Analysis",
@@ -96,5 +54,47 @@
     "title": "Data Analysis",
     "section": "7 References",
     "text": "7 References"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "",
+    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
+  },
+  {
+    "objectID": "index.html#project-overview",
+    "href": "index.html#project-overview",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "",
+    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
+  },
+  {
+    "objectID": "index.html#data-source",
+    "href": "index.html#data-source",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "5.1 Data Source",
+    "text": "5.1 Data Source\nWe will utilize the Lightcast 2024 dataset, which includes: - Job posting volumes for analytics, data science, and ML roles by industry and location - Salary data across data-related positions and geographies - Skill requirements extracted from job descriptions - Hiring trends across time periods - Company size and industry classifications - Emerging role titles and job requirements"
+  },
+  {
+    "objectID": "index.html#analysis-approach",
+    "href": "index.html#analysis-approach",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "5.2 Analysis Approach",
+    "text": "5.2 Analysis Approach\nOur team will:\n\nClean and preprocess the Lightcast data using Python (pandas, NumPy)\nExtract and categorize skills mentioned in job descriptions for analytics and ML roles\nCompare trends across industries, geographies, and job levels\nAnalyze salary patterns to understand compensation for different skill combinations\nIdentify emerging roles and how job requirements are evolving\nVisualize findings through interactive dashboards using Plotly and Matplotlib\nDevelop career strategy recommendations based on market insights"
+  },
+  {
+    "objectID": "index.html#expected-findings",
+    "href": "index.html#expected-findings",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "5.3 Expected Findings",
+    "text": "5.3 Expected Findings\nWe anticipate discovering that: - Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills - Generative AI and prompt engineering are emerging as newly valued competencies - Finance, healthcare, and technology sectors lead in analytics hiring - Soft skills like communication and domain expertise are increasingly emphasized - Analytics roles offer strong job security and career growth potential - Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics"
+  },
+  {
+    "objectID": "index.html#deliverables-future-phases",
+    "href": "index.html#deliverables-future-phases",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "5.4 Deliverables (Future Phases)",
+    "text": "5.4 Deliverables (Future Phases)\n\nExploratory Data Analysis (EDA) with visualizations\nInteractive dashboards showing skill trends, industry hiring patterns, and salary insights\nCareer pathway recommendations for different specializations\nPersonal career action plans for each team member"
   }
 ]
