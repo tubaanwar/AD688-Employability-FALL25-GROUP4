@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tuba Anwar">
+<meta name="author" content="Kriti Singh">
+<meta name="author" content="Soham Deshkhaire">
+
+<title>Data Analysis – Job Market Analysis 2024</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-56309892f1c796412271d97dce1f9b6b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Job Market Analysis 2024</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.qmd"> 
+<span class="menu-text">About Team</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#step-1-removing-redundant-columns" id="toc-step-1-removing-redundant-columns" class="nav-link" data-scroll-target="#step-1-removing-redundant-columns"><span class="header-section-number">2</span> Step 1: Removing Redundant Columns</a>
+  <ul class="collapse">
+  <li><a href="#why-remove-these-columns" id="toc-why-remove-these-columns" class="nav-link" data-scroll-target="#why-remove-these-columns"><span class="header-section-number">2.1</span> Why Remove These Columns?</a></li>
+  </ul></li>
+  <li><a href="#step-2-handling-missing-values" id="toc-step-2-handling-missing-values" class="nav-link" data-scroll-target="#step-2-handling-missing-values"><span class="header-section-number">3</span> Step 2: Handling Missing Values</a>
+  <ul class="collapse">
+  <li><a href="#understanding-missing-data" id="toc-understanding-missing-data" class="nav-link" data-scroll-target="#understanding-missing-data"><span class="header-section-number">3.1</span> Understanding Missing Data</a></li>
+  <li><a href="#missing-value-imputation-strategy" id="toc-missing-value-imputation-strategy" class="nav-link" data-scroll-target="#missing-value-imputation-strategy"><span class="header-section-number">3.2</span> Missing Value Imputation Strategy</a></li>
+  </ul></li>
+  <li><a href="#step-3-removing-duplicates" id="toc-step-3-removing-duplicates" class="nav-link" data-scroll-target="#step-3-removing-duplicates"><span class="header-section-number">4</span> Step 3: Removing Duplicates</a>
+  <ul class="collapse">
+  <li><a href="#why-remove-duplicates" id="toc-why-remove-duplicates" class="nav-link" data-scroll-target="#why-remove-duplicates"><span class="header-section-number">4.1</span> Why Remove Duplicates?</a></li>
+  </ul></li>
+  <li><a href="#step-4-exploratory-data-analysis-eda" id="toc-step-4-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#step-4-exploratory-data-analysis-eda"><span class="header-section-number">5</span> Step 4: Exploratory Data Analysis (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#visualization-1-top-job-titles" id="toc-visualization-1-top-job-titles" class="nav-link" data-scroll-target="#visualization-1-top-job-titles"><span class="header-section-number">5.1</span> Visualization 1: Top Job Titles</a></li>
+  <li><a href="#visualization-2-job-postings-by-employment-type" id="toc-visualization-2-job-postings-by-employment-type" class="nav-link" data-scroll-target="#visualization-2-job-postings-by-employment-type"><span class="header-section-number">5.2</span> Visualization 2: Job Postings by Employment Type</a></li>
+  <li><a href="#visualization-3-remote-work-distribution" id="toc-visualization-3-remote-work-distribution" class="nav-link" data-scroll-target="#visualization-3-remote-work-distribution"><span class="header-section-number">5.3</span> Visualization 3: Remote Work Distribution</a></li>
+  </ul></li>
+  <li><a href="#summary-of-data-cleaning-analysis" id="toc-summary-of-data-cleaning-analysis" class="nav-link" data-scroll-target="#summary-of-data-cleaning-analysis"><span class="header-section-number">6</span> Summary of Data Cleaning &amp; Analysis</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7</span> References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Analysis</h1>
+<p class="subtitle lead">Comprehensive Data Cleaning &amp; Exploratory Analysis of Job Market Trends</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Tuba Anwar </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Boston University
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Kriti Singh </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Boston University
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Soham Deshkhaire </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Boston University
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>This document provides a comprehensive analysis of job market data for 2024. We perform data cleaning, handle missing values, remove duplicates, and conduct exploratory data analysis to understand hiring trends, salary distributions, and job market dynamics.</p>
+<div id="b5bd89cb" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> missingno <span class="im">as</span> msno</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set style for better visualizations</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">12</span>, <span class="dv">6</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your data</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'lightcast_job_postings.csv'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original dataset shape: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total records: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total columns: </span><span class="sc">{</span><span class="bu">len</span>(df.columns)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original dataset shape: (72498, 131)
+Total records: 72,498
+Total columns: 131</code></pre>
+</div>
+</div>
+</section>
+<section id="step-1-removing-redundant-columns" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="step-1-removing-redundant-columns"><span class="header-section-number">2</span> Step 1: Removing Redundant Columns</h2>
+<section id="why-remove-these-columns" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="why-remove-these-columns"><span class="header-section-number">2.1</span> Why Remove These Columns?</h3>
+<p>We remove redundant columns to improve dataset quality and analysis efficiency. Specifically:</p>
+<ul>
+<li><strong>Tracking &amp; Administrative Columns</strong>: ID, URL, DUPLICATES, LAST_UPDATED_TIMESTAMP - These are metadata and don’t contribute to analysis</li>
+<li><strong>Raw Text Fields</strong>: BODY, TITLE_RAW, COMPANY_RAW - We have cleaned versions (TITLE, COMPANY_NAME, TITLE_CLEAN)</li>
+<li><strong>Deprecated Classifications</strong>: We keep only the latest NAICS_2022_6, SOC_2021_4, and CIP4 standards</li>
+<li><strong>Duplicate Geographic Fields</strong>: Multiple versions of county/MSA data create redundancy</li>
+</ul>
+<div id="8b201d8a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of columns to drop</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Administrative &amp; tracking columns</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Raw text columns (we have cleaned versions)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BODY"</span>, <span class="st">"TITLE_RAW"</span>, <span class="st">"COMPANY_RAW"</span>, <span class="st">"ACTIVE_SOURCES_INFO"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deprecated NAICS versions (keeping NAICS_2022_6)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAICS2"</span>, <span class="st">"NAICS2_NAME"</span>, <span class="st">"NAICS3"</span>, <span class="st">"NAICS3_NAME"</span>, </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAICS4"</span>, <span class="st">"NAICS4_NAME"</span>, <span class="st">"NAICS5"</span>, <span class="st">"NAICS5_NAME"</span>, </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAICS6"</span>, <span class="st">"NAICS6_NAME"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deprecated SOC versions (keeping SOC_2021_4)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SOC_2"</span>, <span class="st">"SOC_2_NAME"</span>, <span class="st">"SOC_3"</span>, <span class="st">"SOC_3_NAME"</span>, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SOC_4"</span>, <span class="st">"SOC_4_NAME"</span>, <span class="st">"SOC_5"</span>, <span class="st">"SOC_5_NAME"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SOC_2021_2"</span>, <span class="st">"SOC_2021_2_NAME"</span>, <span class="st">"SOC_2021_3"</span>, <span class="st">"SOC_2021_3_NAME"</span>, </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SOC_2021_5"</span>, <span class="st">"SOC_2021_5_NAME"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deprecated occupation classifications</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_CAREER_AREA"</span>, <span class="st">"LOT_CAREER_AREA_NAME"</span>, <span class="st">"LOT_OCCUPATION"</span>, <span class="st">"LOT_OCCUPATION_NAME"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_SPECIALIZED_OCCUPATION"</span>, <span class="st">"LOT_SPECIALIZED_OCCUPATION_NAME"</span>, </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_OCCUPATION_GROUP"</span>, <span class="st">"LOT_OCCUPATION_GROUP_NAME"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_V6_SPECIALIZED_OCCUPATION"</span>, <span class="st">"LOT_V6_SPECIALIZED_OCCUPATION_NAME"</span>, </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_V6_OCCUPATION"</span>, <span class="st">"LOT_V6_OCCUPATION_NAME"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_V6_OCCUPATION_GROUP"</span>, <span class="st">"LOT_V6_OCCUPATION_GROUP_NAME"</span>, </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LOT_V6_CAREER_AREA"</span>, <span class="st">"LOT_V6_CAREER_AREA_NAME"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deprecated CIP and ONET versions</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ONET_2019"</span>, <span class="st">"ONET_2019_NAME"</span>, <span class="st">"CIP6"</span>, <span class="st">"CIP6_NAME"</span>, <span class="st">"CIP2"</span>, <span class="st">"CIP2_NAME"</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Duplicate geographic fields</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"COUNTY"</span>, <span class="st">"COUNTY_NAME"</span>, <span class="st">"COUNTY_OUTGOING"</span>, <span class="st">"COUNTY_NAME_OUTGOING"</span>, </span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"COUNTY_INCOMING"</span>, <span class="st">"COUNTY_NAME_INCOMING"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MSA"</span>, <span class="st">"MSA_OUTGOING"</span>, <span class="st">"MSA_INCOMING"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deprecated salary fields (keeping SALARY)</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SALARY_TO"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"ORIGINAL_PAY_PERIOD"</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model versions (keep actual data)</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MODELED_EXPIRED"</span>, <span class="st">"MODELED_DURATION"</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop only columns that exist in the dataset</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> columns_to_drop <span class="cf">if</span> col <span class="kw">in</span> df.columns]</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>df_cleaned <span class="op">=</span> df.drop(columns<span class="op">=</span>columns_to_drop, inplace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"DATA CLEANING SUMMARY"</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original dataset shape: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cleaned dataset shape: </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Columns removed: </span><span class="sc">{</span><span class="bu">len</span>(columns_to_drop)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Columns retained: </span><span class="sc">{</span><span class="bu">len</span>(df_cleaned.columns)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Remaining key columns:</span><span class="ch">\n</span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(df_cleaned.columns[:<span class="dv">15</span>])<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+============================================================
+DATA CLEANING SUMMARY
+============================================================
+Original dataset shape: (72498, 131)
+Cleaned dataset shape: (72498, 62)
+Columns removed: 69
+Columns retained: 62
+
+Remaining key columns:
+LAST_UPDATED_DATE, POSTED, EXPIRED, DURATION, SOURCE_TYPES, SOURCES, COMPANY, COMPANY_NAME, COMPANY_IS_STAFFING, EDUCATION_LEVELS, EDUCATION_LEVELS_NAME, MIN_EDULEVELS, MIN_EDULEVELS_NAME, MAX_EDULEVELS, MAX_EDULEVELS_NAME</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-2-handling-missing-values" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="step-2-handling-missing-values"><span class="header-section-number">3</span> Step 2: Handling Missing Values</h2>
+<section id="understanding-missing-data" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="understanding-missing-data"><span class="header-section-number">3.1</span> Understanding Missing Data</h3>
+<p>Before imputation, let’s visualize where data is missing:</p>
+<div id="83deb33f" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a heatmap of missing values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>msno.heatmap(df_cleaned, ax<span class="op">=</span>ax)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Missing Values Heatmap - Lightcast Job Market Data"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print detailed missing value statistics</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>missing_stats <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Column'</span>: df_cleaned.columns,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Missing_Count'</span>: df_cleaned.isnull().<span class="bu">sum</span>().values,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Missing_Percentage'</span>: (df_cleaned.isnull().<span class="bu">sum</span>().values <span class="op">/</span> <span class="bu">len</span>(df_cleaned) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>missing_stats <span class="op">=</span> missing_stats[missing_stats[<span class="st">'Missing_Count'</span>] <span class="op">&gt;</span> <span class="dv">0</span>].sort_values(<span class="st">'Missing_Percentage'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Missing Value Statistics:"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(missing_stats.head(<span class="dv">10</span>).to_string(index<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_analysis_files/figure-html/cell-4-output-1.png" width="1246" height="565" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Missing Value Statistics:
+                Column  Missing_Count  Missing_Percentage
+  MAX_YEARS_EXPERIENCE          64068               88.37
+         MAX_EDULEVELS          56183               77.50
+    MAX_EDULEVELS_NAME          56183               77.50
+     LIGHTCAST_SECTORS          54711               75.47
+LIGHTCAST_SECTORS_NAME          54711               75.47
+                SALARY          41690               57.51
+              DURATION          27316               37.68
+  MIN_YEARS_EXPERIENCE          23146               31.93
+               EXPIRED           7844               10.82
+     MSA_NAME_INCOMING           3962                5.46</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-value-imputation-strategy" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="missing-value-imputation-strategy"><span class="header-section-number">3.2</span> Missing Value Imputation Strategy</h3>
+<div id="c7dd3ed0" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Strategy: Drop columns with &gt;50% missing values</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="bu">len</span>(df_cleaned) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cols_before <span class="op">=</span> <span class="bu">len</span>(df_cleaned.columns)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df_cleaned <span class="op">=</span> df_cleaned.dropna(thresh<span class="op">=</span>threshold, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cols_after <span class="op">=</span> <span class="bu">len</span>(df_cleaned.columns)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dropped </span><span class="sc">{</span>cols_before <span class="op">-</span> cols_after<span class="sc">}</span><span class="ss"> columns with &gt;50% missing values"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill numerical columns with median</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>numerical_cols <span class="op">=</span> df_cleaned.select_dtypes(include<span class="op">=</span>[np.number]).columns.tolist()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numerical_cols:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> df_cleaned[col].isnull().<span class="bu">sum</span>() <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        median_val <span class="op">=</span> df_cleaned[col].median()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        df_cleaned[col].fillna(median_val, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Filled '</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">' with median value: </span><span class="sc">{</span>median_val<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill categorical columns with "Unknown"</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>categorical_cols <span class="op">=</span> df_cleaned.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns.tolist()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> categorical_cols:</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> df_cleaned[col].isnull().<span class="bu">sum</span>() <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        df_cleaned[col].fillna(<span class="st">"Unknown"</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Filled '</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">' with 'Unknown'"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total missing values after imputation: </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>isnull()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dropped 6 columns with &gt;50% missing values
+Filled 'DURATION' with median value: 18.00
+Filled 'COMPANY' with median value: 37615159.00
+Filled 'MIN_EDULEVELS' with median value: 2.00
+Filled 'EMPLOYMENT_TYPE' with median value: 1.00
+Filled 'MIN_YEARS_EXPERIENCE' with median value: 5.00
+Filled 'REMOTE_TYPE' with median value: 0.00
+Filled 'STATE' with median value: 29.00
+Filled 'NAICS_2022_2' with median value: 54.00
+Filled 'NAICS_2022_3' with median value: 541.00
+Filled 'NAICS_2022_4' with median value: 5415.00
+Filled 'NAICS_2022_5' with median value: 54151.00
+Filled 'NAICS_2022_6' with median value: 541519.00
+Filled 'LAST_UPDATED_DATE' with 'Unknown'
+Filled 'POSTED' with 'Unknown'
+Filled 'EXPIRED' with 'Unknown'
+Filled 'SOURCE_TYPES' with 'Unknown'
+Filled 'SOURCES' with 'Unknown'
+Filled 'COMPANY_NAME' with 'Unknown'
+Filled 'COMPANY_IS_STAFFING' with 'Unknown'
+Filled 'EDUCATION_LEVELS' with 'Unknown'
+Filled 'EDUCATION_LEVELS_NAME' with 'Unknown'
+Filled 'MIN_EDULEVELS_NAME' with 'Unknown'
+Filled 'EMPLOYMENT_TYPE_NAME' with 'Unknown'
+Filled 'IS_INTERNSHIP' with 'Unknown'
+Filled 'REMOTE_TYPE_NAME' with 'Unknown'
+Filled 'LOCATION' with 'Unknown'
+Filled 'CITY' with 'Unknown'
+Filled 'CITY_NAME' with 'Unknown'
+Filled 'MSA_NAME' with 'Unknown'
+Filled 'STATE_NAME' with 'Unknown'
+Filled 'MSA_NAME_OUTGOING' with 'Unknown'
+Filled 'MSA_NAME_INCOMING' with 'Unknown'
+Filled 'TITLE' with 'Unknown'
+Filled 'TITLE_NAME' with 'Unknown'
+Filled 'TITLE_CLEAN' with 'Unknown'
+Filled 'SKILLS' with 'Unknown'
+Filled 'SKILLS_NAME' with 'Unknown'
+Filled 'SPECIALIZED_SKILLS' with 'Unknown'
+Filled 'SPECIALIZED_SKILLS_NAME' with 'Unknown'
+Filled 'CERTIFICATIONS' with 'Unknown'
+Filled 'CERTIFICATIONS_NAME' with 'Unknown'
+Filled 'COMMON_SKILLS' with 'Unknown'
+Filled 'COMMON_SKILLS_NAME' with 'Unknown'
+Filled 'SOFTWARE_SKILLS' with 'Unknown'
+Filled 'SOFTWARE_SKILLS_NAME' with 'Unknown'
+Filled 'ONET' with 'Unknown'
+Filled 'ONET_NAME' with 'Unknown'
+Filled 'CIP4' with 'Unknown'
+Filled 'CIP4_NAME' with 'Unknown'
+Filled 'SOC_2021_4' with 'Unknown'
+Filled 'SOC_2021_4_NAME' with 'Unknown'
+Filled 'NAICS_2022_2_NAME' with 'Unknown'
+Filled 'NAICS_2022_3_NAME' with 'Unknown'
+Filled 'NAICS_2022_4_NAME' with 'Unknown'
+Filled 'NAICS_2022_5_NAME' with 'Unknown'
+Filled 'NAICS_2022_6_NAME' with 'Unknown'
+
+Total missing values after imputation: 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-3-removing-duplicates" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="step-3-removing-duplicates"><span class="header-section-number">4</span> Step 3: Removing Duplicates</h2>
+<section id="why-remove-duplicates" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="why-remove-duplicates"><span class="header-section-number">4.1</span> Why Remove Duplicates?</h3>
+<p>Duplicate job postings skew our analysis. We remove them based on job title, company, and location to ensure each unique position is counted only once.</p>
+<div id="a06881d6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Duplicate records before removal: </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>duplicated()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove duplicates based on key identifiers</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df_cleaned <span class="op">=</span> df_cleaned.drop_duplicates(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    subset<span class="op">=</span>[<span class="st">'TITLE_NAME'</span>, <span class="st">'COMPANY_NAME'</span>, <span class="st">'LOCATION'</span>], </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    keep<span class="op">=</span><span class="st">'first'</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Duplicate records after removal: </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>duplicated()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Final cleaned dataset shape: </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total records retained: </span><span class="sc">{</span><span class="bu">len</span>(df_cleaned)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Duplicate records before removal: 28
+Duplicate records after removal: 0
+
+Final cleaned dataset shape: (59220, 56)
+Total records retained: 59,220</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-exploratory-data-analysis-eda" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="step-4-exploratory-data-analysis-eda"><span class="header-section-number">5</span> Step 4: Exploratory Data Analysis (EDA)</h2>
+<section id="visualization-1-top-job-titles" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="visualization-1-top-job-titles"><span class="header-section-number">5.1</span> Visualization 1: Top Job Titles</h3>
+<p>Understanding which job titles are most in demand helps job seekers identify the skills and roles to target.</p>
+<div id="55f70db3" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get top 10 job titles</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>title_counts <span class="op">=</span> df_cleaned[<span class="st">'TITLE_NAME'</span>].value_counts().head(<span class="dv">10</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>title_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Number of Job Postings'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Job Title'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Top 10 Job Titles by Postings (2024)'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ax.tick_params(left<span class="op">=</span><span class="va">False</span>, bottom<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(title_counts):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    ax.text(v <span class="op">+</span> <span class="dv">50</span>, i, <span class="bu">str</span>(v), va<span class="op">=</span><span class="st">'center'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Top Job Titles by Postings:"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(title_counts)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Job Title Market Share (%):"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((title_counts <span class="op">/</span> title_counts.<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_analysis_files/figure-html/cell-7-output-1.png" width="1143" height="565" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Top Job Titles by Postings:
+TITLE_NAME
+Data Analysts                     6409
+Unclassified                      2405
+Business Intelligence Analysts    1624
+Enterprise Architects             1535
+Data Modelers                      578
+Data Governance Analysts           472
+Oracle Cloud HCM Consultants       396
+Solutions Architects               377
+ERP Business Analysts              369
+Data Quality Analysts              359
+Name: count, dtype: int64
+
+Job Title Market Share (%):
+TITLE_NAME
+Data Analysts                     44.13
+Unclassified                      16.56
+Business Intelligence Analysts    11.18
+Enterprise Architects             10.57
+Data Modelers                      3.98
+Data Governance Analysts           3.25
+Oracle Cloud HCM Consultants       2.73
+Solutions Architects               2.60
+ERP Business Analysts              2.54
+Data Quality Analysts              2.47
+Name: count, dtype: float64</code></pre>
+</div>
+</div>
+<p><strong>Key Insight</strong>: The top job titles show where the job market is most active. This data helps identify roles with highest demand for new talent.</p>
+</section>
+<section id="visualization-2-job-postings-by-employment-type" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="visualization-2-job-postings-by-employment-type"><span class="header-section-number">5.2</span> Visualization 2: Job Postings by Employment Type</h3>
+<p>Employment type indicates the nature of positions available in the job market. Understanding the distribution helps job seekers target positions that match their preferences.</p>
+<div id="3bba9806" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count jobs by employment type</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>employment_counts <span class="op">=</span> df_cleaned[<span class="st">'EMPLOYMENT_TYPE_NAME'</span>].value_counts()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>employment_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'coral'</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Number of Job Postings'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Employment Type'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Job Postings by Employment Type (2024)'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>ax.tick_params(left<span class="op">=</span><span class="va">False</span>, bottom<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(employment_counts):</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    ax.text(v <span class="op">+</span> <span class="dv">50</span>, i, <span class="bu">str</span>(v), va<span class="op">=</span><span class="st">'center'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Job Postings by Employment Type:"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(employment_counts)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Employment Type Distribution (%):"</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((employment_counts <span class="op">/</span> employment_counts.<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_analysis_files/figure-html/cell-8-output-1.png" width="1142" height="565" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Job Postings by Employment Type:
+EMPLOYMENT_TYPE_NAME
+Full-time (&gt; 32 hours)      56420
+Part-time (â‰¤ 32 hours)     1977
+Part-time / full-time         822
+Unknown                         1
+Name: count, dtype: int64
+
+Employment Type Distribution (%):
+EMPLOYMENT_TYPE_NAME
+Full-time (&gt; 32 hours)      95.27
+Part-time (â‰¤ 32 hours)     3.34
+Part-time / full-time        1.39
+Unknown                      0.00
+Name: count, dtype: float64</code></pre>
+</div>
+</div>
+<p><strong>Key Insight</strong>: The distribution of employment types shows whether the market is primarily offering full-time, part-time, or contract positions, helping job seekers identify opportunities that match their work preferences.</p>
+</section>
+<section id="visualization-3-remote-work-distribution" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="visualization-3-remote-work-distribution"><span class="header-section-number">5.3</span> Visualization 3: Remote Work Distribution</h3>
+<p>The prevalence of remote work reflects post-pandemic hiring trends and work flexibility.</p>
+<div id="4e53b0cf" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count jobs by remote type</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>remote_counts <span class="op">=</span> df_cleaned[<span class="st">'REMOTE_TYPE_NAME'</span>].value_counts()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">"Set2"</span>, <span class="bu">len</span>(remote_counts))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>wedges, texts, autotexts <span class="op">=</span> ax.pie(remote_counts.values, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                    labels<span class="op">=</span>remote_counts.index,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                    autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                    colors<span class="op">=</span>colors,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                                    startangle<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Job Market Distribution: Remote vs. On-Site (2024)"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> autotext <span class="kw">in</span> autotexts:</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    autotext.set_color(<span class="st">'white'</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    autotext.set_fontweight(<span class="st">'bold'</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Remote Work Distribution:"</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> remote_type, count <span class="kw">in</span> remote_counts.items():</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> (count <span class="op">/</span> remote_counts.<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>remote_type<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>count<span class="sc">:,}</span><span class="ss"> jobs (</span><span class="sc">{</span>pct<span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_analysis_files/figure-html/cell-9-output-1.png" width="557" height="565" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Remote Work Distribution:
+[None]: 46,160 jobs (77.9%)
+Remote: 10,263 jobs (17.3%)
+Hybrid Remote: 1,891 jobs (3.2%)
+Not Remote: 905 jobs (1.5%)
+Unknown: 1 jobs (0.0%)</code></pre>
+</div>
+</div>
+<p><strong>Key Insight</strong>: The balance between remote and on-site jobs shows employers’ flexibility preferences. Higher remote job percentages indicate industry acceptance of distributed workforces.</p>
+</section>
+</section>
+<section id="summary-of-data-cleaning-analysis" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="summary-of-data-cleaning-analysis"><span class="header-section-number">6</span> Summary of Data Cleaning &amp; Analysis</h2>
+<div id="0f60ae5d" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"DATA QUALITY SUMMARY"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Removed </span><span class="sc">{</span><span class="bu">len</span>(columns_to_drop)<span class="sc">}</span><span class="ss"> redundant columns"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Handled missing values with median/Unknown imputation"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Removed </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">0</span>] <span class="op">-</span> df_cleaned<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> duplicate records"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final dataset: </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> records × </span><span class="sc">{</span>df_cleaned<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+============================================================
+DATA QUALITY SUMMARY
+============================================================
+Removed 69 redundant columns
+Handled missing values with median/Unknown imputation
+Removed 13,278 duplicate records
+Final dataset: 59,220 records × 56 columns
+============================================================</code></pre>
+</div>
+</div>
+</section>
+<section id="references" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="references"><span class="header-section-number">7</span> References</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
