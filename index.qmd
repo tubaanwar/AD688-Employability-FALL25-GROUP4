@@ -1,0 +1,95 @@
+---
+title: "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends"
+author: "Team 4 Members: Tuba Anwar, Kriti Singh, Soham Deshkhaire"
+date: today
+format: 
+  html:
+    bibliography: references.bib
+    toc: true
+    theme: cosmo
+    highlight-style: github
+---
+
+# Introduction
+
+## Project Overview
+
+This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals.
+
+---
+
+# Research Rationale
+
+AI, ML and data analytics have changed the global job market, creating both opportunities and challenges for new professionals. Organizations are looking for people with strong technical skills such as Python, SQL and ML modeling along with soft skills like communication, ethical reasoning and problem framing. Understanding these changing expectations is important for job seekers so they can match their academic learning and career plans with what the market is demanding. 
+
+This research aims to map out the connection between AI adoption, skill demand and career pathways. Examining these trends can help predict how automation, cloud computing, and generative AI will affect job prospects. Additionally, identifying leading sectors such as finance, healthcare and consulting in analytics hiring will clarify future opportunities and guide both individual career planning and institutional curriculum development.
+
+---
+
+# Research Questions
+
+Our analysis addresses the following core questions:
+
+1. What are the most in-demand technical and soft skills for data science, business analytics, and ML roles in 2024?
+2. How have job descriptions evolved to incorporate AI/ML requirements and competencies?
+3. Which industries are hiring the most data scientists and analytics professionals, and why?
+4. What is the realistic career outlook for business analytics professionals in the short to medium term?
+
+---
+
+# Literature Review
+
+Recent research highlights how analytics and ML skills are becoming increasingly central across industries. Job postings now demand expertise in the full data lifecycle, from engineering and modeling to interpretability along with governance and ethical considerations @liu2024embracing, @liu2024insights. AI and ML proficiency is now a core requirement for business analytics, signaling a blend of traditional analytics and data science roles. Industries such as finance, healthcare and technology are leading this shift, relying on predictive and prescriptive analytics to drive strategy and innovation @smaldone2022.
+
+The literature also points to an optimistic but dynamic career outlook. Georgieff and Hyee (2022) found that AI adoption does not necessarily displace analytics jobs but rather increases demand for those combining digital and domain expertise @georgieff2022. Gerhart et al. (2024) emphasize that communication and application of insights are as vital as technical proficiency @gerhart2024. Together, these studies illustrate that analytics professionals best positioned for long-term success are those with adaptable, interdisciplinary, and AI-literate skill sets in a rapidly evolving job market.
+
+The evidence from the U.S. Bureau of Labor Statistics suggests strong growth in data science careers, with increasing demand for professionals who understand both technical analytics and business strategy @bls2024. Graham (2025) highlights emerging AI skills in technology sectors, demonstrating how new competencies are rapidly becoming market requirements @graham2025aiskills. Liu and Li (2024) provide insights into talent cultivation in big data management, showing that employers seek candidates with 1-3 years of experience and strong foundational skills in data mining and analysis @liu2024insights.
+
+The evidence suggests that the analytics field is expanding rather than contracting. Organizations are not replacing human analysts with AI systems; instead, they are expanding their teams and seeking professionals who can work alongside AI tools. This presents a compelling opportunity for students entering the field, provided they develop both technical depth and the soft skills necessary to translate data insights into business value.
+
+---
+
+# Project Scope & Methodology
+
+## Data Source
+
+We will utilize the Lightcast 2024 dataset, which includes:
+- Job posting volumes for analytics, data science, and ML roles by industry and location
+- Salary data across data-related positions and geographies
+- Skill requirements extracted from job descriptions
+- Hiring trends across time periods
+- Company size and industry classifications
+- Emerging role titles and job requirements
+
+## Analysis Approach
+
+Our team will:
+
+1. Clean and preprocess the Lightcast data using Python (pandas, NumPy)
+2. Extract and categorize skills mentioned in job descriptions for analytics and ML roles
+3. Compare trends across industries, geographies, and job levels
+4. Analyze salary patterns to understand compensation for different skill combinations
+5. Identify emerging roles and how job requirements are evolving
+6. Visualize findings through interactive dashboards using Plotly and Matplotlib
+7. Develop career strategy recommendations based on market insights
+
+## Expected Findings
+
+We anticipate discovering that:
+- Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills
+- Generative AI and prompt engineering are emerging as newly valued competencies
+- Finance, healthcare, and technology sectors lead in analytics hiring
+- Soft skills like communication and domain expertise are increasingly emphasized
+- Analytics roles offer strong job security and career growth potential
+- Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics
+
+## Deliverables (Future Phases)
+
+- Exploratory Data Analysis (EDA) with visualizations
+- Interactive dashboards showing skill trends, industry hiring patterns, and salary insights
+- Career pathway recommendations for different specializations
+- Personal career action plans for each team member
+
+---
+
+# References
