@@ -1,34 +1,9 @@
----
-title: "Data Analysis"
-subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
-author:
-  - name: Tuba Anwar
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Kriti Singh
-    affiliations:
-      - ref: bu
-  - name: Soham Deshkhaire
-    affiliations:
-      - ref: bu
-# bibliography: references.bib
-# csl: csl/econometrica.csl
-format: 
-  html:
-    toc: true
-    number-sections: true
-    df-print: paged
-jupyter: python3
----
+"""
+Complete Data Analysis & Exploratory Analysis of Job Market Trends
+Team: Tuba Anwar, Kriti Singh, Soham Deshkhaire
+Boston University
+"""
 
-## Introduction
-
-This document provides a comprehensive analysis of job market data for 2024. We perform data cleaning, handle missing values, remove duplicates, and conduct exploratory data analysis to understand hiring trends, salary distributions, and job market dynamics.
-
-```{python}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,26 +16,33 @@ warnings.filterwarnings('ignore')
 sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (12, 6)
 
-# Load your data
+print("="*80)
+print("JOB MARKET ANALYSIS 2024 - DATA CLEANING & EXPLORATORY ANALYSIS")
+print("="*80)
+
+# ========================================
+# LOAD DATA
+# ========================================
 df = pd.read_csv('lightcast_job_postings.csv')
-print(f"Original dataset shape: {df.shape}")
-print(f"Total records: {len(df):,}")
-print(f"Total columns: {len(df.columns)}")
-```
+print(f"\n📊 Original dataset shape: {df.shape}")
+print(f"📊 Total records: {len(df):,}")
+print(f"📊 Total columns: {len(df.columns)}")
 
-## Step 1: Removing Redundant Columns
+# ========================================
+# STEP 1: REMOVING REDUNDANT COLUMNS
+# ========================================
+print("\n" + "="*80)
+print("STEP 1: REMOVING REDUNDANT COLUMNS")
+print("="*80)
 
-### Why Remove These Columns?
+print("""
+WHY REMOVE THESE COLUMNS?
+- Tracking & Administrative: ID, URL, DUPLICATES - metadata not useful for analysis
+- Raw Text Fields: We have cleaned versions (TITLE, COMPANY_NAME)
+- Deprecated Classifications: Keep only latest standards (NAICS_2022_6, SOC_2021_4)
+- Duplicate Geographic Fields: Multiple versions of county/MSA create redundancy
+""")
 
-We remove redundant columns to improve dataset quality and analysis efficiency. Specifically:
-
-- **Tracking & Administrative Columns**: ID, URL, DUPLICATES, LAST_UPDATED_TIMESTAMP - These are metadata and don't contribute to analysis
-- **Raw Text Fields**: BODY, TITLE_RAW, COMPANY_RAW - We have cleaned versions (TITLE, COMPANY_NAME, TITLE_CLEAN)
-- **Deprecated Classifications**: We keep only the latest NAICS_2022_6, SOC_2021_4, and CIP4 standards
-- **Duplicate Geographic Fields**: Multiple versions of county/MSA data create redundancy
-
-```{python}
-# List of columns to drop
 columns_to_drop = [
     # Administrative & tracking columns
     "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
@@ -91,198 +73,273 @@ columns_to_drop = [
     "MSA", "MSA_OUTGOING", "MSA_INCOMING",
     # Deprecated salary fields (keeping SALARY)
     "SALARY_TO", "SALARY_FROM", "ORIGINAL_PAY_PERIOD",
-    # Model versions (keep actual data)
+    # Model versions
     "MODELED_EXPIRED", "MODELED_DURATION"
 ]
 
-# Drop only columns that exist in the dataset
 columns_to_drop = [col for col in columns_to_drop if col in df.columns]
 df_cleaned = df.drop(columns=columns_to_drop, inplace=False)
 
-print(f"\n{'='*60}")
-print(f"DATA CLEANING SUMMARY")
-print(f"{'='*60}")
-print(f"Original dataset shape: {df.shape}")
-print(f"Cleaned dataset shape: {df_cleaned.shape}")
-print(f"Columns removed: {len(columns_to_drop)}")
-print(f"Columns retained: {len(df_cleaned.columns)}")
-print(f"\nRemaining key columns:\n{', '.join(df_cleaned.columns[:15])}")
-```
+print(f"✅ Original dataset: {df.shape}")
+print(f"✅ Cleaned dataset: {df_cleaned.shape}")
+print(f"✅ Columns removed: {len(columns_to_drop)}")
+print(f"✅ Columns retained: {len(df_cleaned.columns)}")
 
-## Step 2: Handling Missing Values
+# ========================================
+# STEP 2: HANDLING MISSING VALUES
+# ========================================
+print("\n" + "="*80)
+print("STEP 2: UNDERSTANDING & HANDLING MISSING DATA")
+print("="*80)
 
-### Understanding Missing Data
+print("\n📊 Visualizing Missing Values Pattern...\n")
 
-Before imputation, let's visualize where data is missing:
-
-```{python}
-# Create a heatmap of missing values
+# Create missing values heatmap
 fig, ax = plt.subplots(figsize=(14, 6))
-msno.heatmap(df_cleaned, ax=ax)
-plt.title("Missing Values Heatmap - Lightcast Job Market Data", fontsize=14, fontweight='bold')
+msno.heatmap(df_cleaned, ax=ax, fontsize=8)
+plt.title("Missing Values Heatmap - Lightcast Job Market Data", 
+          fontsize=14, fontweight='bold', pad=20)
 plt.tight_layout()
 plt.show()
 
-# Print detailed missing value statistics
+# Show top missing value statistics
 missing_stats = pd.DataFrame({
     'Column': df_cleaned.columns,
     'Missing_Count': df_cleaned.isnull().sum().values,
     'Missing_Percentage': (df_cleaned.isnull().sum().values / len(df_cleaned) * 100).round(2)
 })
-missing_stats = missing_stats[missing_stats['Missing_Count'] > 0].sort_values('Missing_Percentage', ascending=False)
+missing_stats = missing_stats[missing_stats['Missing_Count'] > 0].sort_values(
+    'Missing_Percentage', ascending=False
+)
 
-print("\nMissing Value Statistics:")
+print("\n📋 Top 10 Columns with Missing Values:")
 print(missing_stats.head(10).to_string(index=False))
-```
 
-### Missing Value Imputation Strategy
+print("""
+MISSING VALUE STRATEGY:
+1. Drop columns with >50% missing values (insufficient data)
+2. Fill numerical columns with median (robust to outliers)
+3. Fill categorical columns with 'Unknown' (preserve data)
+""")
 
-```{python}
-# Strategy: Drop columns with >50% missing values
+# Drop columns with >50% missing
 threshold = len(df_cleaned) * 0.5
 cols_before = len(df_cleaned.columns)
 df_cleaned = df_cleaned.dropna(thresh=threshold, axis=1)
 cols_after = len(df_cleaned.columns)
-
-print(f"Dropped {cols_before - cols_after} columns with >50% missing values")
+print(f"\n✅ Dropped {cols_before - cols_after} columns with >50% missing values")
 
 # Fill numerical columns with median
 numerical_cols = df_cleaned.select_dtypes(include=[np.number]).columns.tolist()
+filled_numerical = 0
 for col in numerical_cols:
     if df_cleaned[col].isnull().sum() > 0:
         median_val = df_cleaned[col].median()
         df_cleaned[col].fillna(median_val, inplace=True)
-        print(f"Filled '{col}' with median value: {median_val:.2f}")
+        filled_numerical += 1
+
+print(f"✅ Filled {filled_numerical} numerical columns with median values")
 
 # Fill categorical columns with "Unknown"
 categorical_cols = df_cleaned.select_dtypes(include=['object']).columns.tolist()
+filled_categorical = 0
 for col in categorical_cols:
     if df_cleaned[col].isnull().sum() > 0:
         df_cleaned[col].fillna("Unknown", inplace=True)
-        print(f"Filled '{col}' with 'Unknown'")
+        filled_categorical += 1
 
-print(f"\nTotal missing values after imputation: {df_cleaned.isnull().sum().sum()}")
-```
+print(f"✅ Filled {filled_categorical} categorical columns with 'Unknown'")
+print(f"✅ Total missing values after imputation: {df_cleaned.isnull().sum().sum()}")
 
-## Step 3: Removing Duplicates
+# ========================================
+# STEP 3: REMOVING DUPLICATES
+# ========================================
+print("\n" + "="*80)
+print("STEP 3: REMOVING DUPLICATE JOB POSTINGS")
+print("="*80)
 
-### Why Remove Duplicates?
+print("""
+WHY REMOVE DUPLICATES?
+Duplicate job postings skew our analysis. We remove them based on:
+- Job Title
+- Company Name
+- Location
+This ensures each unique position is counted only once.
+""")
 
-Duplicate job postings skew our analysis. We remove them based on job title, company, and location to ensure each unique position is counted only once.
+duplicates_before = df_cleaned.duplicated().sum()
+print(f"📊 Duplicate records found: {duplicates_before:,}")
 
-```{python}
-print(f"Duplicate records before removal: {df_cleaned.duplicated().sum():,}")
-
-# Remove duplicates based on key identifiers
 df_cleaned = df_cleaned.drop_duplicates(
     subset=['TITLE_NAME', 'COMPANY_NAME', 'LOCATION'], 
     keep='first'
 )
 
-print(f"Duplicate records after removal: {df_cleaned.duplicated().sum():,}")
-print(f"\nFinal cleaned dataset shape: {df_cleaned.shape}")
-print(f"Total records retained: {len(df_cleaned):,}")
-```
+duplicates_after = df_cleaned.duplicated().sum()
+print(f"✅ Duplicates after removal: {duplicates_after:,}")
+print(f"✅ Records removed: {duplicates_before - duplicates_after:,}")
+print(f"✅ Final cleaned dataset: {df_cleaned.shape}")
 
-## Step 4: Exploratory Data Analysis (EDA)
+# ========================================
+# STEP 4: EXPLORATORY DATA ANALYSIS (EDA)
+# ========================================
+print("\n" + "="*80)
+print("STEP 4: EXPLORATORY DATA ANALYSIS")
+print("="*80)
 
-### Visualization 1: Top Job Titles
+# VISUALIZATION 1: Top Job Titles
+print("\n📊 VISUALIZATION 1: TOP JOB TITLES BY DEMAND")
+print("-" * 80)
+print("""
+KEY INSIGHT: Understanding which job titles are most in demand helps job seekers
+identify the skills and roles to target in their career development.
+""")
 
-Understanding which job titles are most in demand helps job seekers identify the skills and roles to target.
-
-```{python}
-# Get top 10 job titles
 title_counts = df_cleaned['TITLE_NAME'].value_counts().head(10)
 
-fig, ax = plt.subplots(figsize=(12, 6))
-title_counts.plot(kind='barh', ax=ax, color='steelblue')
-ax.set_xlabel('Number of Job Postings', fontsize=12, fontweight='bold')
-ax.set_ylabel('Job Title', fontsize=12, fontweight='bold')
-ax.set_title('Top 10 Job Titles by Postings (2024)', fontsize=14, fontweight='bold')
+fig, ax = plt.subplots(figsize=(12, 7))
+bars = title_counts.plot(kind='barh', ax=ax, color='#6C9BCF')
+ax.set_xlabel('Number of Job Postings', fontsize=13, fontweight='bold')
+ax.set_ylabel('Job Title', fontsize=13, fontweight='bold')
+ax.set_title('Top 10 Most In-Demand Job Titles (2024)', 
+             fontsize=15, fontweight='bold', pad=20)
 ax.invert_yaxis()
 ax.tick_params(left=False, bottom=False)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
 for i, v in enumerate(title_counts):
-    ax.text(v + 50, i, str(v), va='center', fontweight='bold')
+    ax.text(v + 50, i, f'{v:,}', va='center', fontweight='bold', fontsize=10)
+
 plt.tight_layout()
 plt.show()
 
-print(f"\nTop Job Titles by Postings:")
-print(title_counts)
-print(f"\nJob Title Market Share (%):")
-print((title_counts / title_counts.sum() * 100).round(2))
-```
+print(f"\n📈 Top 5 Job Titles:")
+for i, (title, count) in enumerate(title_counts.head(5).items(), 1):
+    pct = (count / title_counts.sum() * 100)
+    print(f"{i}. {title}: {count:,} postings ({pct:.1f}% of top 10)")
 
-**Key Insight**: The top job titles show where the job market is most active. This data helps identify roles with highest demand for new talent.
+# VISUALIZATION 2: Employment Type Distribution
+print("\n\n VISUALIZATION 2: JOB POSTINGS BY EMPLOYMENT TYPE")
+print("-" * 80)
+print("""
+KEY INSIGHT: Employment type distribution shows whether the market is primarily
+offering full-time, part-time, or contract positions, helping job seekers
+identify opportunities that match their work preferences.
+""")
 
-### Visualization 2: Job Postings by Employment Type
-
-Employment type indicates the nature of positions available in the job market. Understanding the distribution helps job seekers target positions that match their preferences.
-
-```{python}
-# Count jobs by employment type
 employment_counts = df_cleaned['EMPLOYMENT_TYPE_NAME'].value_counts()
 
-fig, ax = plt.subplots(figsize=(12, 6))
-employment_counts.plot(kind='barh', ax=ax, color='coral')
-ax.set_xlabel('Number of Job Postings', fontsize=12, fontweight='bold')
-ax.set_ylabel('Employment Type', fontsize=12, fontweight='bold')
-ax.set_title('Job Postings by Employment Type (2024)', fontsize=14, fontweight='bold')
+fig, ax = plt.subplots(figsize=(12, 7))
+employment_counts.plot(kind='barh', ax=ax, color='#FF9B85')
+ax.set_xlabel('Number of Job Postings', fontsize=13, fontweight='bold')
+ax.set_ylabel('Employment Type', fontsize=13, fontweight='bold')
+ax.set_title('Job Market by Employment Type (2024)', 
+             fontsize=15, fontweight='bold', pad=20)
 ax.invert_yaxis()
 ax.tick_params(left=False, bottom=False)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
 for i, v in enumerate(employment_counts):
-    ax.text(v + 50, i, str(v), va='center', fontweight='bold')
+    ax.text(v + 50, i, f'{v:,}', va='center', fontweight='bold', fontsize=10)
+
 plt.tight_layout()
 plt.show()
 
-print(f"\nJob Postings by Employment Type:")
-print(employment_counts)
-print(f"\nEmployment Type Distribution (%):")
-print((employment_counts / employment_counts.sum() * 100).round(2))
-```
+print(f"\n Employment Type Breakdown:")
+for emp_type, count in employment_counts.items():
+    pct = (count / employment_counts.sum() * 100)
+    print(f"• {emp_type}: {count:,} postings ({pct:.1f}%)")
 
-**Key Insight**: The distribution of employment types shows whether the market is primarily offering full-time, part-time, or contract positions, helping job seekers identify opportunities that match their work preferences.
+# VISUALIZATION 3: Remote Work Distribution (IMPROVED WITH PASTEL COLORS)
+print("\n\n VISUALIZATION 3: REMOTE WORK DISTRIBUTION")
+print("-" * 80)
+print("""
+KEY INSIGHT: The balance between remote and on-site jobs reflects post-pandemic
+hiring trends and shows employers' flexibility preferences. Higher remote job
+percentages indicate industry acceptance of distributed workforces.
+""")
 
-### Visualization 3: Remote Work Distribution
-
-The prevalence of remote work reflects post-pandemic hiring trends and work flexibility.
-
-```{python}
-# Count jobs by remote type
 remote_counts = df_cleaned['REMOTE_TYPE_NAME'].value_counts()
 
-fig, ax = plt.subplots(figsize=(10, 6))
-colors = sns.color_palette("Set2", len(remote_counts))
-wedges, texts, autotexts = ax.pie(remote_counts.values, 
-                                    labels=remote_counts.index,
-                                    autopct='%1.1f%%',
-                                    colors=colors,
-                                    startangle=90)
-ax.set_title("Job Market Distribution: Remote vs. On-Site (2024)", fontsize=14, fontweight='bold')
+# Beautiful pastel color palette
+pastel_colors = ['#B4E7CE', '#FFB5A7', '#A7C7E7', '#F8E5F1', '#FFDAB9']
+
+fig, ax = plt.subplots(figsize=(12, 8))
+
+wedges, texts, autotexts = ax.pie(
+    remote_counts.values, 
+    labels=remote_counts.index,
+    autopct='%1.1f%%',
+    colors=pastel_colors[:len(remote_counts)],
+    startangle=90,
+    pctdistance=0.85,
+    explode=[0.05] * len(remote_counts),
+    textprops={'fontsize': 12, 'fontweight': 'bold'},
+    shadow=True
+)
+
+# Style percentage text
 for autotext in autotexts:
-    autotext.set_color('white')
+    autotext.set_color('#2C3E50')
     autotext.set_fontweight('bold')
+    autotext.set_fontsize(14)
+
+# Style labels
+for text in texts:
+    text.set_fontsize(13)
+    text.set_fontweight('bold')
+    text.set_color('#34495E')
+
+# Title
+ax.set_title(
+    "Job Market Distribution: Remote vs. On-Site Work (2024)", 
+    fontsize=16, 
+    fontweight='bold',
+    pad=20,
+    color='#2C3E50'
+)
+
+# Donut effect
+centre_circle = plt.Circle((0, 0), 0.70, fc='white', linewidth=0)
+fig.gca().add_artist(centre_circle)
+
+ax.axis('equal')
 plt.tight_layout()
 plt.show()
 
-print(f"\nRemote Work Distribution:")
+print(f"\n Remote Work Statistics:")
 for remote_type, count in remote_counts.items():
     pct = (count / remote_counts.sum() * 100)
-    print(f"{remote_type}: {count:,} jobs ({pct:.1f}%)")
-```
+    print(f"• {remote_type}: {count:,} jobs ({pct:.1f}%)")
 
-**Key Insight**: The balance between remote and on-site jobs shows employers' flexibility preferences. Higher remote job percentages indicate industry acceptance of distributed workforces.
+# ========================================
+# FINAL SUMMARY
+# ========================================
+print("\n" + "="*80)
+print("DATA QUALITY & ANALYSIS SUMMARY")
+print("="*80)
+print(f"""
+ CLEANING RESULTS:
+   • Removed {len(columns_to_drop)} redundant columns
+   • Handled missing values (median/Unknown imputation)
+   • Removed {df.shape[0] - df_cleaned.shape[0]:,} duplicate records
+   
+ FINAL DATASET:
+   • Records: {df_cleaned.shape[0]:,}
+   • Features: {df_cleaned.shape[1]}
+   • Data Quality: High (no missing values, no duplicates)
 
-## Summary of Data Cleaning & Analysis
-
-```{python}
-print(f"\n{'='*60}")
-print(f"DATA QUALITY SUMMARY")
-print(f"{'='*60}")
-print(f"Removed {len(columns_to_drop)} redundant columns")
-print(f"Handled missing values with median/Unknown imputation")
-print(f"Removed {df.shape[0] - df_cleaned.shape[0]:,} duplicate records")
-print(f"Final dataset: {df_cleaned.shape[0]:,} records × {df_cleaned.shape[1]} columns")
-print(f"{'='*60}")
-```
-
-## References
+ KEY FINDINGS:
+   • Top job demand: {title_counts.index[0]}
+   • Primary employment type: {employment_counts.index[0]}
+   • Remote work adoption: {(remote_counts.get('Remote', 0) / remote_counts.sum() * 100):.1f}%
+   
+ NEXT STEPS:
+   • Salary analysis by industry
+   • AI vs. non-AI job trends
+   • Geographic hiring patterns
+   • Career strategy development
+""")
+print("="*80) 
