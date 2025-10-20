@@ -1,2 +1,15 @@
+lightcast_job_postings.csv
+.venv/
+*.ipynb_checkpoints
+__pycache__/
+*.pyc
+.DS_Store
+
 /.quarto/
 **/*.quarto_ipynb
+.venv/
+__pycache__/
+*.pyc
+.venv/
+__pycache__/
+*.pyc
