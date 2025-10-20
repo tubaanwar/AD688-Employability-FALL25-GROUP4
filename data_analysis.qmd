@@ -22,6 +22,9 @@ format:
     number-sections: true
     df-print: paged
 jupyter: python3
+execute:
+  echo: true
+  eval: false
 ---
 
 ## Introduction
