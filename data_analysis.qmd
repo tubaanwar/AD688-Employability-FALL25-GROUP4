@@ -21,10 +21,11 @@ format:
     toc: true
     number-sections: true
     df-print: paged
+    code-overflow: wrap
 jupyter: python3
 execute:
   echo: true
-  eval: false
+  eval: true
 ---
 
 ## Introduction
