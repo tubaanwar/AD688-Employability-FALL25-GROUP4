@@ -238,7 +238,7 @@ ax.tick_params(left=False, bottom=False)
 for i, v in enumerate(employment_counts):
     ax.text(v + 50, i, str(v), va='center', fontweight='bold')
 plt.tight_layout()
-plt.savefig("./figure/Job-posting by-employment-type.png")
+plt.savefig("./figure/Job-posting-by-employment-type.png")
 plt.show()
 
 print(f"\nJob Postings by Employment Type:")
