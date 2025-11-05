@@ -125,6 +125,7 @@ fig, ax = plt.subplots(figsize=(14, 6))
 msno.heatmap(df_cleaned, ax=ax)
 plt.title("Missing Values Heatmap - Lightcast Job Market Data", fontsize=14, fontweight='bold')
 plt.tight_layout()
+plt.savefig("./figures/Missing-values-Heatmap.pnj")
 plt.show()
 
 # Print detailed missing value statistics
@@ -208,6 +209,7 @@ ax.tick_params(left=False, bottom=False)
 for i, v in enumerate(title_counts):
     ax.text(v + 50, i, str(v), va='center', fontweight='bold')
 plt.tight_layout()
+plt.savefig("./figures/Top 10-Job-Titles-by-Postings(2024).pnj")
 plt.show()
 
 print(f"\nTop Job Titles by Postings:")
@@ -236,6 +238,7 @@ ax.tick_params(left=False, bottom=False)
 for i, v in enumerate(employment_counts):
     ax.text(v + 50, i, str(v), va='center', fontweight='bold')
 plt.tight_layout()
+plt.savefig("/.figure/Job-posting by-employment-type.png")
 plt.show()
 
 print(f"\nJob Postings by Employment Type:")
@@ -266,6 +269,7 @@ for autotext in autotexts:
     autotext.set_color('white')
     autotext.set_fontweight('bold')
 plt.tight_layout()
+plt.savefig(./figure/Job-Market-Distribution-remotevsonsite.png )
 plt.show()
 
 print(f"\nRemote Work Distribution:")
