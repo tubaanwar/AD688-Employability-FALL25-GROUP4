@@ -1,6 +1,7 @@
 project:
   type: website
-  output-dir: docs
+  execute-dir: project   # makes relative paths stable (repo root)
+  # output-dir omitted (Quarto uses _site by default)
 
 website:
   title: "Job Market Analysis 2024"
@@ -22,3 +23,4 @@ format:
     theme: cosmo
     toc: true
     number-sections: true
+    css: styles.css

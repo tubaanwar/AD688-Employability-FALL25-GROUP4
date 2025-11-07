@@ -1,0 +1,131 @@
+/* Professional Color Palette */
+:root {
+  --primary-navy: #1D3557;
+  --secondary-blue: #457B9D;
+  --accent-teal: #2A9D8F;
+  --accent-red: #E63946;
+  --light-bg: #F1FAEE;
+  --text-dark: #1D3557;
+}
+
+/* Main body styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-dark);
+  line-height: 1.8;
+}
+
+/* Header styling */
+h1, h2, h3 {
+  color: var(--primary-navy);
+  font-weight: 600;
+  margin-top: 2rem;
+}
+
+h1 {
+  border-bottom: 3px solid var(--accent-teal);
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  border-left: 4px solid var(--secondary-blue);
+  padding-left: 1rem;
+  margin-top: 2.5rem;
+}
+
+h3 {
+  color: var(--secondary-blue);
+}
+
+/* Code blocks */
+.cell-code {
+  background-color: #f8f9fa;
+  border-left: 3px solid var(--secondary-blue);
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+/* Key insights styling */
+p strong {
+  color: var(--accent-red);
+}
+
+/* Blockquotes for insights */
+blockquote {
+  border-left: 4px solid var(--accent-teal);
+  background-color: var(--light-bg);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+/* Table of contents */
+#TOC {
+  background-color: var(--light-bg);
+  border: 1px solid var(--secondary-blue);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+#TOC a {
+  color: var(--primary-navy);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+#TOC a:hover {
+  color: var(--accent-teal);
+  padding-left: 0.5rem;
+}
+
+/* Plotly/hvPlot container */
+.plotly, .bk-root {
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Section dividers */
+section {
+  margin-bottom: 3rem;
+}
+
+/* Links */
+a {
+  color: var(--secondary-blue);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-teal);
+}
+
+/* Improve readability */
+.quarto-title-block {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+  color: white;
+  padding: 3rem 2rem;
+  margin-bottom: 3rem;
+  border-radius: 0 0 8px 8px;
+}
+
+.quarto-title-block h1,
+.quarto-title-block .subtitle {
+  color: white !important;
+  border: none;
+}
+
+/* Author information */
+.quarto-title-meta {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .plotly, .bk-root {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
