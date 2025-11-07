@@ -1,31 +1,28 @@
-on:
-  workflow_dispatch:
-  push:
-    branches: main
+name: Build & Publish Quarto site
 
-name: Quarto Publish
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Install Python and Dependencies
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
         with:
-          python-version: '3.12'
-          cache: 'pip'
-      - run: pip install jupyter
-      - run: pip install -r requirements.txt
-
-      - name: Render and Publish
+          fetch-depth: 0
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "latest"
+      # If you need Python libs for plots, uncomment the next 4 lines:
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.11"
+      # - run: pip install -r requirements.txt || true
+      - name: Render site
+        run: quarto render
+      - name: Publish to gh-pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
