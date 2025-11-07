@@ -120,3 +120,8 @@ webcolors==25.10.0
 webencodings==0.5.1
 websocket-client==1.9.0
 widgetsnbextension==4.0.15
+hvplot==0.10.0
+holoviews==1.19.1
+bokeh==3.6.2
+panel==1.5.2
+
