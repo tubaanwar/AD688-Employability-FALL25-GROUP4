@@ -20,17 +20,17 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        # You can pin to a version if needed:
-        # with:
-        #   version: "1.6.40"
 
-      # Optional Python setup (uncomment if your .qmds use Python code)
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: "3.11"
-      # - name: Install Python packages
-      #   run: pip install -r requirements.txt
+      # ✅ Add this block
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter nbformat pandas matplotlib hvplot bokeh plotly
 
       - name: Render site
         run: quarto render
