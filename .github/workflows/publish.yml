@@ -5,23 +5,36 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: "latest"
-      # If you need Python libs for plots, uncomment the next 4 lines:
-      # - uses: actions/setup-python@v5
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        # You can pin to a version if needed:
+        # with:
+        #   version: "1.6.40"
+
+      # Optional Python setup (uncomment if your .qmds use Python code)
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
       #   with:
       #     python-version: "3.11"
-      # - run: pip install -r requirements.txt || true
+      # - name: Install Python packages
+      #   run: pip install -r requirements.txt
+
       - name: Render site
         run: quarto render
+
       - name: Publish to gh-pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
