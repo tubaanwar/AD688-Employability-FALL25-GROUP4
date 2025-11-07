@@ -1,7 +1,10 @@
 project:
   type: website
-  execute-dir: project
-  # (output-dir omitted — defaults to _site)
+  execute-dir: project   # keep
+  # output-dir omitted — Quarto uses _site
+
+execute:
+  freeze: auto           # <-- add this
 
 website:
   title: "Job Market Analysis 2024"

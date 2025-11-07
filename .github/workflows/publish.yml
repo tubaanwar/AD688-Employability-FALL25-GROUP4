@@ -11,7 +11,6 @@ permissions:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -21,19 +20,8 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      # ✅ Add this block
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install Python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install jupyter nbformat pandas matplotlib hvplot bokeh plotly
-
-      - name: Render site
-        run: quarto render
+      - name: Render site (no execute; uses _freeze/)
+        run: quarto render --no-execute
 
       - name: Publish to gh-pages
         uses: quarto-dev/quarto-actions/publish@v2
