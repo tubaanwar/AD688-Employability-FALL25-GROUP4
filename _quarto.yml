@@ -1,10 +1,13 @@
+
 project:
   type: website
-  execute-dir: project   # keep
-  # output-dir omitted — Quarto uses _site
-
+  execute-dir: project
+  
 execute:
-  freeze: auto           # <-- add this
+  freeze: auto
+  echo: true
+  eval: true
+  code-fold: true
 
 website:
   title: "Job Market Analysis 2024"
@@ -13,16 +16,19 @@ website:
       - href: index.qmd
         text: "Home"
       - href: research_introduction.qmd
-        text: "Research"
-      - href: data_analysis.qmd
-        text: "Data Analysis"
-      - href: career_plan.qmd
-        text: "Career Strategy"
-      - href: about.qmd
-        text: "About Team"
+        text: "Introduction"
+      - href: data_cleaning.qmd
+        text: "Data Cleaning & Exploration"
+      - href: eda.qmd
+        text: "Exploratory Data Analysis"
+      - href: skill_gap_analysis.qmd
+        text: "Skill Gap Analysis"
+      - href: ml_methods.qmd
+        text: "ML Methods"
+      - href: nlp_methods.qmd
+        text: "NLP Methods"
 
 format:
   html:
     theme: cosmo
     toc: true
-    number-sections: true

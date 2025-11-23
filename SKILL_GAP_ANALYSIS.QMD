@@ -1,0 +1,540 @@
+---
+title: "Skill Gap Analysis"
+subtitle: "Comparing Team Skills Against Market Demands"
+author:
+  - name: Tuba Anwar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Kriti Singh
+    affiliations:
+      - ref: bu
+  - name: Soham Deshkhaire
+    affiliations:
+      - ref: bu
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code-overflow: wrap
+    embed-resources: true
+    theme: 
+      light: [cosmo, custom.scss]
+    css: styles.css
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Introduction
+
+This analysis compares our team's current skill levels against the skills demanded in the IT job market. By identifying gaps between our capabilities and market requirements, we can develop targeted learning strategies to enhance our competitiveness as job candidates.
+
+```{python}
+import pandas as pd
+import numpy as np
+import hvplot.pandas
+import panel as pn
+from collections import Counter
+import re
+import warnings
+warnings.filterwarnings('ignore')
+
+# Enable panel for rendering
+pn.extension()
+
+# Color palette
+COLORS = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c']
+
+# Load cleaned job data
+df = pd.read_csv('lightcast_job_postings.csv')
+print(f"Analyzing {len(df):,} job postings for skill requirements")
+```
+
+## 1. Team Skill Assessment
+
+### 1.1 Creating Team Skills Profile
+
+Each team member rates their proficiency in key IT skills on a scale of 1-5:
+- **1** = Beginner (aware of the skill)
+- **2** = Basic knowledge (can perform simple tasks)
+- **3** = Intermediate (comfortable with common scenarios)
+- **4** = Advanced (can handle complex problems)
+- **5** = Expert (can teach others and solve any problem)
+
+```{python}
+# Team member skill assessments
+# TODO: Replace with actual team member names and skill ratings
+skills_data = {
+    "Name": ["Tuba Anwar", "Kriti Singh", "Soham Deshkhaire"],
+    "Python": [4, 3, 4],
+    "SQL": [3, 4, 3],
+    "Machine Learning": [3, 2, 4],
+    "Data Analysis": [4, 4, 3],
+    "Cloud Computing": [2, 2, 3],
+    "Java": [3, 2, 2],
+    "JavaScript": [2, 3, 3],
+    "R": [3, 3, 2],
+    "Tableau": [3, 4, 2],
+    "Excel": [4, 5, 3],
+    "AWS": [2, 1, 2],
+    "Azure": [1, 2, 2],
+    "Docker": [2, 1, 3],
+    "Git": [3, 3, 4],
+    "Power BI": [2, 3, 2],
+    "Spark": [2, 2, 3],
+    "TensorFlow": [2, 1, 3],
+    "NLP": [3, 2, 3]
+}
+
+df_team_skills = pd.DataFrame(skills_data)
+df_team_skills.set_index("Name", inplace=True)
+
+# Display team skills
+print("Team Skills Profile:")
+print(df_team_skills)
+
+# Calculate team averages
+team_avg = df_team_skills.mean().sort_values(ascending=False)
+print(f"\nTeam Average Skills (sorted):")
+print(team_avg)
+```
+
+### 1.2 Team Skills Heatmap
+
+Visualize each team member's strengths and weaknesses across all skills.
+
+```{python}
+# Create heatmap using hvPlot
+heatmap = df_team_skills.T.hvplot.heatmap(
+    title='Team Skill Proficiency Heatmap',
+    cmap='RdYlGn',
+    height=700,
+    width=800,
+    xlabel='Team Member',
+    ylabel='Skill',
+    clabel='Proficiency Level',
+    rot=0
+)
+heatmap
+```
+
+::: {.callout-note icon=false}
+## Key Observation
+The heatmap reveals individual strengths and team-wide patterns. Skills with consistently high ratings represent team strengths, while low ratings across the board indicate collective skill gaps requiring attention.
+:::
+
+### 1.3 Team Average Skills Bar Chart
+
+Compare team average proficiency across all skills.
+
+```{python}
+# Prepare data for bar chart
+team_avg_df = team_avg.reset_index()
+team_avg_df.columns = ['Skill', 'Average Proficiency']
+
+# Create bar chart
+chart = team_avg_df.sort_values('Average Proficiency', ascending=True).hvplot.barh(
+    x='Skill',
+    y='Average Proficiency',
+    title='Team Average Skill Proficiency',
+    height=700,
+    width=900,
+    color='#3498db',
+    xlabel='Average Proficiency (1-5)',
+    ylabel='',
+    flip_yaxis=True
+)
+chart
+```
+
+## 2. Market Skill Demand Analysis
+
+### 2.1 Extracting Skills from Job Descriptions
+
+We analyze job postings to identify the most in-demand skills in the IT job market.
+
+```{python}
+# Define comprehensive skill keywords to search for
+skill_keywords = {
+    'Python': ['python', 'python3', 'py'],
+    'SQL': ['sql', 'mysql', 'postgresql', 'sql server', 'oracle sql'],
+    'Machine Learning': ['machine learning', 'ml', 'deep learning', 'neural network'],
+    'Data Analysis': ['data analysis', 'data analytics', 'analytical'],
+    'Cloud Computing': ['cloud', 'cloud computing', 'cloud services'],
+    'Java': ['java', 'java8', 'java 8'],
+    'JavaScript': ['javascript', 'js', 'node.js', 'nodejs'],
+    'R': [' r ', 'r programming', 'rstudio'],
+    'Tableau': ['tableau'],
+    'Excel': ['excel', 'microsoft excel', 'advanced excel'],
+    'AWS': ['aws', 'amazon web services', 'ec2', 's3'],
+    'Azure': ['azure', 'microsoft azure'],
+    'Docker': ['docker', 'containerization'],
+    'Git': ['git', 'github', 'version control'],
+    'Power BI': ['power bi', 'powerbi'],
+    'Spark': ['spark', 'apache spark', 'pyspark'],
+    'TensorFlow': ['tensorflow', 'tf'],
+    'NLP': ['nlp', 'natural language processing', 'text mining']
+}
+
+# Function to extract skills from text
+def extract_skills(text):
+    if pd.isna(text):
+        return []
+    text = str(text).lower()
+    found_skills = []
+    for skill, keywords in skill_keywords.items():
+        for keyword in keywords:
+            if keyword in text:
+                found_skills.append(skill)
+                break
+    return found_skills
+
+# Extract skills from job titles and descriptions (if available)
+if 'TITLE_NAME' in df.columns:
+    df['extracted_skills'] = df['TITLE_NAME'].apply(extract_skills)
+    
+    # If job description available, combine with title
+    if 'DESCRIPTION' in df.columns or 'JOB_DESCRIPTION' in df.columns:
+        desc_col = 'DESCRIPTION' if 'DESCRIPTION' in df.columns else 'JOB_DESCRIPTION'
+        df['extracted_skills'] = df.apply(
+            lambda row: list(set(extract_skills(row['TITLE_NAME']) + extract_skills(row[desc_col]))),
+            axis=1
+        )
+
+# Count skill occurrences
+all_skills = [skill for skills_list in df['extracted_skills'] for skill in skills_list]
+skill_counts = Counter(all_skills)
+market_skills_df = pd.DataFrame(skill_counts.items(), columns=['Skill', 'Job Postings'])
+market_skills_df = market_skills_df.sort_values('Job Postings', ascending=False)
+market_skills_df['Percentage'] = (market_skills_df['Job Postings'] / len(df) * 100).round(2)
+
+print("Market Skill Demand (Top Skills):")
+print(market_skills_df.head(15))
+```
+
+### 2.2 Top In-Demand Skills Visualization
+
+```{python}
+# Create bar chart of top 15 market skills
+top_market_skills = market_skills_df.head(15).sort_values('Job Postings', ascending=True)
+
+chart = top_market_skills.hvplot.barh(
+    x='Skill',
+    y='Job Postings',
+    title='Top 15 Most In-Demand Skills in Job Market (2024)',
+    height=600,
+    width=900,
+    color='#3498db',
+    hover_cols=['Percentage'],
+    xlabel='Number of Job Postings Requiring Skill',
+    ylabel='',
+    flip_yaxis=True
+)
+chart
+```
+
+::: {.callout-note icon=false}
+## Market Insight
+These are the skills most frequently mentioned in job postings. High-demand skills represent critical areas where job seekers should focus their learning efforts.
+:::
+
+## 3. Skill Gap Identification
+
+### 3.1 Comparing Team Skills to Market Demand
+
+Now we identify gaps between our team's capabilities and what the market requires.
+
+```{python}
+# Normalize market demand to 1-5 scale for comparison
+# We'll scale based on percentage of jobs requiring each skill
+max_percentage = market_skills_df['Percentage'].max()
+
+# Create comparison dataframe
+comparison_data = []
+
+for skill in df_team_skills.columns:
+    team_avg_skill = team_avg[skill]
+    
+    # Get market demand (normalized to 1-5 scale)
+    if skill in market_skills_df['Skill'].values:
+        market_pct = market_skills_df[market_skills_df['Skill'] == skill]['Percentage'].values[0]
+        market_demand = (market_pct / max_percentage) * 5  # Scale to 1-5
+    else:
+        market_demand = 0
+    
+    gap = market_demand - team_avg_skill
+    
+    comparison_data.append({
+        'Skill': skill,
+        'Team Average': team_avg_skill,
+        'Market Demand': market_demand,
+        'Gap': gap,
+        'Gap_Category': 'Strength' if gap <= 0 else ('Moderate Gap' if gap <= 2 else 'Critical Gap')
+    })
+
+comparison_df = pd.DataFrame(comparison_data)
+comparison_df = comparison_df.sort_values('Gap', ascending=False)
+
+print("Skill Gap Analysis:")
+print(comparison_df)
+```
+
+### 3.2 Skill Gap Visualization
+
+```{python}
+# Create comparison dataframe for visualization
+comparison_melted = comparison_df.melt(
+    id_vars='Skill',
+    value_vars=['Team Average', 'Market Demand'],
+    var_name='Metric',
+    value_name='Level'
+)
+
+# Sort by Market Demand
+skill_order = comparison_df.sort_values('Market Demand', ascending=False)['Skill'].tolist()
+
+# Create grouped bar chart
+chart = comparison_melted.hvplot.bar(
+    x='Skill',
+    y='Level',
+    by='Metric',
+    title='Team Skills vs Market Demand Comparison',
+    height=600,
+    width=1000,
+    ylabel='Proficiency / Demand Level (1-5)',
+    xlabel='Skill',
+    legend='top_right',
+    rot=45
+)
+chart
+```
+
+### 3.3 Skill Gap Priority Matrix
+
+Identify which skills need immediate attention based on gap size.
+
+```{python}
+# Create scatter plot: Team proficiency vs Market demand
+chart = comparison_df.hvplot.scatter(
+    x='Team Average',
+    y='Market Demand',
+    by='Gap_Category',
+    size=abs(comparison_df['Gap']) * 50,
+    hover_cols=['Skill', 'Gap'],
+    title='Skill Gap Priority Matrix',
+    height=700,
+    width=900,
+    xlabel='Team Average Proficiency (1-5)',
+    ylabel='Market Demand Level (1-5 normalized)',
+    legend='top_left',
+    color=['#2ecc71', '#f39c12', '#e74c3c']
+)
+chart
+```
+
+::: {.callout-important icon=false}
+## Critical Skill Gaps
+Skills appearing in the **lower right area** (high market demand, low team proficiency) represent critical gaps requiring immediate attention. These should be prioritized in our learning plan.
+:::
+
+## 4. Individual Skill Gap Analysis
+
+### 4.1 Skill Gaps by Team Member
+
+Identify personalized skill development needs for each team member.
+
+```{python}
+# Calculate individual gaps
+individual_gaps = []
+
+for member in df_team_skills.index:
+    for skill in df_team_skills.columns:
+        member_skill = df_team_skills.loc[member, skill]
+        
+        # Get market demand
+        if skill in market_skills_df['Skill'].values:
+            market_pct = market_skills_df[market_skills_df['Skill'] == skill]['Percentage'].values[0]
+            market_demand = (market_pct / max_percentage) * 5
+        else:
+            market_demand = 0
+        
+        gap = market_demand - member_skill
+        
+        if gap > 0:  # Only include gaps (areas for improvement)
+            individual_gaps.append({
+                'Member': member,
+                'Skill': skill,
+                'Current Level': member_skill,
+                'Market Demand': market_demand,
+                'Gap': gap
+            })
+
+individual_gaps_df = pd.DataFrame(individual_gaps)
+individual_gaps_df = individual_gaps_df.sort_values(['Member', 'Gap'], ascending=[True, False])
+
+# Show top 5 gaps per member
+print("Top 5 Skill Gaps per Team Member:")
+for member in df_team_skills.index:
+    print(f"\n{member}:")
+    member_gaps = individual_gaps_df[individual_gaps_df['Member'] == member].head(5)
+    print(member_gaps[['Skill', 'Current Level', 'Gap']].to_string(index=False))
+```
+
+### 4.2 Individual Gap Visualization
+
+```{python}
+# Get top 5 gaps per member
+top_individual_gaps = individual_gaps_df.groupby('Member').head(5)
+
+# Create bar chart for each member
+for member in df_team_skills.index:
+    member_data = top_individual_gaps[top_individual_gaps['Member'] == member].sort_values('Gap', ascending=True)
+    
+    plot = member_data.hvplot.barh(
+        x='Skill',
+        y='Gap',
+        title=f'Top 5 Skill Gaps - {member}',
+        height=400,
+        width=700,
+        color='#e74c3c',
+        xlabel='Skill Gap (Market - Current)',
+        ylabel='',
+        flip_yaxis=True
+    )
+    
+    display(plot)
+```
+
+## 5. Skill Development Plan
+
+### 5.1 Priority Skills for Team Development
+
+Based on our analysis, here are the priority skills the team should focus on:
+
+```{python}
+# Identify critical gaps (gap > 2)
+critical_gaps = comparison_df[comparison_df['Gap'] > 2].sort_values('Gap', ascending=False)
+
+print("CRITICAL SKILLS TO DEVELOP (Gap > 2):")
+print(critical_gaps[['Skill', 'Team Average', 'Market Demand', 'Gap']])
+
+# Identify moderate gaps (1 < gap <= 2)
+moderate_gaps = comparison_df[(comparison_df['Gap'] > 1) & (comparison_df['Gap'] <= 2)].sort_values('Gap', ascending=False)
+
+print("\n\nMODERATE PRIORITY SKILLS (1 < Gap <= 2):")
+print(moderate_gaps[['Skill', 'Team Average', 'Market Demand', 'Gap']])
+```
+
+### 5.2 Recommended Learning Resources
+
+Based on identified gaps, here are recommended learning resources:
+
+```{python}
+# Create learning recommendations
+learning_resources = {
+    'Python': {
+        'Courses': ['Python for Data Science (Coursera)', 'Complete Python Bootcamp (Udemy)'],
+        'Practice': ['LeetCode Python problems', 'HackerRank Python track'],
+        'Time': '2-3 months for intermediate proficiency'
+    },
+    'SQL': {
+        'Courses': ['SQL for Data Science (Coursera)', 'The Complete SQL Bootcamp (Udemy)'],
+        'Practice': ['SQLZoo', 'LeetCode Database problems'],
+        'Time': '1-2 months'
+    },
+    'Machine Learning': {
+        'Courses': ['Machine Learning by Andrew Ng (Coursera)', 'Fast.ai Practical Deep Learning'],
+        'Practice': ['Kaggle competitions', 'Personal ML projects'],
+        'Time': '3-6 months'
+    },
+    'AWS': {
+        'Courses': ['AWS Certified Solutions Architect (A Cloud Guru)', 'AWS Free Tier hands-on'],
+        'Practice': ['Build personal projects on AWS', 'AWS Cloud Quest'],
+        'Time': '2-3 months'
+    },
+    'Docker': {
+        'Courses': ['Docker Mastery (Udemy)', 'Docker documentation'],
+        'Practice': ['Containerize personal projects', 'Docker Hub'],
+        'Time': '1-2 months'
+    },
+    'Cloud Computing': {
+        'Courses': ['Cloud Computing Concepts (Coursera)', 'Google Cloud Training'],
+        'Practice': ['Multi-cloud projects', 'Free tier experimentation'],
+        'Time': '2-4 months'
+    }
+}
+
+# Display learning plan for critical skills
+print("RECOMMENDED LEARNING PLAN:\n")
+for _, row in critical_gaps.head(5).iterrows():
+    skill = row['Skill']
+    if skill in learning_resources:
+        print(f"📚 {skill} (Gap: {row['Gap']:.2f})")
+        print(f"   Courses: {', '.join(learning_resources[skill]['Courses'])}")
+        print(f"   Practice: {', '.join(learning_resources[skill]['Practice'])}")
+        print(f"   Estimated Time: {learning_resources[skill]['Time']}")
+        print()
+```
+
+### 5.3 Team Collaboration Strategy
+
+How can team members help each other?
+
+```{python}
+# Identify team strengths (where team exceeds market demand)
+team_strengths = comparison_df[comparison_df['Gap'] < 0].sort_values('Team Average', ascending=False)
+
+print("TEAM STRENGTHS (Can mentor others):")
+print(team_strengths[['Skill', 'Team Average', 'Market Demand']])
+
+# Create mentoring pairs based on individual strengths
+print("\n\nSUGGESTED MENTORING OPPORTUNITIES:")
+
+for skill in df_team_skills.columns:
+    skill_levels = df_team_skills[skill].sort_values(ascending=False)
+    if skill_levels.max() - skill_levels.min() >= 2:  # Significant difference
+        expert = skill_levels.index[0]
+        learner = skill_levels.index[-1]
+        print(f"  {skill}: {expert} (Level {skill_levels.iloc[0]}) can mentor {learner} (Level {skill_levels.iloc[-1]})")
+```
+
+### 5.4 3-Month, 6-Month, and 1-Year Goals
+
+Create timeline for skill development:
+
+::: {.callout-tip icon=false}
+## Skill Development Timeline
+
+**3-Month Goals (Immediate Priority)**
+- Focus on critical gap skills with highest market demand
+- Complete foundational courses in AWS, Docker, and Cloud Computing
+- Build 1-2 hands-on projects demonstrating new skills
+- Team members mentor each other in strength areas
+
+**6-Month Goals (Intermediate)**
+- Achieve intermediate proficiency (Level 3) in all critical gap skills
+- Complete advanced courses in Machine Learning and Data Analysis
+- Participate in Kaggle competitions or contribute to open-source projects
+- Earn 1-2 professional certifications (e.g., AWS Certified Developer)
+
+**1-Year Goals (Advanced)**
+- Achieve advanced proficiency (Level 4) in priority skills
+- Entire team reaches minimum Level 3 in all high-demand market skills
+- Build comprehensive portfolio showcasing technical competencies
+- Competitive job candidates for targeted IT roles
+:::
+
+
+
+## References
+
+- Job market data: Lightcast Job Postings Dataset (2024)
+- Skill assessment framework: Industry-standard proficiency scales
+- Learning resources: Coursera, Udemy, AWS Training, Kaggle
+- Analysis tools: Python, pandas, hvPlot, Panel

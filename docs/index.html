@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Team 4 Members: Tuba Anwar, Kriti Singh, Soham Deshkhaire">
-<meta name="dcterms.date" content="2025-11-07">
+<meta name="dcterms.date" content="2025-11-23">
 
 <title>Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends – Job Market Analysis 2024</title>
 <style>
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -92,6 +127,7 @@ div.csl-indent {
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -118,20 +154,12 @@ div.csl-indent {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./research_introduction.html"> 
-<span class="menu-text">Research</span></a>
+    <a class="nav-link" href="./eda.html"> 
+<span class="menu-text">EDA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./data_analysis.html"> 
-<span class="menu-text">Data Analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./career_plan.html"> 
-<span class="menu-text">Career Strategy</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.qmd"> 
-<span class="menu-text">About Team</span></a>
+    <a class="nav-link" href="./analysis.qmd"> 
+<span class="menu-text">Analysis</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -149,21 +177,21 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview"><span class="header-section-number">1.1</span> Project Overview</a></li>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a></li>
   </ul></li>
-  <li><a href="#research-rationale" id="toc-research-rationale" class="nav-link" data-scroll-target="#research-rationale"><span class="header-section-number">2</span> Research Rationale</a></li>
-  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions"><span class="header-section-number">3</span> Research Questions</a></li>
-  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review"><span class="header-section-number">4</span> Literature Review</a></li>
-  <li><a href="#project-scope-methodology" id="toc-project-scope-methodology" class="nav-link" data-scroll-target="#project-scope-methodology"><span class="header-section-number">5</span> Project Scope &amp; Methodology</a>
+  <li><a href="#research-rationale" id="toc-research-rationale" class="nav-link" data-scroll-target="#research-rationale">Research Rationale</a></li>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
+  <li><a href="#project-scope-methodology" id="toc-project-scope-methodology" class="nav-link" data-scroll-target="#project-scope-methodology">Project Scope &amp; Methodology</a>
   <ul class="collapse">
-  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source"><span class="header-section-number">5.1</span> Data Source</a></li>
-  <li><a href="#analysis-approach" id="toc-analysis-approach" class="nav-link" data-scroll-target="#analysis-approach"><span class="header-section-number">5.2</span> Analysis Approach</a></li>
-  <li><a href="#expected-findings" id="toc-expected-findings" class="nav-link" data-scroll-target="#expected-findings"><span class="header-section-number">5.3</span> Expected Findings</a></li>
-  <li><a href="#deliverables-future-phases" id="toc-deliverables-future-phases" class="nav-link" data-scroll-target="#deliverables-future-phases"><span class="header-section-number">5.4</span> Deliverables (Future Phases)</a></li>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">Data Source</a></li>
+  <li><a href="#analysis-approach" id="toc-analysis-approach" class="nav-link" data-scroll-target="#analysis-approach">Analysis Approach</a></li>
+  <li><a href="#expected-findings" id="toc-expected-findings" class="nav-link" data-scroll-target="#expected-findings">Expected Findings</a></li>
+  <li><a href="#deliverables-future-phases" id="toc-deliverables-future-phases" class="nav-link" data-scroll-target="#deliverables-future-phases">Deliverables (Future Phases)</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">6</span> References</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -172,7 +200,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends</h1>
+<div class="quarto-title-block"><div><h1 class="title">Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -189,7 +217,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 7, 2025</p>
+      <p class="date">November 23, 2025</p>
     </div>
   </div>
   
@@ -201,22 +229,22 @@ div.csl-indent {
 </header>
 
 
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<section id="project-overview" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="project-overview"><span class="header-section-number">1.1</span> Project Overview</h2>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
 <p>This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals.</p>
 <hr>
 </section>
 </section>
-<section id="research-rationale" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Research Rationale</h1>
+<section id="research-rationale" class="level1">
+<h1>Research Rationale</h1>
 <p>AI, ML and data analytics have changed the global job market, creating both opportunities and challenges for new professionals. Organizations are looking for people with strong technical skills such as Python, SQL and ML modeling along with soft skills like communication, ethical reasoning and problem framing. Understanding these changing expectations is important for job seekers so they can match their academic learning and career plans with what the market is demanding.</p>
 <p>This research aims to map out the connection between AI adoption, skill demand and career pathways. Examining these trends can help predict how automation, cloud computing, and generative AI will affect job prospects. Additionally, identifying leading sectors such as finance, healthcare and consulting in analytics hiring will clarify future opportunities and guide both individual career planning and institutional curriculum development.</p>
 <hr>
 </section>
-<section id="research-questions" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Research Questions</h1>
+<section id="research-questions" class="level1">
+<h1>Research Questions</h1>
 <p>Our analysis addresses the following core questions:</p>
 <ol type="1">
 <li>What are the most in-demand technical and soft skills for data science, business analytics, and ML roles in 2024?</li>
@@ -226,22 +254,22 @@ div.csl-indent {
 </ol>
 <hr>
 </section>
-<section id="literature-review" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Literature Review</h1>
+<section id="literature-review" class="level1">
+<h1>Literature Review</h1>
 <p>Recent research highlights how analytics and ML skills are becoming increasingly central across industries. Job postings now demand expertise in the full data lifecycle, from engineering and modeling to interpretability along with governance and ethical considerations <span class="citation" data-cites="liu2024embracing">J. Liu, Chen, and Lyu (<a href="#ref-liu2024embracing" role="doc-biblioref">2024</a>)</span>, <span class="citation" data-cites="liu2024insights">Y. Liu and Li (<a href="#ref-liu2024insights" role="doc-biblioref">2024</a>)</span>. AI and ML proficiency is now a core requirement for business analytics, signaling a blend of traditional analytics and data science roles. Industries such as finance, healthcare and technology are leading this shift, relying on predictive and prescriptive analytics to drive strategy and innovation <span class="citation" data-cites="smaldone2022">Smaldone et al. (<a href="#ref-smaldone2022" role="doc-biblioref">2022</a>)</span>.</p>
 <p>The literature also points to an optimistic but dynamic career outlook. Georgieff and Hyee (2022) found that AI adoption does not necessarily displace analytics jobs but rather increases demand for those combining digital and domain expertise <span class="citation" data-cites="georgieff2022">Georgieff and Hyee (<a href="#ref-georgieff2022" role="doc-biblioref">2022</a>)</span>. Gerhart et al.&nbsp;(2024) emphasize that communication and application of insights are as vital as technical proficiency <span class="citation" data-cites="gerhart2024">Gerhart, Rastegari, and Cole (<a href="#ref-gerhart2024" role="doc-biblioref">2024</a>)</span>. Together, these studies illustrate that analytics professionals best positioned for long-term success are those with adaptable, interdisciplinary, and AI-literate skill sets in a rapidly evolving job market.</p>
 <p>The evidence from the U.S. Bureau of Labor Statistics suggests strong growth in data science careers, with increasing demand for professionals who understand both technical analytics and business strategy <span class="citation" data-cites="bls2024">U.S. Bureau of Labor Statistics (<a href="#ref-bls2024" role="doc-biblioref">2024</a>)</span>. Graham (2025) highlights emerging AI skills in technology sectors, demonstrating how new competencies are rapidly becoming market requirements <span class="citation" data-cites="graham2025aiskills">Graham (<a href="#ref-graham2025aiskills" role="doc-biblioref">2025</a>)</span>. Liu and Li (2024) provide insights into talent cultivation in big data management, showing that employers seek candidates with 1-3 years of experience and strong foundational skills in data mining and analysis <span class="citation" data-cites="liu2024insights">Y. Liu and Li (<a href="#ref-liu2024insights" role="doc-biblioref">2024</a>)</span>.</p>
 <p>The evidence suggests that the analytics field is expanding rather than contracting. Organizations are not replacing human analysts with AI systems; instead, they are expanding their teams and seeking professionals who can work alongside AI tools. This presents a compelling opportunity for students entering the field, provided they develop both technical depth and the soft skills necessary to translate data insights into business value.</p>
 <hr>
 </section>
-<section id="project-scope-methodology" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Project Scope &amp; Methodology</h1>
-<section id="data-source" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="data-source"><span class="header-section-number">5.1</span> Data Source</h2>
+<section id="project-scope-methodology" class="level1">
+<h1>Project Scope &amp; Methodology</h1>
+<section id="data-source" class="level2">
+<h2 class="anchored" data-anchor-id="data-source">Data Source</h2>
 <p>We will utilize the Lightcast 2024 dataset, which includes: - Job posting volumes for analytics, data science, and ML roles by industry and location - Salary data across data-related positions and geographies - Skill requirements extracted from job descriptions - Hiring trends across time periods - Company size and industry classifications - Emerging role titles and job requirements</p>
 </section>
-<section id="analysis-approach" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="analysis-approach"><span class="header-section-number">5.2</span> Analysis Approach</h2>
+<section id="analysis-approach" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-approach">Analysis Approach</h2>
 <p>Our team will:</p>
 <ol type="1">
 <li>Clean and preprocess the Lightcast data using Python (pandas, NumPy)</li>
@@ -253,12 +281,12 @@ div.csl-indent {
 <li>Develop career strategy recommendations based on market insights</li>
 </ol>
 </section>
-<section id="expected-findings" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="expected-findings"><span class="header-section-number">5.3</span> Expected Findings</h2>
+<section id="expected-findings" class="level2">
+<h2 class="anchored" data-anchor-id="expected-findings">Expected Findings</h2>
 <p>We anticipate discovering that: - Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills - Generative AI and prompt engineering are emerging as newly valued competencies - Finance, healthcare, and technology sectors lead in analytics hiring - Soft skills like communication and domain expertise are increasingly emphasized - Analytics roles offer strong job security and career growth potential - Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics</p>
 </section>
-<section id="deliverables-future-phases" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="deliverables-future-phases"><span class="header-section-number">5.4</span> Deliverables (Future Phases)</h2>
+<section id="deliverables-future-phases" class="level2">
+<h2 class="anchored" data-anchor-id="deliverables-future-phases">Deliverables (Future Phases)</h2>
 <ul>
 <li>Exploratory Data Analysis (EDA) with visualizations</li>
 <li>Interactive dashboards showing skill trends, industry hiring patterns, and salary insights</li>
@@ -268,14 +296,16 @@ div.csl-indent {
 <hr>
 </section>
 </section>
-<section id="references" class="level1" data-number="6">
+<section id="references" class="level1">
 
 
+
+<!-- -->
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-georgieff2022" class="csl-entry" role="listitem">
 Georgieff, Alexandre, and Remi Hyee. 2022. <span>“Artificial Intelligence and Employment: New Cross-Country Evidence.”</span> <em>Frontiers in Artificial Intelligence</em> 5: 832736. <a href="https://doi.org/10.3389/frai.2022.832736">https://doi.org/10.3389/frai.2022.832736</a>.
 </div>
@@ -368,6 +398,57 @@ U.S. Bureau of Labor Statistics. 2024. <span>“Occupational Employment and Wage
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -697,7 +778,103 @@ U.S. Bureau of Labor Statistics. 2024. <span>“Occupational Employment and Wage
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Team 4 Members: Tuba Anwar, Kriti Singh, Soham Deshkhaire"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    bibliography: references.bib</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Overview</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu"># Research Rationale</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>AI, ML and data analytics have changed the global job market, creating both opportunities and challenges for new professionals. Organizations are looking for people with strong technical skills such as Python, SQL and ML modeling along with soft skills like communication, ethical reasoning and problem framing. Understanding these changing expectations is important for job seekers so they can match their academic learning and career plans with what the market is demanding. </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>This research aims to map out the connection between AI adoption, skill demand and career pathways. Examining these trends can help predict how automation, cloud computing, and generative AI will affect job prospects. Additionally, identifying leading sectors such as finance, healthcare and consulting in analytics hiring will clarify future opportunities and guide both individual career planning and institutional curriculum development.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu"># Research Questions</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Our analysis addresses the following core questions:</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>What are the most in-demand technical and soft skills for data science, business analytics, and ML roles in 2024?</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>How have job descriptions evolved to incorporate AI/ML requirements and competencies?</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Which industries are hiring the most data scientists and analytics professionals, and why?</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>What is the realistic career outlook for business analytics professionals in the short to medium term?</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu"># Literature Review</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>Recent research highlights how analytics and ML skills are becoming increasingly central across industries. Job postings now demand expertise in the full data lifecycle, from engineering and modeling to interpretability along with governance and ethical considerations @liu2024embracing, @liu2024insights. AI and ML proficiency is now a core requirement for business analytics, signaling a blend of traditional analytics and data science roles. Industries such as finance, healthcare and technology are leading this shift, relying on predictive and prescriptive analytics to drive strategy and innovation @smaldone2022.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>The literature also points to an optimistic but dynamic career outlook. Georgieff and Hyee (2022) found that AI adoption does not necessarily displace analytics jobs but rather increases demand for those combining digital and domain expertise @georgieff2022. Gerhart et al. (2024) emphasize that communication and application of insights are as vital as technical proficiency @gerhart2024. Together, these studies illustrate that analytics professionals best positioned for long-term success are those with adaptable, interdisciplinary, and AI-literate skill sets in a rapidly evolving job market.</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>The evidence from the U.S. Bureau of Labor Statistics suggests strong growth in data science careers, with increasing demand for professionals who understand both technical analytics and business strategy @bls2024. Graham (2025) highlights emerging AI skills in technology sectors, demonstrating how new competencies are rapidly becoming market requirements @graham2025aiskills. Liu and Li (2024) provide insights into talent cultivation in big data management, showing that employers seek candidates with 1-3 years of experience and strong foundational skills in data mining and analysis @liu2024insights.</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>The evidence suggests that the analytics field is expanding rather than contracting. Organizations are not replacing human analysts with AI systems; instead, they are expanding their teams and seeking professionals who can work alongside AI tools. This presents a compelling opportunity for students entering the field, provided they develop both technical depth and the soft skills necessary to translate data insights into business value.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="fu"># Project Scope &amp; Methodology</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Source</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>We will utilize the Lightcast 2024 dataset, which includes:</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Job posting volumes for analytics, data science, and ML roles by industry and location</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Salary data across data-related positions and geographies</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Skill requirements extracted from job descriptions</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hiring trends across time periods</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Company size and industry classifications</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Emerging role titles and job requirements</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis Approach</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>Our team will:</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Clean and preprocess the Lightcast data using Python (pandas, NumPy)</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Extract and categorize skills mentioned in job descriptions for analytics and ML roles</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compare trends across industries, geographies, and job levels</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Analyze salary patterns to understand compensation for different skill combinations</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Identify emerging roles and how job requirements are evolving</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Visualize findings through interactive dashboards using Plotly and Matplotlib</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Develop career strategy recommendations based on market insights</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">## Expected Findings</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>We anticipate discovering that:</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Generative AI and prompt engineering are emerging as newly valued competencies</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Finance, healthcare, and technology sectors lead in analytics hiring</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Soft skills like communication and domain expertise are increasingly emphasized</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analytics roles offer strong job security and career growth potential</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Deliverables (Future Phases)</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exploratory Data Analysis (EDA) with visualizations</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interactive dashboards showing skill trends, industry hiring patterns, and salary insights</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Career pathway recommendations for different specializations</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Personal career action plans for each team member</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

@@ -1,0 +1,425 @@
+---
+title: "Exploratory Data Analysis"
+subtitle: "Uncovering Job Market Trends and Patterns in 2024"
+author:
+  - name: Tuba Anwar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Kriti Singh
+    affiliations:
+      - ref: bu
+  - name: Soham Deshkhaire
+    affiliations:
+      - ref: bu
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code-overflow: wrap
+    embed-resources: true
+    theme: 
+      light: [cosmo, custom.scss]
+    css: styles.css
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Introduction
+
+This document presents a comprehensive exploratory data analysis of the 2024 job market. We examine hiring trends, salary distributions, geographic patterns, employment types, and remote work opportunities to provide actionable insights for job seekers and market analysts.
+
+```{python}
+import pandas as pd
+import numpy as np
+import hvplot.pandas
+import panel as pn
+import warnings
+warnings.filterwarnings('ignore')
+
+# Enable panel for rendering
+pn.extension()
+
+# Color palette
+COLORS = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#34495e', '#e67e22']
+
+# Load cleaned data
+df = pd.read_csv('lightcast_job_postings.csv')
+
+print(f"Dataset shape: {df.shape}")
+print(f"Analysis period: 2024 Job Market")
+print(f"Total job postings analyzed: {len(df):,}")
+```
+
+## 1. Job Title Analysis
+
+### 1.1 Top In-Demand Job Titles
+
+Understanding which job titles dominate the market helps identify high-demand roles and emerging career opportunities.
+
+```{python}
+# Get top 15 job titles
+title_counts = df['TITLE_NAME'].value_counts().head(15)
+title_df = pd.DataFrame({
+    'Job Title': title_counts.index, 
+    'Count': title_counts.values,
+    'Percentage': (title_counts.values / len(df) * 100).round(2)
+})
+
+# Create interactive horizontal bar chart
+title_df.hvplot.barh(
+    x='Job Title',
+    y='Count',
+    title='Top 15 Most In-Demand Job Titles (2024)',
+    height=600,
+    width=900,
+    color='#3498db',
+    hover_cols=['Percentage'],
+    ylabel='',
+    xlabel='Number of Job Postings',
+    flip_yaxis=True
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+The top job titles reveal where the market has the highest demand. Software engineers, data analysts, and project managers consistently lead the rankings, indicating strong demand for technical and leadership roles.
+:::
+
+## 2. Employment Type Distribution
+
+### 2.1 Full-Time vs Part-Time vs Contract
+
+Understanding employment type distribution helps job seekers target positions matching their career preferences.
+
+```{python}
+# Count jobs by employment type
+employment_counts = df['EMPLOYMENT_TYPE_NAME'].value_counts()
+employment_df = pd.DataFrame({
+    'Employment Type': employment_counts.index, 
+    'Count': employment_counts.values,
+    'Percentage': (employment_counts.values / employment_counts.sum() * 100).round(1)
+})
+
+# Create bar chart
+employment_df.hvplot.bar(
+    x='Employment Type',
+    y='Count',
+    title='Job Market Distribution by Employment Type (2024)',
+    height=500,
+    width=800,
+    color='Employment Type',
+    cmap=COLORS,
+    hover_cols=['Percentage'],
+    ylabel='Number of Job Postings',
+    rot=45
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+The distribution of employment types shows whether the market primarily offers full-time stability, part-time flexibility, or contract-based project work. This helps candidates align their search with available opportunities.
+:::
+
+## 3. Remote Work Analysis
+
+### 3.1 Remote vs Hybrid vs On-Site
+
+The prevalence of remote work reflects post-pandemic hiring trends and employer flexibility.
+
+```{python}
+# Count jobs by remote type
+remote_counts = df['REMOTE_TYPE_NAME'].value_counts()
+remote_df = pd.DataFrame({
+    'Remote Type': remote_counts.index,
+    'Count': remote_counts.values,
+    'Percentage': (remote_counts.values / remote_counts.sum() * 100).round(1)
+})
+
+# Create bar chart with percentages
+remote_df.hvplot.bar(
+    x='Remote Type',
+    y='Count',
+    title='Job Market Distribution: Remote, Hybrid & On-Site Opportunities (2024)',
+    height=500,
+    width=800,
+    color='Remote Type',
+    cmap=COLORS,
+    hover_cols=['Percentage'],
+    ylabel='Number of Job Postings',
+    xlabel='Work Location Type',
+    rot=0
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+The balance between remote, hybrid, and on-site jobs indicates industry acceptance of flexible work arrangements. Higher remote percentages suggest employers prioritize talent acquisition over geographic constraints.
+:::
+
+## 4. Salary Analysis
+
+### 4.1 Salary Distribution Overview
+
+Salary analysis reveals compensation trends and helps job seekers set realistic expectations.
+
+```{python}
+# Filter out unrealistic salaries (likely errors)
+salary_data = df[df['SALARY'].notna() & (df['SALARY'] > 0) & (df['SALARY'] < 500000)].copy()
+
+mean_salary = salary_data['SALARY'].mean()
+median_salary = salary_data['SALARY'].median()
+
+# Create histogram
+salary_data.hvplot.hist(
+    y='SALARY',
+    bins=50,
+    title='Salary Distribution in Job Market (2024)',
+    height=500,
+    width=900,
+    color='#3498db',
+    alpha=0.7,
+    ylabel='Number of Job Postings',
+    xlabel='Annual Salary ($)'
+)
+```
+
+```{python}
+print(f"Salary Statistics:")
+print(f"  Mean: ${mean_salary:,.2f}")
+print(f"  Median: ${median_salary:,.2f}")
+print(f"  25th Percentile: ${salary_data['SALARY'].quantile(0.25):,.2f}")
+print(f"  75th Percentile: ${salary_data['SALARY'].quantile(0.75):,.2f}")
+```
+
+### 4.2 Salary by Top Job Titles
+
+Compare compensation across the most common job titles to identify high-paying roles.
+
+```{python}
+# Get top 10 job titles
+top_titles = df['TITLE_NAME'].value_counts().head(10).index
+
+# Filter salary data for top titles
+salary_by_title = df[
+    df['TITLE_NAME'].isin(top_titles) & 
+    df['SALARY'].notna() & 
+    (df['SALARY'] > 0) & 
+    (df['SALARY'] < 500000)
+].groupby('TITLE_NAME')['SALARY'].agg(['median', 'mean', 'count']).reset_index()
+
+salary_by_title = salary_by_title.sort_values('median', ascending=True)
+
+# Create horizontal bar chart
+salary_by_title.hvplot.barh(
+    x='TITLE_NAME',
+    y='median',
+    title='Median Salary by Top 10 Job Titles (2024)',
+    height=600,
+    width=900,
+    color='#2ecc71',
+    hover_cols=['mean', 'count'],
+    ylabel='',
+    xlabel='Median Annual Salary ($)',
+    flip_yaxis=True
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+Salary variations across job titles highlight which roles command premium compensation. Technical roles often show higher median salaries compared to administrative positions.
+:::
+
+### 4.3 Salary Comparison: Remote vs On-Site
+
+Does remote work affect compensation? Let's find out.
+
+```{python}
+# Compare salary by remote type
+salary_remote = df[
+    df['SALARY'].notna() & 
+    (df['SALARY'] > 0) & 
+    (df['SALARY'] < 500000)
+].groupby('REMOTE_TYPE_NAME')['SALARY'].agg(['median', 'mean', 'count']).reset_index()
+
+# Reshape for grouped bar chart
+salary_remote_melted = salary_remote.melt(
+    id_vars='REMOTE_TYPE_NAME',
+    value_vars=['median', 'mean'],
+    var_name='Metric',
+    value_name='Salary'
+)
+
+# Create grouped bar chart
+salary_remote_melted.hvplot.bar(
+    x='REMOTE_TYPE_NAME',
+    y='Salary',
+    by='Metric',
+    title='Salary Comparison: Remote vs Hybrid vs On-Site (2024)',
+    height=500,
+    width=800,
+    ylabel='Annual Salary ($)',
+    xlabel='Work Location Type',
+    legend='top_right',
+    rot=0
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+Comparing salaries across work arrangements reveals whether remote positions offer competitive compensation or if on-site roles command premium pay due to location requirements.
+:::
+
+## 5. Geographic Analysis
+
+### 5.1 Top States for Job Opportunities
+
+Geographic distribution shows where job opportunities are concentrated.
+
+```{python}
+# Get top 15 states by job postings
+state_counts = df['STATE_NAME'].value_counts().head(15)
+state_df = pd.DataFrame({
+    'State': state_counts.index,
+    'Job Postings': state_counts.values,
+    'Percentage': (state_counts.values / len(df) * 100).round(2)
+})
+
+# Create bar chart
+state_df.hvplot.bar(
+    x='State',
+    y='Job Postings',
+    title='Top 15 States by Number of Job Postings (2024)',
+    height=600,
+    width=1000,
+    color='#9b59b6',
+    hover_cols=['Percentage'],
+    ylabel='Number of Job Postings',
+    xlabel='State',
+    rot=45
+)
+```
+
+### 5.2 Salary by State (Top 10 States)
+
+Compare salaries across states to identify high-paying regions.
+
+```{python}
+# Get salary data for top 10 states
+top_states = df['STATE_NAME'].value_counts().head(10).index
+
+salary_by_state = df[
+    df['STATE_NAME'].isin(top_states) & 
+    df['SALARY'].notna() & 
+    (df['SALARY'] > 0) & 
+    (df['SALARY'] < 500000)
+].groupby('STATE_NAME')['SALARY'].median().sort_values(ascending=False).reset_index()
+
+# Create bar chart
+salary_by_state.hvplot.bar(
+    x='STATE_NAME',
+    y='SALARY',
+    title='Median Salary by Top 10 States (2024)',
+    height=500,
+    width=900,
+    color='#f39c12',
+    ylabel='Median Annual Salary ($)',
+    xlabel='State',
+    rot=45
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+Geographic salary variations reflect regional cost of living and market demand. Tech hubs like California and New York typically show higher median salaries.
+:::
+
+## 6. Top Hiring Companies
+
+### 6.1 Companies with Most Job Openings
+
+Identifying top hiring companies helps job seekers target organizations with multiple opportunities.
+
+```{python}
+# Get top 15 companies by job postings
+company_counts = df['COMPANY_NAME'].value_counts().head(15)
+company_df = pd.DataFrame({
+    'Company': company_counts.index,
+    'Job Postings': company_counts.values
+})
+
+# Create horizontal bar chart
+company_df.hvplot.barh(
+    x='Company',
+    y='Job Postings',
+    title='Top 15 Companies by Number of Job Postings (2024)',
+    height=700,
+    width=900,
+    color='#e74c3c',
+    ylabel='',
+    xlabel='Number of Job Postings',
+    flip_yaxis=True
+)
+```
+
+::: {.callout-note icon=false}
+## Key Insight
+Companies with the highest number of job postings indicate organizations actively expanding their workforce. These companies may offer better opportunities for multiple role applications and career growth.
+:::
+
+## 7. Multi-Dimensional Analysis
+
+### 7.1 Job Postings Over Time (if date data available)
+
+```{python}
+# Check if date column exists
+if 'POSTED_DATE' in df.columns or 'POST_DATE' in df.columns:
+    date_col = 'POSTED_DATE' if 'POSTED_DATE' in df.columns else 'POST_DATE'
+    df[date_col] = pd.to_datetime(df[date_col], errors='coerce')
+    
+    # Filter valid dates
+    time_data = df[df[date_col].notna()].copy()
+    time_data['Month'] = time_data[date_col].dt.to_period('M').astype(str)
+    
+    # Group by month
+    monthly_counts = time_data['Month'].value_counts().sort_index()
+    monthly_df = pd.DataFrame({
+        'Month': monthly_counts.index,
+        'Job Postings': monthly_counts.values
+    })
+    
+    # Create line chart
+    monthly_df.hvplot.line(
+        x='Month',
+        y='Job Postings',
+        title='Job Posting Trends Over Time (2024)',
+        height=500,
+        width=900,
+        color='#3498db',
+        line_width=3,
+        ylabel='Number of Job Postings',
+        xlabel='Month'
+    )
+else:
+    print("Date column not available for time-series analysis")
+```
+
+## Next Steps
+
+With comprehensive EDA completed, we proceed to:
+
+1. **Skill Gap Analysis** - Compare our team's skills against market requirements
+2. **Machine Learning Methods** - Apply clustering to identify job categories
+3. **NLP Analysis** - Extract insights from job descriptions
+
+## References
+
+- Data source: Lightcast Job Postings Dataset (2024)
+- Visualization tools: hvPlot, Panel, Python
+- Analysis framework: Standard EDA best practices

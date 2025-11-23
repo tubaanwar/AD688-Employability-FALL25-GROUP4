@@ -1,0 +1,456 @@
+---
+title: "Machine Learning Methods"
+subtitle: "Clustering and Predictive Modeling for Job Market Analysis"
+author:
+  - name: Tuba Anwar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Kriti Singh
+    affiliations:
+      - ref: bu
+  - name: Soham Deshkhaire
+    affiliations:
+      - ref: bu
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code-overflow: wrap
+    embed-resources: true
+    theme: 
+      light: [cosmo, custom.scss]
+    css: styles.css
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Introduction
+
+This section applies machine learning techniques to uncover patterns in job market data. We use clustering algorithms to group similar job postings and predictive models to forecast salary trends and job categories.
+
+```{python}
+import pandas as pd
+import numpy as np
+import hvplot.pandas
+import panel as pn
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import warnings
+warnings.filterwarnings('ignore')
+
+# Enable panel for rendering
+pn.extension()
+
+# Load cleaned data
+df = pd.read_csv('lightcast_job_postings.csv')
+print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
+```
+
+## 1. Feature Engineering
+
+### 1.1 Preparing Data for Machine Learning
+
+Before applying ML algorithms, we need to prepare our features.
+
+```{python}
+# Select relevant numerical features for clustering
+# Check which numerical features exist
+print("Available columns:")
+print(df.columns.tolist())
+
+# Select numerical features - adjust based on your actual columns
+ml_features = []
+
+# Common numerical features to look for
+potential_features = ['DURATION', 'EXPERIENCE_REQUIRED', 'MIN_YEARS_EXPERIENCE', 'MAX_YEARS_EXPERIENCE']
+
+for feature in potential_features:
+    if feature in df.columns:
+        ml_features.append(feature)
+
+# If SALARY exists, use it as target variable
+if 'SALARY' in df.columns:
+    # Filter for valid salaries and create working dataset
+    df_ml = df[df['SALARY'].notna() & (df['SALARY'] > 0) & (df['SALARY'] < 500000)].copy()
+    
+    # Add additional engineered features
+    if 'TITLE_NAME' in df.columns:
+        # Create title length as a feature
+        df_ml['TITLE_LENGTH'] = df_ml['TITLE_NAME'].str.len()
+        ml_features.append('TITLE_LENGTH')
+    
+    if 'REMOTE_TYPE_NAME' in df.columns:
+        # Encode remote type as numerical
+        remote_mapping = {'On-Site': 0, 'Hybrid': 1, 'Remote': 2}
+        df_ml['REMOTE_ENCODED'] = df_ml['REMOTE_TYPE_NAME'].map(remote_mapping).fillna(0)
+        ml_features.append('REMOTE_ENCODED')
+    
+    # Keep only rows with complete feature data
+    feature_cols = [f for f in ml_features if f in df_ml.columns]
+    df_ml = df_ml[['SALARY'] + feature_cols].dropna()
+    
+    # Update ml_features to only include existing features
+    ml_features = [f for f in ml_features if f in df_ml.columns]
+    
+    print(f"\nFeatures selected for ML: {ml_features}")
+    print(f"ML dataset shape: {df_ml.shape}")
+    print(f"\nFeature statistics:")
+    print(df_ml[ml_features + ['SALARY']].describe())
+else:
+    print("SALARY column not found. Please check your data.")
+    df_ml = pd.DataFrame()
+```
+
+## 2. K-Means Clustering
+
+### 2.1 Determining Optimal Number of Clusters
+
+Use the elbow method to find the optimal number of clusters.
+
+```{python}
+if len(ml_features) > 0 and len(df_ml) > 0:
+    # Standardize features
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(df_ml[ml_features])
+    
+    # Calculate inertia for different k values
+    inertias = []
+    K_range = range(2, 11)
+    
+    for k in K_range:
+        kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+        kmeans.fit(X_scaled)
+        inertias.append(kmeans.inertia_)
+    
+    # Store scaled data for later use
+    X_scaled_stored = X_scaled.copy()
+    
+    # Create dataframe for plotting
+    elbow_df = pd.DataFrame({
+        'K': list(K_range),
+        'Inertia': inertias
+    })
+    
+    # Plot elbow curve
+    chart = elbow_df.hvplot.line(
+        x='K',
+        y='Inertia',
+        title='Elbow Method for Optimal K',
+        height=500,
+        width=800,
+        xlabel='Number of Clusters (K)',
+        ylabel='Inertia',
+        color='#3498db',
+        line_width=3
+    ) * elbow_df.hvplot.scatter(
+        x='K',
+        y='Inertia',
+        color='#3498db',
+        size=100
+    )
+    chart
+else:
+    print("Insufficient data for clustering")
+```
+
+::: {.callout-note icon=false}
+## Choosing Optimal K
+Look for the "elbow" in the curve where the rate of decrease in inertia sharply changes. This indicates the optimal number of clusters.
+:::
+
+### 2.2 Applying K-Means Clustering
+
+```{python}
+if len(ml_features) > 0 and len(df_ml) > 0:
+    # Use k=4 as example - adjust based on elbow method
+    optimal_k = 4
+    
+    kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
+    clusters = kmeans.fit_predict(X_scaled_stored)
+    
+    # Create clean dataframe for visualization
+    df_viz = df_ml.copy()
+    df_viz['Cluster'] = clusters
+    
+    print(f"Clustering complete with K={optimal_k}")
+    print("\nCluster distribution:")
+    print(df_viz['Cluster'].value_counts().sort_index())
+    
+    # Calculate cluster statistics
+    print("\nCluster characteristics (mean values):")
+    cluster_stats = df_viz.groupby('Cluster')[ml_features + ['SALARY']].mean()
+    print(cluster_stats)
+```
+
+### 2.3 Visualizing Clusters
+
+```{python}
+if len(ml_features) >= 2 and len(df_ml) > 0:
+    # Apply PCA for visualization
+    pca = PCA(n_components=2)
+    X_pca = pca.fit_transform(X_scaled_stored)
+    
+    # Add PCA components to viz dataframe
+    df_viz['PC1'] = X_pca[:, 0]
+    df_viz['PC2'] = X_pca[:, 1]
+    
+    print(f"PCA explained variance: PC1={pca.explained_variance_ratio_[0]:.2%}, PC2={pca.explained_variance_ratio_[1]:.2%}")
+    
+    # Create scatter plot
+    chart = df_viz.hvplot.scatter(
+        x='PC1',
+        y='PC2',
+        by='Cluster',
+        title=f'Job Clusters (K-Means, K={optimal_k})',
+        height=600,
+        width=900,
+        xlabel='First Principal Component',
+        ylabel='Second Principal Component',
+        size=50,
+        alpha=0.6,
+        legend='top_right'
+    )
+    chart
+```
+
+::: {.callout-note icon=false}
+## Cluster Visualization
+The scatter plot shows job postings grouped by similarity. Points closer together share similar characteristics in terms of salary and other features.
+:::
+
+### 2.4 Cluster Salary Distribution
+
+```{python}
+if 'Cluster' in df_viz.columns:
+    # Box plot of salary by cluster
+    chart = df_viz.hvplot.box(
+        y='SALARY',
+        by='Cluster',
+        title='Salary Distribution by Job Cluster',
+        height=500,
+        width=900,
+        ylabel='Salary ($)',
+        xlabel='Cluster',
+        legend=False
+    )
+    chart
+```
+
+## 3. Cluster Interpretation
+
+### 3.1 Analyzing Cluster Characteristics
+
+```{python}
+if 'Cluster' in df_viz.columns:
+    print("Detailed Cluster Analysis:\n")
+    
+    for cluster_id in sorted(df_viz['Cluster'].unique()):
+        cluster_data = df_viz[df_viz['Cluster'] == cluster_id]
+        
+        print(f"{'='*60}")
+        print(f"CLUSTER {cluster_id} (n={len(cluster_data):,} jobs)")
+        print(f"{'='*60}")
+        print(f"Average Salary: ${cluster_data['SALARY'].mean():,.2f}")
+        print(f"Median Salary: ${cluster_data['SALARY'].median():,.2f}")
+        print(f"Salary Range: ${cluster_data['SALARY'].min():,.0f} - ${cluster_data['SALARY'].max():,.0f}")
+        
+        for feature in ml_features:
+            if feature in cluster_data.columns:
+                print(f"Average {feature}: {cluster_data[feature].mean():.2f}")
+        print()
+```
+
+### 3.2 Cluster Comparison Chart
+
+```{python}
+if 'Cluster' in df_viz.columns:
+    # Create comparison of average values across clusters
+    cluster_means = df_viz.groupby('Cluster')[ml_features + ['SALARY']].mean().reset_index()
+    
+    # Melt for grouped bar chart
+    cluster_means_melted = cluster_means.melt(
+        id_vars='Cluster',
+        var_name='Feature',
+        value_name='Average Value'
+    )
+    
+    chart = cluster_means_melted.hvplot.bar(
+        x='Cluster',
+        y='Average Value',
+        by='Feature',
+        title='Average Feature Values by Cluster',
+        height=500,
+        width=1000,
+        ylabel='Average Value',
+        xlabel='Cluster',
+        legend='top_right',
+        rot=0
+    )
+    chart
+```
+
+## 4. Predictive Modeling
+
+### 4.1 Salary Prediction Model
+
+Build a Random Forest model to predict salary based on available features.
+
+```{python}
+if len(ml_features) > 0 and len(df_ml) > 0:
+    # Prepare data for modeling
+    X = df_ml[ml_features]
+    y = df_ml['SALARY']
+    
+    # Split data
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+    
+    # Train Random Forest model
+    rf_model = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
+    rf_model.fit(X_train, y_train)
+    
+    # Make predictions
+    y_pred = rf_model.predict(X_test)
+    
+    # Calculate metrics
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+    
+    print("Salary Prediction Model Results:")
+    print(f"{'='*50}")
+    print(f"R² Score: {r2:.4f}")
+    print(f"RMSE: ${rmse:,.2f}")
+    print(f"Mean Absolute Error: ${np.mean(np.abs(y_test - y_pred)):,.2f}")
+    print()
+    
+    # Feature importance
+    feature_importance = pd.DataFrame({
+        'Feature': ml_features,
+        'Importance': rf_model.feature_importances_
+    }).sort_values('Importance', ascending=False)
+    
+    print("Feature Importance:")
+    print(feature_importance)
+```
+
+### 4.2 Feature Importance Visualization
+
+```{python}
+if len(ml_features) > 0 and len(df_ml) > 0:
+    # Plot feature importance
+    chart = feature_importance.hvplot.barh(
+        x='Feature',
+        y='Importance',
+        title='Feature Importance for Salary Prediction',
+        height=400,
+        width=800,
+        color='#2ecc71',
+        xlabel='Importance',
+        ylabel='',
+        flip_yaxis=True
+    )
+    chart
+```
+
+### 4.3 Prediction vs Actual
+
+```{python}
+if len(ml_features) > 0 and len(df_ml) > 0:
+    # Create comparison dataframe
+    comparison_df = pd.DataFrame({
+        'Actual': y_test,
+        'Predicted': y_pred
+    })
+    
+    # Scatter plot
+    chart = comparison_df.hvplot.scatter(
+        x='Actual',
+        y='Predicted',
+        title='Predicted vs Actual Salary',
+        height=600,
+        width=700,
+        xlabel='Actual Salary ($)',
+        ylabel='Predicted Salary ($)',
+        color='#3498db',
+        alpha=0.5,
+        size=30
+    )
+    
+    # Add perfect prediction line
+    perfect_line = pd.DataFrame({
+        'x': [comparison_df['Actual'].min(), comparison_df['Actual'].max()],
+        'y': [comparison_df['Actual'].min(), comparison_df['Actual'].max()]
+    })
+    
+    line = perfect_line.hvplot.line(
+        x='x',
+        y='y',
+        color='red',
+        line_dash='dashed',
+        line_width=2
+    )
+    
+    chart * line
+```
+
+::: {.callout-note icon=false}
+## Model Performance
+Points closer to the red diagonal line indicate more accurate predictions. The R² score tells us how well the model explains salary variance.
+:::
+
+## 5. Model Insights and Recommendations
+
+### 5.1 Key Insights
+
+```{python}
+if 'Cluster' in df_viz.columns and len(ml_features) > 0:
+    print("Machine Learning Analysis Summary")
+    print("="*60)
+    print()
+    
+    # Cluster insights
+    print(f"📊 CLUSTERING INSIGHTS:")
+    print(f"   - Identified {optimal_k} distinct job clusters")
+    best_cluster = df_viz.groupby('Cluster')['SALARY'].median().idxmax()
+    best_salary = df_viz.groupby('Cluster')['SALARY'].median().max()
+    print(f"   - Highest paying cluster: Cluster {best_cluster} (median: ${best_salary:,.0f})")
+    print()
+    
+    # Model insights
+    print(f"💡 PREDICTION MODEL INSIGHTS:")
+    print(f"   - Model achieves R² score of {r2:.4f}")
+    print(f"   - Average prediction error: ${np.mean(np.abs(y_test - y_pred)):,.0f}")
+    print(f"   - Most important feature: {feature_importance.iloc[0]['Feature']}")
+    print()
+    
+    # Recommendations
+    print(f"🎯 RECOMMENDATIONS FOR JOB SEEKERS:")
+    print(f"   - Target jobs in Cluster {best_cluster} for higher salaries")
+    print(f"   - Focus on developing: {feature_importance.iloc[0]['Feature']}")
+    print(f"   - Consider: {', '.join(feature_importance.head(3)['Feature'].tolist())}")
+```
+
+## Next Steps
+
+Proceed to NLP Methods to extract insights from job descriptions using text analysis techniques.
+
+## References
+
+- Scikit-learn documentation
+- K-Means clustering best practices
+- PCA for dimensionality reduction
+- Random Forest regression
+- Analysis tools: Python, pandas, hvPlot, Panel
