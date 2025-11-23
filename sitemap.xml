@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/research_introduction.html</loc>
-    <lastmod>2025-11-07T08:25:16.377Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/career_plan.html</loc>
-    <lastmod>2025-11-07T08:25:16.365Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/data_analysis.html</loc>
-    <lastmod>2025-11-07T08:25:16.365Z</lastmod>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/eda.html</loc>
+    <lastmod>2025-11-23T05:21:09.597Z</lastmod>
   </url>
   <url>
     <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/index.html</loc>
-    <lastmod>2025-11-07T08:25:16.375Z</lastmod>
+    <lastmod>2025-11-23T05:21:09.599Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/data_analysis.html</loc>
+    <lastmod>2025-11-23T05:21:09.580Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/SKILL_GAP_ANALYSIS.html</loc>
+    <lastmod>2025-11-23T05:21:09.551Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/ML.html</loc>
+    <lastmod>2025-11-23T05:21:09.550Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/career_plan.html</loc>
+    <lastmod>2025-11-23T05:21:09.580Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/research_introduction.html</loc>
+    <lastmod>2025-11-23T05:21:09.602Z</lastmod>
   </url>
 </urlset>
