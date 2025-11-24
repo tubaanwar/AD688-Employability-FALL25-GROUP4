@@ -1,0 +1,422 @@
+---
+title: "Natural Language Processing Methods"
+subtitle: "Extracting Insights from Job Descriptions"
+author:
+  - name: Tuba Anwar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Kriti Singh
+    affiliations:
+      - ref: bu
+  - name: Soham Deshkhaire
+    affiliations:
+      - ref: bu
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code-overflow: wrap
+    embed-resources: true
+    theme: 
+      light: [cosmo, custom.scss]
+    css: styles.css
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Introduction
+
+This section applies Natural Language Processing (NLP) techniques to analyze job descriptions and extract meaningful insights about skills, requirements, and industry trends. By processing text data, we can uncover patterns not visible in structured data alone.
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from collections import Counter
+import re
+import warnings
+warnings.filterwarnings('ignore')
+
+# Set seaborn style
+sns.set_style("whitegrid")
+sns.set_palette("husl")
+plt.rcParams['figure.figsize'] = (14, 7)
+
+# Load data - try multiple filenames
+try:
+    df = pd.read_csv('cleaned_job_postings.csv')
+except:
+    try:
+        df = pd.read_csv('lightcast_job_postings.csv')
+    except:
+        df = pd.read_csv('cleaned_job_posting.csv')
+
+print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
+print(f"Columns: {list(df.columns)}")
+
+# Find text columns
+text_columns = [col for col in df.columns if 'DESCRIPTION' in col.upper() or 'DESC' in col.upper()]
+
+# If not found, search for object columns with long text
+if not text_columns:
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            try:
+                avg_len = df[col].astype(str).str.len().mean()
+                if avg_len > 100:
+                    text_columns.append(col)
+            except:
+                pass
+
+print(f"Text columns found: {text_columns}")
+```
+
+## 1. Text Preprocessing
+
+### 1.1 Data Preparation
+
+```{python}
+# Text preprocessing function
+def preprocess_text(text):
+    """Clean and preprocess text data"""
+    if pd.isna(text):
+        return ""
+    text = str(text).lower()
+    text = re.sub(r'[^a-z\s]', '', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+# Apply preprocessing
+if len(text_columns) > 0:
+    text_col = text_columns[0]
+    df['processed_text'] = df[text_col].apply(preprocess_text)
+    df_text = df[df['processed_text'].str.len() > 0].copy()
+    
+    print(f"✓ Text column used: {text_col}")
+    print(f"✓ Successfully preprocessed: {len(df_text):,} job descriptions")
+    print(f"✓ Average text length: {df_text['processed_text'].str.len().mean():.0f} characters")
+else:
+    print("✗ No text columns found for processing")
+    df_text = pd.DataFrame()
+```
+
+## 2. Keyword Extraction
+
+### 2.1 Top 20 Most Common Words
+
+```{python}
+# Extract most common words
+if len(text_columns) > 0 and len(df_text) > 0:
+    stopwords = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 
+                 'of', 'is', 'are', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 
+                 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 
+                 'must', 'can', 'this', 'that', 'with', 'as', 'by', 'from', 'your', 
+                 'we', 'you', 'they', 'our', 'their', 'what', 'which', 'who', 
+                 'where', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more', 
+                 'most', 'other', 'such', 'no', 'nor', 'not', 'only', 'same', 'so', 
+                 'than', 'too', 'very', 'if', 'about', 'above', 'after', 'again',
+                 'years', 'experience', 'job', 'position', 'role', 'work', 'required',
+                 'day', 'time', 'would', 'one', 'two', 'three', 'well', 'also'}
+    
+    all_words = []
+    for text in df_text['processed_text']:
+        words = [w for w in text.split() if w not in stopwords and len(w) > 2]
+        all_words.extend(words)
+    
+    word_freq = Counter(all_words)
+    top_words = word_freq.most_common(20)
+    words, counts = zip(*top_words)
+    
+    # Create dataframe for seaborn
+    word_df = pd.DataFrame({'Word': words, 'Frequency': counts})
+    word_df = word_df.sort_values('Frequency')
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(data=word_df, y='Word', x='Frequency', palette='Blues_r', ax=ax)
+    ax.set_title('Top 20 Most Common Words in Job Descriptions', fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlabel('Frequency', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Word', fontsize=12, fontweight='bold')
+    
+    # Add value labels
+    for i, v in enumerate(word_df['Frequency']):
+        ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.show()
+```
+
+## 3. Technical Skills Analysis
+
+### 3.1 Skills Extraction
+
+```{python}
+# Extract technical skills
+if len(text_columns) > 0 and len(df_text) > 0:
+    tech_skills = {
+        'Python': ['python'],
+        'SQL': ['sql', 'mysql', 'postgresql', 'plpgsql'],
+        'Java': ['java'],
+        'JavaScript': ['javascript', ' js '],
+        'R': [r'\br\b'],
+        'Machine Learning': ['machine learning', 'ml ', 'deep learning'],
+        'Data Analysis': ['data analysis', 'analytics', 'analyst'],
+        'Excel': ['excel', 'vba'],
+        'Power BI': ['power bi', 'powerbi'],
+        'Tableau': ['tableau'],
+        'AWS': ['aws', 'amazon web'],
+        'Azure': ['azure', 'microsoft azure'],
+        'Spark': ['spark', 'pyspark'],
+        'Hadoop': ['hadoop'],
+        'Git': ['git ', 'github', 'gitlab'],
+        'Docker': ['docker'],
+        'Kubernetes': ['kubernetes', 'k8s'],
+    }
+    
+    skill_counts = {}
+    for skill, keywords in tech_skills.items():
+        count = 0
+        pattern = '|'.join(keywords)
+        for text in df_text['processed_text']:
+            if re.search(pattern, text):
+                count += 1
+        if count > 0:
+            skill_counts[skill] = count
+    
+    if skill_counts:
+        sorted_skills = dict(sorted(skill_counts.items(), key=lambda x: x[1], reverse=True))
+        
+        # Create dataframe for seaborn
+        skill_df = pd.DataFrame(list(sorted_skills.items()), columns=['Skill', 'Count'])
+        skill_df = skill_df.sort_values('Count')
+        
+        fig, ax = plt.subplots(figsize=(12, 7))
+        sns.barplot(data=skill_df, y='Skill', x='Count', palette='viridis_r', ax=ax)
+        ax.set_title('Technical Skills Frequency in Job Descriptions', fontsize=16, fontweight='bold', pad=20)
+        ax.set_xlabel('Number of Job Postings', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Skill', fontsize=12, fontweight='bold')
+        
+        # Add value labels
+        for i, v in enumerate(skill_df['Count']):
+            ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold')
+        
+        plt.tight_layout()
+        plt.show()
+        
+        print("\n📊 Top Technical Skills:")
+        for skill, count in sorted_skills.items():
+            pct = (count / len(df_text)) * 100
+            print(f"  {skill:20s} - {count:5d} jobs ({pct:5.1f}%)")
+```
+
+## 4. Job Title Frequency
+
+### 4.1 Most Common Job Titles
+
+```{python}
+# Analyze job titles
+if 'TITLE_NAME' in df.columns:
+    top_titles = df['TITLE_NAME'].value_counts().head(15)
+    
+    # Create dataframe for seaborn
+    title_df = pd.DataFrame({'Title': top_titles.index, 'Count': top_titles.values})
+    title_df = title_df.sort_values('Count')
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(data=title_df, y='Title', x='Count', palette='RdYlGn_r', ax=ax)
+    ax.set_title('Top 15 Most Common Job Titles', fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlabel('Number of Postings', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Job Title', fontsize=12, fontweight='bold')
+    
+    # Add value labels
+    for i, v in enumerate(title_df['Count']):
+        ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.show()
+else:
+    print("TITLE_NAME column not found")
+```
+
+## 5. Text Length Analysis
+
+### 5.1 Job Description Length Distribution
+
+```{python}
+# Analyze description lengths
+if len(df_text) > 0:
+    df_text['text_length'] = df_text['processed_text'].str.len()
+    df_text['word_count'] = df_text['processed_text'].str.split().str.len()
+    
+    fig, axes = plt.subplots(1, 2, figsize=(15, 5))
+    
+    # Character length distribution
+    sns.histplot(data=df_text, x='text_length', bins=50, kde=True, color='#3498db', ax=axes[0])
+    axes[0].set_title('Character Count Distribution', fontsize=14, fontweight='bold')
+    axes[0].set_xlabel('Character Count', fontsize=11, fontweight='bold')
+    axes[0].set_ylabel('Frequency', fontsize=11, fontweight='bold')
+    axes[0].axvline(df_text['text_length'].mean(), color='red', linestyle='--', linewidth=2, label=f"Mean: {df_text['text_length'].mean():.0f}")
+    axes[0].legend()
+    
+    # Word count distribution
+    sns.histplot(data=df_text, x='word_count', bins=50, kde=True, color='#e74c3c', ax=axes[1])
+    axes[1].set_title('Word Count Distribution', fontsize=14, fontweight='bold')
+    axes[1].set_xlabel('Word Count', fontsize=11, fontweight='bold')
+    axes[1].set_ylabel('Frequency', fontsize=11, fontweight='bold')
+    axes[1].axvline(df_text['word_count'].mean(), color='red', linestyle='--', linewidth=2, label=f"Mean: {df_text['word_count'].mean():.0f}")
+    axes[1].legend()
+    
+    plt.tight_layout()
+    plt.show()
+    
+    print("\n📊 Text Length Statistics:")
+    print(f"  Average characters: {df_text['text_length'].mean():.0f}")
+    print(f"  Median characters: {df_text['text_length'].median():.0f}")
+    print(f"  Average words: {df_text['word_count'].mean():.0f}")
+    print(f"  Median words: {df_text['word_count'].median():.0f}")
+```
+
+## 6. Skill Requirements by Job Title
+
+### 6.1 Skills vs Top Job Titles - Heatmap
+
+```{python}
+# Cross-tabulate skills by top job titles
+if 'TITLE_NAME' in df.columns and len(text_columns) > 0:
+    top_titles = df['TITLE_NAME'].value_counts().head(8).index
+    
+    tech_skills_short = {
+        'Python': ['python'],
+        'SQL': ['sql'],
+        'Java': ['java'],
+        'JavaScript': ['javascript'],
+        'Machine Learning': ['machine learning'],
+        'AWS': ['aws'],
+        'Excel': ['excel'],
+        'Power BI': ['power bi']
+    }
+    
+    skill_title_matrix = []
+    
+    for title in top_titles:
+        title_data = df[df['TITLE_NAME'] == title].copy()
+        title_data['processed_text'] = title_data[text_columns[0]].apply(preprocess_text)
+        
+        skill_row = {'Title': title}
+        for skill, keywords in tech_skills_short.items():
+            count = 0
+            pattern = '|'.join(keywords)
+            for text in title_data['processed_text']:
+                if re.search(pattern, str(text)):
+                    count += 1
+            skill_row[skill] = (count / len(title_data) * 100) if len(title_data) > 0 else 0
+        
+        skill_title_matrix.append(skill_row)
+    
+    if skill_title_matrix:
+        skill_df = pd.DataFrame(skill_title_matrix)
+        skill_df = skill_df.set_index('Title')
+        
+        fig, ax = plt.subplots(figsize=(12, 7))
+        sns.heatmap(skill_df, annot=True, fmt='.1f', cmap='YlOrRd', cbar_kws={'label': 'Percentage (%)'}, 
+                    ax=ax, linewidths=0.5, linecolor='gray')
+        ax.set_title('Skill Requirements by Job Title (% of postings)', fontsize=16, fontweight='bold', pad=20)
+        ax.set_xlabel('Skill', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Job Title', fontsize=12, fontweight='bold')
+        
+        plt.tight_layout()
+        plt.show()
+```
+
+## 7. Keyword Correlation Analysis
+
+### 7.1 Top Keyword Pairs
+
+```{python}
+# Find commonly co-occurring keywords
+if len(text_columns) > 0 and len(df_text) > 0:
+    keywords = ['python', 'sql', 'java', 'machine', 'data', 'analytics', 'development', 
+                'cloud', 'aws', 'leadership', 'management', 'communication']
+    
+    keyword_cooccurrence = {}
+    
+    for text in df_text['processed_text']:
+        text_keywords = [kw for kw in keywords if kw in text]
+        if len(text_keywords) > 1:
+            for i, kw1 in enumerate(text_keywords):
+                for kw2 in text_keywords[i+1:]:
+                    pair = tuple(sorted([kw1, kw2]))
+                    keyword_cooccurrence[pair] = keyword_cooccurrence.get(pair, 0) + 1
+    
+    if keyword_cooccurrence:
+        sorted_pairs = sorted(keyword_cooccurrence.items(), key=lambda x: x[1], reverse=True)[:12]
+        pair_names = [f"{p[0][0].capitalize()}-{p[0][1].capitalize()}" for p in sorted_pairs]
+        pair_counts = [p[1] for p in sorted_pairs]
+        
+        pair_df = pd.DataFrame({'Keyword Pair': pair_names, 'Co-occurrence': pair_counts})
+        pair_df = pair_df.sort_values('Co-occurrence')
+        
+        fig, ax = plt.subplots(figsize=(12, 7))
+        sns.barplot(data=pair_df, y='Keyword Pair', x='Co-occurrence', palette='coolwarm', ax=ax)
+        ax.set_title('Top Keyword Pairs in Job Descriptions', fontsize=16, fontweight='bold', pad=20)
+        ax.set_xlabel('Co-occurrence Count', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Keyword Pair', fontsize=12, fontweight='bold')
+        
+        # Add value labels
+        for i, v in enumerate(pair_df['Co-occurrence']):
+            ax.text(v + 5, i, str(int(v)), va='center', fontweight='bold')
+        
+        plt.tight_layout()
+        plt.show()
+```
+
+## Summary
+
+::: {.callout-important icon=false}
+## NLP Analysis Key Findings
+
+**Text Analysis Results:**
+- ✓ Successfully processed job descriptions using NLP techniques
+- ✓ Identified most common keywords and technical terms
+- ✓ Extracted and ranked technical skills mentioned in postings
+- ✓ Analyzed job title distribution and text characteristics
+- ✓ Cross-referenced skills with job title requirements
+- ✓ Discovered commonly co-occurring keywords
+
+**Key Insights:**
+- Top technical skills dominate the job market
+- Job descriptions follow consistent patterns in length and language
+- Specific tools and frameworks are frequently required
+- Job titles show clear industry segmentation
+- Skills vary significantly by job title
+- Certain skills frequently appear together in job postings
+
+**Recommendations for Job Seekers:**
+- Prioritize learning top-mentioned technical skills
+- Tailor resume language to match common terms found in postings
+- Focus on roles matching your skill set based on frequency analysis
+- Use identified keywords to optimize job search strategy
+- Target jobs where your skills are in highest demand
+- Consider developing complementary skills that frequently co-occur
+:::
+
+## Next Steps
+
+- Integrate NLP findings with machine learning clustering results
+- Compare skill requirements across job clusters
+- Develop personalized career strategy based on combined insights
+- Create targeted skill development plan
+
+## References
+
+- NLTK Documentation: https://www.nltk.org/
+- spaCy Documentation: https://spacy.io/
+- Seaborn Documentation: https://seaborn.pydata.org/
+- Scikit-learn Text Processing: https://scikit-learn.org/stable/tutorial/text_analytics/
