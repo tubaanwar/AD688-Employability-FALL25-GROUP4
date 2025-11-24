@@ -24,8 +24,8 @@ website:
         text: "Skill Gap Analysis"
       - href: "ML.QMD"
         text: "Machine Learning Methods"
-      - href: nlp_methods.qmd
-        text: "NLP Methods"
+      - href: NLP.QMD
+        text: "Natural Language Processing Methods"
 
 format:
   html:
