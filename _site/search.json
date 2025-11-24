@@ -56,67 +56,102 @@
     "text": "7 References\nAll data sourced from Lightcast Job Postings Dataset (2024). Analysis performed using Python with pandas, hvplot, and holoviews libraries."
   },
   {
-    "objectID": "ML.html",
-    "href": "ML.html",
-    "title": "Machine Learning Methods",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
     "section": "",
-    "text": "This section applies machine learning techniques to uncover patterns in job market data. We use clustering algorithms to group similar job postings and predictive models to forecast salary trends and job categories.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nDataset loaded from: lightcast_job_postings.csv\nShape: 72,498 rows, 131 columns\nColumns available: ID, LAST_UPDATED_DATE, LAST_UPDATED_TIMESTAMP, DUPLICATES, POSTED, EXPIRED, DURATION, SOURCE_TYPES, SOURCES, URL..."
+    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
   },
   {
-    "objectID": "ML.html#introduction",
-    "href": "ML.html#introduction",
-    "title": "Machine Learning Methods",
+    "objectID": "index.html#project-overview",
+    "href": "index.html#project-overview",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
     "section": "",
-    "text": "This section applies machine learning techniques to uncover patterns in job market data. We use clustering algorithms to group similar job postings and predictive models to forecast salary trends and job categories.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nDataset loaded from: lightcast_job_postings.csv\nShape: 72,498 rows, 131 columns\nColumns available: ID, LAST_UPDATED_DATE, LAST_UPDATED_TIMESTAMP, DUPLICATES, POSTED, EXPIRED, DURATION, SOURCE_TYPES, SOURCES, URL..."
+    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
   },
   {
-    "objectID": "ML.html#feature-engineering",
-    "href": "ML.html#feature-engineering",
-    "title": "Machine Learning Methods",
-    "section": "2 1. Feature Engineering",
-    "text": "2 1. Feature Engineering\n\n2.1 1.1 Preparing Data for Machine Learning\nBefore applying ML algorithms, we need to prepare our features.\n\n\nFeatures selected for ML: ['SALARY', 'DURATION']\n\nML dataset shape: (18880, 2)\n\nFeature Summary Statistics:\n              SALARY      DURATION\ncount   18880.000000  18880.000000\nmean   115658.985434     23.422617\nstd     43853.198284     14.123814\nmin     15860.000000      0.000000\n25%     83250.000000     12.000000\n50%    114400.000000     19.000000\n75%    143000.000000     33.000000\nmax    500000.000000     59.000000"
+    "objectID": "index.html#data-source",
+    "href": "index.html#data-source",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "Data Source",
+    "text": "Data Source\nWe will utilize the Lightcast 2024 dataset, which includes: - Job posting volumes for analytics, data science, and ML roles by industry and location - Salary data across data-related positions and geographies - Skill requirements extracted from job descriptions - Hiring trends across time periods - Company size and industry classifications - Emerging role titles and job requirements"
   },
   {
-    "objectID": "ML.html#k-means-clustering",
-    "href": "ML.html#k-means-clustering",
-    "title": "Machine Learning Methods",
-    "section": "3 2. K-Means Clustering",
-    "text": "3 2. K-Means Clustering\n\n3.1 2.1 Determining Optimal Number of Clusters\nUse the elbow method to find the optimal number of clusters.\n\n\n\n\n\n\n\n\n\nReview the elbow curve to determine optimal K\n\n\n\n\n\n\n\n\nNoteChoosing Optimal K\n\n\n\nLook for the “elbow” point where the inertia decrease begins to slow down. This represents the optimal balance between cluster compactness and the number of clusters.\n\n\n\n\n3.2 2.2 Applying K-Means Clustering\n\n\nClustering complete with K=4\n\nCluster distribution:\nCluster\n0    3789\n1    5876\n2    2850\n3    6365\nName: count, dtype: int64\n\nCluster Centers (Original Scale):\n          SALARY   DURATION  Cluster\n0   85340.794289  39.230830        0\n1  150132.072038  14.120519        1\n2  158877.599581  40.932333        2\n3   82521.105445  14.714734        3\n\n\n\n\n3.3 2.3 Visualizing Clusters\n\n\n\n\n\n\n\n\n\n\nVariance explained by PC1: 50.58%\nVariance explained by PC2: 49.42%\nTotal variance explained: 100.00%\n\n\n\n\n\n\n\n\nTipUnderstanding PCA Visualization\n\n\n\nThe scatter plot shows job postings projected onto two principal components. Points of the same color belong to the same cluster, revealing natural groupings in the data."
+    "objectID": "index.html#analysis-approach",
+    "href": "index.html#analysis-approach",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "Analysis Approach",
+    "text": "Analysis Approach\nOur team will:\n\nClean and preprocess the Lightcast data using Python (pandas, NumPy)\nExtract and categorize skills mentioned in job descriptions for analytics and ML roles\nCompare trends across industries, geographies, and job levels\nAnalyze salary patterns to understand compensation for different skill combinations\nIdentify emerging roles and how job requirements are evolving\nVisualize findings through interactive dashboards using Plotly and Matplotlib\nDevelop career strategy recommendations based on market insights"
   },
   {
-    "objectID": "ML.html#cluster-interpretation",
-    "href": "ML.html#cluster-interpretation",
-    "title": "Machine Learning Methods",
-    "section": "4 3. Cluster Interpretation",
-    "text": "4 3. Cluster Interpretation\n\n4.1 3.1 Analyzing Cluster Characteristics\n\n\nCluster Characteristics:\n\n============================================================\nCLUSTER 0 (n=3,789 jobs)\n============================================================\n  SALARY:\n    Mean: 85454.24\n    Median: 86644.00\n  DURATION:\n    Mean: 39.24\n    Median: 37.00\n\n============================================================\nCLUSTER 1 (n=5,876 jobs)\n============================================================\n  SALARY:\n    Mean: 150028.52\n    Median: 143000.00\n  DURATION:\n    Mean: 14.14\n    Median: 13.00\n\n============================================================\nCLUSTER 2 (n=2,850 jobs)\n============================================================\n  SALARY:\n    Mean: 159106.71\n    Median: 150500.00\n  DURATION:\n    Mean: 40.97\n    Median: 39.00\n\n============================================================\nCLUSTER 3 (n=6,365 jobs)\n============================================================\n  SALARY:\n    Mean: 82456.22\n    Median: 85000.00\n  DURATION:\n    Mean: 14.72\n    Median: 14.00\n\n\n\n\n\n4.2 3.2 Cluster Comparison Heatmap\n\n\n\n\n\n\n\n\n\n\n\n4.3 3.3 Cluster Size Distribution"
+    "objectID": "index.html#expected-findings",
+    "href": "index.html#expected-findings",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "Expected Findings",
+    "text": "Expected Findings\nWe anticipate discovering that: - Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills - Generative AI and prompt engineering are emerging as newly valued competencies - Finance, healthcare, and technology sectors lead in analytics hiring - Soft skills like communication and domain expertise are increasingly emphasized - Analytics roles offer strong job security and career growth potential - Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics"
   },
   {
-    "objectID": "ML.html#predictive-modeling",
-    "href": "ML.html#predictive-modeling",
-    "title": "Machine Learning Methods",
-    "section": "5 4. Predictive Modeling",
-    "text": "5 4. Predictive Modeling\n\n5.1 4.1 Salary Prediction Model\nCan we predict salary based on available features? Let’s build a Random Forest model.\n\n\nTraining set size: 15,102\nTest set size: 3,776\n\nSalary Prediction Model Performance:\n  Mean Absolute Error: $34,287.02\n  R² Score: 0.014\n\nFeature Importance:\n  DURATION: 1.0000\n\n\n\n\n5.2 4.2 Feature Importance Visualization\n\n\n5.3 4.3 Actual vs Predicted Salary\n\n\n\n\n\n\nImportantModel Interpretation\n\n\n\n\nR² Score closer to 1.0 indicates better predictions\nMean Absolute Error shows the average prediction error in dollars\nFeature Importance reveals which factors most influence salary\nPoints closer to the diagonal line (actual = predicted) represent more accurate predictions"
+    "objectID": "index.html#deliverables-future-phases",
+    "href": "index.html#deliverables-future-phases",
+    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
+    "section": "Deliverables (Future Phases)",
+    "text": "Deliverables (Future Phases)\n\nExploratory Data Analysis (EDA) with visualizations\nInteractive dashboards showing skill trends, industry hiring patterns, and salary insights\nCareer pathway recommendations for different specializations\nPersonal career action plans for each team member"
   },
   {
-    "objectID": "ML.html#model-insights-and-recommendations",
-    "href": "ML.html#model-insights-and-recommendations",
-    "title": "Machine Learning Methods",
-    "section": "6 5. Model Insights and Recommendations",
-    "text": "6 5. Model Insights and Recommendations\n\n6.1 5.1 Key Insights\n\nif 'Cluster' in df_viz.columns and len(ml_features) &gt; 0:\n    print(\"Machine Learning Analysis Summary\")\n    print(\"=\"*60)\n    print()\n    \n    # Cluster insights\n    print(f\"📊 CLUSTERING INSIGHTS:\")\n    print(f\"   - Identified {optimal_k} distinct job clusters\")\n    best_cluster = df_viz.groupby('Cluster')['SALARY'].median().idxmax()\n    best_salary = df_viz.groupby('Cluster')['SALARY'].median().max()\n    print(f\"   - Highest paying cluster: Cluster {best_cluster} (median: ${best_salary:,.0f})\")\n    print()\n    \n    # Model insights\n    print(f\"💡 PREDICTION MODEL INSIGHTS:\")\n    print(f\"   - Model achieves R² score of {r2:.4f}\")\n    print(f\"   - Average prediction error: ${np.mean(np.abs(y_test - y_pred)):,.0f}\")\n    print(f\"   - Most important feature: {feature_importance.iloc[0]['Feature']}\")\n    print()\n    \n    # Recommendations\n    print(f\"🎯 RECOMMENDATIONS FOR JOB SEEKERS:\")\n    print(f\"   - Target jobs in Cluster {best_cluster} for higher salaries\")\n    print(f\"   - Focus on developing: {feature_importance.iloc[0]['Feature']}\")\n    print(f\"   - Consider: {', '.join(feature_importance.head(3)['Feature'].tolist())}\")\n\nMachine Learning Analysis Summary\n============================================================\n\n📊 CLUSTERING INSIGHTS:\n   - Identified 4 distinct job clusters\n   - Highest paying cluster: Cluster 2 (median: $127,900)\n\n💡 PREDICTION MODEL INSIGHTS:\n   - Model achieves R² score of 0.4316\n   - Average prediction error: $16,118\n   - Most important feature: DURATION\n\n🎯 RECOMMENDATIONS FOR JOB SEEKERS:\n   - Target jobs in Cluster 2 for higher salaries\n   - Focus on developing: DURATION\n   - Consider: DURATION, TITLE_LENGTH, MAX_YEARS_EXPERIENCE"
+    "objectID": "SKILL_GAP_ANALYSIS.html",
+    "href": "SKILL_GAP_ANALYSIS.html",
+    "title": "Skill Gap Analysis",
+    "section": "",
+    "text": "This analysis compares our team’s current skill levels against the skills demanded in the IT job market. By identifying gaps between our capabilities and market requirements, we can develop targeted learning strategies to enhance our competitiveness as job candidates.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing 72,498 job postings for skill requirements"
   },
   {
-    "objectID": "ML.html#next-steps",
-    "href": "ML.html#next-steps",
-    "title": "Machine Learning Methods",
-    "section": "7 Next Steps",
-    "text": "7 Next Steps\nProceed to NLP Methods to extract insights from job descriptions using text analysis techniques."
+    "objectID": "SKILL_GAP_ANALYSIS.html#introduction",
+    "href": "SKILL_GAP_ANALYSIS.html#introduction",
+    "title": "Skill Gap Analysis",
+    "section": "",
+    "text": "This analysis compares our team’s current skill levels against the skills demanded in the IT job market. By identifying gaps between our capabilities and market requirements, we can develop targeted learning strategies to enhance our competitiveness as job candidates.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing 72,498 job postings for skill requirements"
   },
   {
-    "objectID": "ML.html#references",
-    "href": "ML.html#references",
-    "title": "Machine Learning Methods",
-    "section": "8 References",
-    "text": "8 References\n\nScikit-learn documentation\nK-Means clustering best practices\nPCA for dimensionality reduction\nRandom Forest for regression"
+    "objectID": "SKILL_GAP_ANALYSIS.html#team-skill-assessment",
+    "href": "SKILL_GAP_ANALYSIS.html#team-skill-assessment",
+    "title": "Skill Gap Analysis",
+    "section": "2 1. Team Skill Assessment",
+    "text": "2 1. Team Skill Assessment\n\n2.1 1.1 Creating Team Skills Profile\nEach team member rates their proficiency in key IT skills on a scale of 1-5: - 1 = Beginner (aware of the skill) - 2 = Basic knowledge (can perform simple tasks) - 3 = Intermediate (comfortable with common scenarios) - 4 = Advanced (can handle complex problems) - 5 = Expert (can teach others and solve any problem)\n\n\nTeam Skills Profile:\n                  Python  SQL  Machine Learning  Data Analysis  \\\nName                                                             \nTuba Anwar             4    3                 3              4   \nKriti Singh            3    4                 2              4   \nSoham Deshkhaire       4    3                 4              3   \n\n                  Cloud Computing  Java  JavaScript  R  Tableau  Excel  AWS  \\\nName                                                                          \nTuba Anwar                      2     3           2  3        3      4    2   \nKriti Singh                     2     2           3  3        4      5    1   \nSoham Deshkhaire                3     2           3  2        2      3    2   \n\n                  Azure  Docker  Git  Power BI  Spark  TensorFlow  NLP  \nName                                                                    \nTuba Anwar            1       2    3         2      2           2    3  \nKriti Singh           2       1    3         3      2           1    2  \nSoham Deshkhaire      2       3    4         2      3           3    3  \n\nTeam Average Skills (sorted):\nExcel               4.000000\nPython              3.666667\nData Analysis       3.666667\nSQL                 3.333333\nGit                 3.333333\nTableau             3.000000\nMachine Learning    3.000000\nR                   2.666667\nNLP                 2.666667\nJavaScript          2.666667\nCloud Computing     2.333333\nJava                2.333333\nPower BI            2.333333\nSpark               2.333333\nDocker              2.000000\nTensorFlow          2.000000\nAWS                 1.666667\nAzure               1.666667\ndtype: float64\n\n\n\n\n2.2 1.2 Team Skills Heatmap\nVisualize each team member’s strengths and weaknesses across all skills.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Observation\n\n\n\nThe heatmap reveals individual strengths and team-wide patterns. Skills with consistently high ratings represent team strengths, while low ratings across the board indicate collective skill gaps requiring attention.\n\n\n\n\n2.3 1.3 Team Average Skills Bar Chart\nCompare team average proficiency across all skills."
+  },
+  {
+    "objectID": "SKILL_GAP_ANALYSIS.html#market-skill-demand-analysis",
+    "href": "SKILL_GAP_ANALYSIS.html#market-skill-demand-analysis",
+    "title": "Skill Gap Analysis",
+    "section": "3 2. Market Skill Demand Analysis",
+    "text": "3 2. Market Skill Demand Analysis\n\n3.1 2.1 Extracting Skills from Job Descriptions\nWe analyze job postings to identify the most in-demand skills in the IT job market.\n\n\nMarket Skill Demand (Top Skills):\n               Skill  Job Postings  Percentage\n1      Data Analysis          2654        3.66\n0    Cloud Computing          2241        3.09\n2         TensorFlow           497        0.69\n6                Git           226        0.31\n3                SQL           167        0.23\n5              Azure           127        0.18\n4               Java            57        0.08\n8              Excel            43        0.06\n10            Python            28        0.04\n7   Machine Learning            23        0.03\n9            Tableau            19        0.03\n11               AWS            15        0.02\n12             Spark             1        0.00\n\n\n\n\n3.2 2.2 Top In-Demand Skills Visualization\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteMarket Insight\n\n\n\nThese are the skills most frequently mentioned in job postings. High-demand skills represent critical areas where job seekers should focus their learning efforts."
+  },
+  {
+    "objectID": "SKILL_GAP_ANALYSIS.html#skill-gap-identification",
+    "href": "SKILL_GAP_ANALYSIS.html#skill-gap-identification",
+    "title": "Skill Gap Analysis",
+    "section": "4 3. Skill Gap Identification",
+    "text": "4 3. Skill Gap Identification\n\n4.1 3.1 Comparing Team Skills to Market Demand\nNow we identify gaps between our team’s capabilities and what the market requires.\n\n\nSkill Gap Analysis:\n               Skill  Team Average  Market Demand       Gap  Gap_Category\n4    Cloud Computing      2.333333       4.221311  1.887978  Moderate Gap\n3      Data Analysis      3.666667       5.000000  1.333333  Moderate Gap\n16        TensorFlow      2.000000       0.942623 -1.057377      Strength\n11             Azure      1.666667       0.245902 -1.420765      Strength\n10               AWS      1.666667       0.027322 -1.639344      Strength\n12            Docker      2.000000       0.000000 -2.000000      Strength\n5               Java      2.333333       0.109290 -2.224044      Strength\n15             Spark      2.333333       0.000000 -2.333333      Strength\n14          Power BI      2.333333       0.000000 -2.333333      Strength\n6         JavaScript      2.666667       0.000000 -2.666667      Strength\n17               NLP      2.666667       0.000000 -2.666667      Strength\n7                  R      2.666667       0.000000 -2.666667      Strength\n13               Git      3.333333       0.423497 -2.909836      Strength\n2   Machine Learning      3.000000       0.040984 -2.959016      Strength\n8            Tableau      3.000000       0.040984 -2.959016      Strength\n1                SQL      3.333333       0.314208 -3.019126      Strength\n0             Python      3.666667       0.054645 -3.612022      Strength\n9              Excel      4.000000       0.081967 -3.918033      Strength\n\n\n\n\n4.2 3.2 Skill Gap Visualization\n\n\n\n\n\n\n  \n\n\n\n\n\n\n4.3 3.3 Skill Gap Priority Matrix\nIdentify which skills need immediate attention based on gap size.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nImportantCritical Skill Gaps\n\n\n\nSkills appearing in the lower right area (high market demand, low team proficiency) represent critical gaps requiring immediate attention. These should be prioritized in our learning plan."
+  },
+  {
+    "objectID": "SKILL_GAP_ANALYSIS.html#individual-skill-gap-analysis",
+    "href": "SKILL_GAP_ANALYSIS.html#individual-skill-gap-analysis",
+    "title": "Skill Gap Analysis",
+    "section": "5 4. Individual Skill Gap Analysis",
+    "text": "5 4. Individual Skill Gap Analysis\n\n5.1 4.1 Skill Gaps by Team Member\nIdentify personalized skill development needs for each team member.\n\n\nTop 5 Skill Gaps per Team Member:\n\nTuba Anwar:\n          Skill  Current Level      Gap\nCloud Computing              2 2.221311\n  Data Analysis              4 1.000000\n\nKriti Singh:\n          Skill  Current Level      Gap\nCloud Computing              2 2.221311\n  Data Analysis              4 1.000000\n\nSoham Deshkhaire:\n          Skill  Current Level      Gap\n  Data Analysis              3 2.000000\nCloud Computing              3 1.221311\n\n\n\n\n5.2 4.2 Individual Gap Visualization"
+  },
+  {
+    "objectID": "SKILL_GAP_ANALYSIS.html#skill-development-plan",
+    "href": "SKILL_GAP_ANALYSIS.html#skill-development-plan",
+    "title": "Skill Gap Analysis",
+    "section": "6 5. Skill Development Plan",
+    "text": "6 5. Skill Development Plan\n\n6.1 5.1 Priority Skills for Team Development\nBased on our analysis, here are the priority skills the team should focus on:\n\n\nCRITICAL SKILLS TO DEVELOP (Gap &gt; 2):\nEmpty DataFrame\nColumns: [Skill, Team Average, Market Demand, Gap]\nIndex: []\n\n\nMODERATE PRIORITY SKILLS (1 &lt; Gap &lt;= 2):\n             Skill  Team Average  Market Demand       Gap\n4  Cloud Computing      2.333333       4.221311  1.887978\n3    Data Analysis      3.666667       5.000000  1.333333\n\n\n\n\n6.2 5.2 Recommended Learning Resources\nBased on identified gaps, here are recommended learning resources:\n\n\nRECOMMENDED LEARNING PLAN:\n\n\n\n\n\n6.3 5.3 Team Collaboration Strategy\nHow can team members help each other?\n\n\nTEAM STRENGTHS (Can mentor others):\n               Skill  Team Average  Market Demand\n9              Excel      4.000000       0.081967\n0             Python      3.666667       0.054645\n1                SQL      3.333333       0.314208\n13               Git      3.333333       0.423497\n8            Tableau      3.000000       0.040984\n2   Machine Learning      3.000000       0.040984\n6         JavaScript      2.666667       0.000000\n17               NLP      2.666667       0.000000\n7                  R      2.666667       0.000000\n15             Spark      2.333333       0.000000\n14          Power BI      2.333333       0.000000\n5               Java      2.333333       0.109290\n16        TensorFlow      2.000000       0.942623\n12            Docker      2.000000       0.000000\n11             Azure      1.666667       0.245902\n10               AWS      1.666667       0.027322\n\n\nSUGGESTED MENTORING OPPORTUNITIES:\n  Machine Learning: Soham Deshkhaire (Level 4) can mentor Kriti Singh (Level 2)\n  Tableau: Kriti Singh (Level 4) can mentor Soham Deshkhaire (Level 2)\n  Excel: Kriti Singh (Level 5) can mentor Soham Deshkhaire (Level 3)\n  Docker: Soham Deshkhaire (Level 3) can mentor Kriti Singh (Level 1)\n  TensorFlow: Soham Deshkhaire (Level 3) can mentor Kriti Singh (Level 1)\n\n\n\n\n6.4 5.4 3-Month, 6-Month, and 1-Year Goals\nCreate timeline for skill development:\n\n\n\n\n\n\nTipSkill Development Timeline\n\n\n\n3-Month Goals (Immediate Priority) - Focus on critical gap skills with highest market demand - Complete foundational courses in AWS, Docker, and Cloud Computing - Build 1-2 hands-on projects demonstrating new skills - Team members mentor each other in strength areas\n6-Month Goals (Intermediate) - Achieve intermediate proficiency (Level 3) in all critical gap skills - Complete advanced courses in Machine Learning and Data Analysis - Participate in Kaggle competitions or contribute to open-source projects - Earn 1-2 professional certifications (e.g., AWS Certified Developer)\n1-Year Goals (Advanced) - Achieve advanced proficiency (Level 4) in priority skills - Entire team reaches minimum Level 3 in all high-demand market skills - Build comprehensive portfolio showcasing technical competencies - Competitive job candidates for targeted IT roles"
+  },
+  {
+    "objectID": "SKILL_GAP_ANALYSIS.html#references",
+    "href": "SKILL_GAP_ANALYSIS.html#references",
+    "title": "Skill Gap Analysis",
+    "section": "7 References",
+    "text": "7 References\n\nJob market data: Lightcast Job Postings Dataset (2024)\nSkill assessment framework: Industry-standard proficiency scales\nLearning resources: Coursera, Udemy, AWS Training, Kaggle\nAnalysis tools: Python, pandas, hvPlot, Panel"
   },
   {
     "objectID": "eda.html",
@@ -196,102 +231,39 @@
     "text": "10 References\n\nData source: Lightcast Job Postings Dataset (2024)\nVisualization tools: hvPlot, Panel, Python\nAnalysis framework: Standard EDA best practices"
   },
   {
-    "objectID": "SKILL_GAP_ANALYSIS.html",
-    "href": "SKILL_GAP_ANALYSIS.html",
-    "title": "Skill Gap Analysis",
+    "objectID": "ML.html",
+    "href": "ML.html",
+    "title": "Machine Learning Methods",
     "section": "",
-    "text": "This analysis compares our team’s current skill levels against the skills demanded in the IT job market. By identifying gaps between our capabilities and market requirements, we can develop targeted learning strategies to enhance our competitiveness as job candidates.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing 72,498 job postings for skill requirements"
+    "text": "This section applies machine learning techniques to uncover patterns in job market data. We use clustering algorithms to group similar job postings and predictive models to forecast salary trends and job categories.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nDataset loaded from: lightcast_job_postings.csv\nShape: 72,498 rows, 131 columns\nColumns available: ID, LAST_UPDATED_DATE, LAST_UPDATED_TIMESTAMP, DUPLICATES, POSTED, EXPIRED, DURATION, SOURCE_TYPES, SOURCES, URL..."
   },
   {
-    "objectID": "SKILL_GAP_ANALYSIS.html#introduction",
-    "href": "SKILL_GAP_ANALYSIS.html#introduction",
-    "title": "Skill Gap Analysis",
+    "objectID": "ML.html#introduction",
+    "href": "ML.html#introduction",
+    "title": "Machine Learning Methods",
     "section": "",
-    "text": "This analysis compares our team’s current skill levels against the skills demanded in the IT job market. By identifying gaps between our capabilities and market requirements, we can develop targeted learning strategies to enhance our competitiveness as job candidates.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing 72,498 job postings for skill requirements"
+    "text": "This section applies machine learning techniques to uncover patterns in job market data. We use clustering algorithms to group similar job postings and predictive models to forecast salary trends and job categories.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nDataset loaded from: lightcast_job_postings.csv\nShape: 72,498 rows, 131 columns\nColumns available: ID, LAST_UPDATED_DATE, LAST_UPDATED_TIMESTAMP, DUPLICATES, POSTED, EXPIRED, DURATION, SOURCE_TYPES, SOURCES, URL..."
   },
   {
-    "objectID": "SKILL_GAP_ANALYSIS.html#team-skill-assessment",
-    "href": "SKILL_GAP_ANALYSIS.html#team-skill-assessment",
-    "title": "Skill Gap Analysis",
-    "section": "2 1. Team Skill Assessment",
-    "text": "2 1. Team Skill Assessment\n\n2.1 1.1 Creating Team Skills Profile\nEach team member rates their proficiency in key IT skills on a scale of 1-5: - 1 = Beginner (aware of the skill) - 2 = Basic knowledge (can perform simple tasks) - 3 = Intermediate (comfortable with common scenarios) - 4 = Advanced (can handle complex problems) - 5 = Expert (can teach others and solve any problem)\n\n\nTeam Skills Profile:\n                  Python  SQL  Machine Learning  Data Analysis  \\\nName                                                             \nTuba Anwar             4    3                 3              4   \nKriti Singh            3    4                 2              4   \nSoham Deshkhaire       4    3                 4              3   \n\n                  Cloud Computing  Java  JavaScript  R  Tableau  Excel  AWS  \\\nName                                                                          \nTuba Anwar                      2     3           2  3        3      4    2   \nKriti Singh                     2     2           3  3        4      5    1   \nSoham Deshkhaire                3     2           3  2        2      3    2   \n\n                  Azure  Docker  Git  Power BI  Spark  TensorFlow  NLP  \nName                                                                    \nTuba Anwar            1       2    3         2      2           2    3  \nKriti Singh           2       1    3         3      2           1    2  \nSoham Deshkhaire      2       3    4         2      3           3    3  \n\nTeam Average Skills (sorted):\nExcel               4.000000\nPython              3.666667\nData Analysis       3.666667\nSQL                 3.333333\nGit                 3.333333\nTableau             3.000000\nMachine Learning    3.000000\nR                   2.666667\nNLP                 2.666667\nJavaScript          2.666667\nCloud Computing     2.333333\nJava                2.333333\nPower BI            2.333333\nSpark               2.333333\nDocker              2.000000\nTensorFlow          2.000000\nAWS                 1.666667\nAzure               1.666667\ndtype: float64\n\n\n\n\n2.2 1.2 Team Skills Heatmap\nVisualize each team member’s strengths and weaknesses across all skills.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Observation\n\n\n\nThe heatmap reveals individual strengths and team-wide patterns. Skills with consistently high ratings represent team strengths, while low ratings across the board indicate collective skill gaps requiring attention.\n\n\n\n\n2.3 1.3 Team Average Skills Bar Chart\nCompare team average proficiency across all skills."
+    "objectID": "ML.html#feature-engineering",
+    "href": "ML.html#feature-engineering",
+    "title": "Machine Learning Methods",
+    "section": "2 1. Feature Engineering",
+    "text": "2 1. Feature Engineering\n\n2.1 1.1 Preparing Data for Machine Learning\nBefore applying ML algorithms, we need to prepare our features.\n\n\nFeatures selected for ML: ['SALARY', 'DURATION']\n\nML dataset shape: (18880, 2)\n\nFeature Summary Statistics:\n              SALARY      DURATION\ncount   18880.000000  18880.000000\nmean   115658.985434     23.422617\nstd     43853.198284     14.123814\nmin     15860.000000      0.000000\n25%     83250.000000     12.000000\n50%    114400.000000     19.000000\n75%    143000.000000     33.000000\nmax    500000.000000     59.000000"
   },
   {
-    "objectID": "SKILL_GAP_ANALYSIS.html#market-skill-demand-analysis",
-    "href": "SKILL_GAP_ANALYSIS.html#market-skill-demand-analysis",
-    "title": "Skill Gap Analysis",
-    "section": "3 2. Market Skill Demand Analysis",
-    "text": "3 2. Market Skill Demand Analysis\n\n3.1 2.1 Extracting Skills from Job Descriptions\nWe analyze job postings to identify the most in-demand skills in the IT job market.\n\n\nMarket Skill Demand (Top Skills):\n               Skill  Job Postings  Percentage\n1      Data Analysis          2654        3.66\n0    Cloud Computing          2241        3.09\n2         TensorFlow           497        0.69\n6                Git           226        0.31\n3                SQL           167        0.23\n5              Azure           127        0.18\n4               Java            57        0.08\n8              Excel            43        0.06\n10            Python            28        0.04\n7   Machine Learning            23        0.03\n9            Tableau            19        0.03\n11               AWS            15        0.02\n12             Spark             1        0.00\n\n\n\n\n3.2 2.2 Top In-Demand Skills Visualization\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteMarket Insight\n\n\n\nThese are the skills most frequently mentioned in job postings. High-demand skills represent critical areas where job seekers should focus their learning efforts."
+    "objectID": "ML.html#k-means-clustering",
+    "href": "ML.html#k-means-clustering",
+    "title": "Machine Learning Methods",
+    "section": "3 2. K-Means Clustering",
+    "text": "3 2. K-Means Clustering\n\n3.1 2.1 Determining Optimal Number of Clusters\nUse the elbow method to find the optimal number of clusters.\n\n\n\n\n\n\n\n\n\nReview the elbow curve to determine optimal K\n\n\n\n\n\n\n\n\nNoteChoosing Optimal K\n\n\n\nLook for the “elbow” point where the inertia decrease begins to slow down. This represents the optimal balance between cluster compactness and the number of clusters.\n\n\n\n\n3.2 2.2 Applying K-Means Clustering\n\n\nClustering complete with K=4\n\nCluster distribution:\nCluster\n0    3789\n1    5876\n2    2850\n3    6365\nName: count, dtype: int64\n\nCluster Centers (Original Scale):\n          SALARY   DURATION  Cluster\n0   85340.794289  39.230830        0\n1  150132.072038  14.120519        1\n2  158877.599581  40.932333        2\n3   82521.105445  14.714734        3\n\n\n\n\n3.3 2.3 Visualizing Clusters\n\n\n\n\n\n\n\n\n\n\nVariance explained by PC1: 50.58%\nVariance explained by PC2: 49.42%\nTotal variance explained: 100.00%\n\n\n\n\n\n\n\n\nTipUnderstanding PCA Visualization\n\n\n\nThe scatter plot shows job postings projected onto two principal components. Points of the same color belong to the same cluster, revealing natural groupings in the data."
   },
   {
-    "objectID": "SKILL_GAP_ANALYSIS.html#skill-gap-identification",
-    "href": "SKILL_GAP_ANALYSIS.html#skill-gap-identification",
-    "title": "Skill Gap Analysis",
-    "section": "4 3. Skill Gap Identification",
-    "text": "4 3. Skill Gap Identification\n\n4.1 3.1 Comparing Team Skills to Market Demand\nNow we identify gaps between our team’s capabilities and what the market requires.\n\n\nSkill Gap Analysis:\n               Skill  Team Average  Market Demand       Gap  Gap_Category\n4    Cloud Computing      2.333333       4.221311  1.887978  Moderate Gap\n3      Data Analysis      3.666667       5.000000  1.333333  Moderate Gap\n16        TensorFlow      2.000000       0.942623 -1.057377      Strength\n11             Azure      1.666667       0.245902 -1.420765      Strength\n10               AWS      1.666667       0.027322 -1.639344      Strength\n12            Docker      2.000000       0.000000 -2.000000      Strength\n5               Java      2.333333       0.109290 -2.224044      Strength\n15             Spark      2.333333       0.000000 -2.333333      Strength\n14          Power BI      2.333333       0.000000 -2.333333      Strength\n6         JavaScript      2.666667       0.000000 -2.666667      Strength\n17               NLP      2.666667       0.000000 -2.666667      Strength\n7                  R      2.666667       0.000000 -2.666667      Strength\n13               Git      3.333333       0.423497 -2.909836      Strength\n2   Machine Learning      3.000000       0.040984 -2.959016      Strength\n8            Tableau      3.000000       0.040984 -2.959016      Strength\n1                SQL      3.333333       0.314208 -3.019126      Strength\n0             Python      3.666667       0.054645 -3.612022      Strength\n9              Excel      4.000000       0.081967 -3.918033      Strength\n\n\n\n\n4.2 3.2 Skill Gap Visualization\n\n\n\n\n\n\n  \n\n\n\n\n\n\n4.3 3.3 Skill Gap Priority Matrix\nIdentify which skills need immediate attention based on gap size.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nImportantCritical Skill Gaps\n\n\n\nSkills appearing in the lower right area (high market demand, low team proficiency) represent critical gaps requiring immediate attention. These should be prioritized in our learning plan."
-  },
-  {
-    "objectID": "SKILL_GAP_ANALYSIS.html#individual-skill-gap-analysis",
-    "href": "SKILL_GAP_ANALYSIS.html#individual-skill-gap-analysis",
-    "title": "Skill Gap Analysis",
-    "section": "5 4. Individual Skill Gap Analysis",
-    "text": "5 4. Individual Skill Gap Analysis\n\n5.1 4.1 Skill Gaps by Team Member\nIdentify personalized skill development needs for each team member.\n\n\nTop 5 Skill Gaps per Team Member:\n\nTuba Anwar:\n          Skill  Current Level      Gap\nCloud Computing              2 2.221311\n  Data Analysis              4 1.000000\n\nKriti Singh:\n          Skill  Current Level      Gap\nCloud Computing              2 2.221311\n  Data Analysis              4 1.000000\n\nSoham Deshkhaire:\n          Skill  Current Level      Gap\n  Data Analysis              3 2.000000\nCloud Computing              3 1.221311\n\n\n\n\n5.2 4.2 Individual Gap Visualization"
-  },
-  {
-    "objectID": "SKILL_GAP_ANALYSIS.html#skill-development-plan",
-    "href": "SKILL_GAP_ANALYSIS.html#skill-development-plan",
-    "title": "Skill Gap Analysis",
-    "section": "6 5. Skill Development Plan",
-    "text": "6 5. Skill Development Plan\n\n6.1 5.1 Priority Skills for Team Development\nBased on our analysis, here are the priority skills the team should focus on:\n\n\nCRITICAL SKILLS TO DEVELOP (Gap &gt; 2):\nEmpty DataFrame\nColumns: [Skill, Team Average, Market Demand, Gap]\nIndex: []\n\n\nMODERATE PRIORITY SKILLS (1 &lt; Gap &lt;= 2):\n             Skill  Team Average  Market Demand       Gap\n4  Cloud Computing      2.333333       4.221311  1.887978\n3    Data Analysis      3.666667       5.000000  1.333333\n\n\n\n\n6.2 5.2 Recommended Learning Resources\nBased on identified gaps, here are recommended learning resources:\n\n\nRECOMMENDED LEARNING PLAN:\n\n\n\n\n\n6.3 5.3 Team Collaboration Strategy\nHow can team members help each other?\n\n\nTEAM STRENGTHS (Can mentor others):\n               Skill  Team Average  Market Demand\n9              Excel      4.000000       0.081967\n0             Python      3.666667       0.054645\n1                SQL      3.333333       0.314208\n13               Git      3.333333       0.423497\n8            Tableau      3.000000       0.040984\n2   Machine Learning      3.000000       0.040984\n6         JavaScript      2.666667       0.000000\n17               NLP      2.666667       0.000000\n7                  R      2.666667       0.000000\n15             Spark      2.333333       0.000000\n14          Power BI      2.333333       0.000000\n5               Java      2.333333       0.109290\n16        TensorFlow      2.000000       0.942623\n12            Docker      2.000000       0.000000\n11             Azure      1.666667       0.245902\n10               AWS      1.666667       0.027322\n\n\nSUGGESTED MENTORING OPPORTUNITIES:\n  Machine Learning: Soham Deshkhaire (Level 4) can mentor Kriti Singh (Level 2)\n  Tableau: Kriti Singh (Level 4) can mentor Soham Deshkhaire (Level 2)\n  Excel: Kriti Singh (Level 5) can mentor Soham Deshkhaire (Level 3)\n  Docker: Soham Deshkhaire (Level 3) can mentor Kriti Singh (Level 1)\n  TensorFlow: Soham Deshkhaire (Level 3) can mentor Kriti Singh (Level 1)\n\n\n\n\n6.4 5.4 3-Month, 6-Month, and 1-Year Goals\nCreate timeline for skill development:\n\n\n\n\n\n\nTipSkill Development Timeline\n\n\n\n3-Month Goals (Immediate Priority) - Focus on critical gap skills with highest market demand - Complete foundational courses in AWS, Docker, and Cloud Computing - Build 1-2 hands-on projects demonstrating new skills - Team members mentor each other in strength areas\n6-Month Goals (Intermediate) - Achieve intermediate proficiency (Level 3) in all critical gap skills - Complete advanced courses in Machine Learning and Data Analysis - Participate in Kaggle competitions or contribute to open-source projects - Earn 1-2 professional certifications (e.g., AWS Certified Developer)\n1-Year Goals (Advanced) - Achieve advanced proficiency (Level 4) in priority skills - Entire team reaches minimum Level 3 in all high-demand market skills - Build comprehensive portfolio showcasing technical competencies - Competitive job candidates for targeted IT roles"
-  },
-  {
-    "objectID": "SKILL_GAP_ANALYSIS.html#references",
-    "href": "SKILL_GAP_ANALYSIS.html#references",
-    "title": "Skill Gap Analysis",
-    "section": "7 References",
-    "text": "7 References\n\nJob market data: Lightcast Job Postings Dataset (2024)\nSkill assessment framework: Industry-standard proficiency scales\nLearning resources: Coursera, Udemy, AWS Training, Kaggle\nAnalysis tools: Python, pandas, hvPlot, Panel"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "",
-    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
-  },
-  {
-    "objectID": "index.html#project-overview",
-    "href": "index.html#project-overview",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "",
-    "text": "This research explores the evolving landscape of Business Analytics, Data Science and Machine Learning (ML) careers in 2024. As organizations increasingly integrate AI in every function from operations to strategic decision-making, the demand for professionals with strong data and analytics skills is growing rapidly. This study explores four interconnected questions: the most sought-after skills for analytics and ML roles, how job descriptions are changing to require AI literacy, which industries are leading data-driven hiring, and what the short- to medium-term career outlook looks like for analytics professionals. By combining insights from labor market data and recent academic research, this project provides a holistic view of how AI and automation are transforming workforce expectations and employability strategies for students and professionals."
-  },
-  {
-    "objectID": "index.html#data-source",
-    "href": "index.html#data-source",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Data Source",
-    "text": "Data Source\nWe will utilize the Lightcast 2024 dataset, which includes: - Job posting volumes for analytics, data science, and ML roles by industry and location - Salary data across data-related positions and geographies - Skill requirements extracted from job descriptions - Hiring trends across time periods - Company size and industry classifications - Emerging role titles and job requirements"
-  },
-  {
-    "objectID": "index.html#analysis-approach",
-    "href": "index.html#analysis-approach",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Analysis Approach",
-    "text": "Analysis Approach\nOur team will:\n\nClean and preprocess the Lightcast data using Python (pandas, NumPy)\nExtract and categorize skills mentioned in job descriptions for analytics and ML roles\nCompare trends across industries, geographies, and job levels\nAnalyze salary patterns to understand compensation for different skill combinations\nIdentify emerging roles and how job requirements are evolving\nVisualize findings through interactive dashboards using Plotly and Matplotlib\nDevelop career strategy recommendations based on market insights"
-  },
-  {
-    "objectID": "index.html#expected-findings",
-    "href": "index.html#expected-findings",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Expected Findings",
-    "text": "Expected Findings\nWe anticipate discovering that: - Python, SQL, and cloud platforms (AWS, GCP, Azure) remain foundational skills - Generative AI and prompt engineering are emerging as newly valued competencies - Finance, healthcare, and technology sectors lead in analytics hiring - Soft skills like communication and domain expertise are increasingly emphasized - Analytics roles offer strong job security and career growth potential - Salary premiums exist for ML/AI-specialized roles compared to traditional business analytics"
-  },
-  {
-    "objectID": "index.html#deliverables-future-phases",
-    "href": "index.html#deliverables-future-phases",
-    "title": "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends",
-    "section": "Deliverables (Future Phases)",
-    "text": "Deliverables (Future Phases)\n\nExploratory Data Analysis (EDA) with visualizations\nInteractive dashboards showing skill trends, industry hiring patterns, and salary insights\nCareer pathway recommendations for different specializations\nPersonal career action plans for each team member"
+    "objectID": "ML.html#cluster-interpretation",
+    "href": "ML.html#cluster-interpretation",
+    "title": "Machine Learning Methods",
+    "section": "4 3. Cluster Interpretation",
+    "text": "4 3. Cluster Interpretation\n\n4.1 3.1 Analyzing Cluster Characteristics\n\n\nCluster Characteristics:\n\n============================================================\nCLUSTER 0 (n=3,789 jobs)\n============================================================\n  SALARY:\n    Mean: 85454.24\n    Median: 86644.00\n  DURATION:\n    Mean: 39.24\n    Median: 37.00\n\n============================================================\nCLUSTER 1 (n=5,876 jobs)\n============================================================\n  SALARY:\n    Mean: 150028.52\n    Median: 143000.00\n  DURATION:\n    Mean: 14.14\n    Median: 13.00\n\n============================================================\nCLUSTER 2 (n=2,850 jobs)\n============================================================\n  SALARY:\n    Mean: 159106.71\n    Median: 150500.00\n  DURATION:\n    Mean: 40.97\n    Median: 39.00\n\n============================================================\nCLUSTER 3 (n=6,365 jobs)\n============================================================\n  SALARY:\n    Mean: 82456.22\n    Median: 85000.00\n  DURATION:\n    Mean: 14.72\n    Median: 14.00\n\n\n\n\n\n4.2 3.2 Cluster Comparison Heatmap\n\n\n\n\n\n\n\n\n\n\n\n4.3 3.3 Cluster Size Distribution"
   },
   {
     "objectID": "ML.html#predictive-modeling-optional",
@@ -308,53 +280,18 @@
     "text": "6 Summary\n\n\n\n\n\n\nImportantMachine Learning Insights\n\n\n\nKey findings from ML analysis: - Clustering reveals distinct job market segments based on numerical features - K-Means algorithm successfully groups similar job postings - PCA visualization helps understand cluster separation - Predictive models can estimate salaries based on job characteristics\nRecommendations: - Target jobs in clusters with favorable characteristics - Focus on features with high importance for salary optimization - Use cluster insights to refine job search strategy"
   },
   {
-    "objectID": "ML.html#job-title-analysis",
-    "href": "ML.html#job-title-analysis",
-    "title": "Exploratory Data Analysis",
-    "section": "2 1. Job Title Analysis",
-    "text": "2 1. Job Title Analysis\n\n2.1 1.1 Top In-Demand Job Titles\nUnderstanding which job titles dominate the market helps identify high-demand roles and emerging career opportunities.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nThe top job titles reveal where the market has the highest demand. Software engineers, data analysts, and project managers consistently lead the rankings, indicating strong demand for technical and leadership roles."
+    "objectID": "ML.html#next-steps",
+    "href": "ML.html#next-steps",
+    "title": "Machine Learning Methods",
+    "section": "7 Next Steps",
+    "text": "7 Next Steps\nProceed to NLP Methods to extract insights from job descriptions using text analysis techniques."
   },
   {
-    "objectID": "ML.html#employment-type-distribution",
-    "href": "ML.html#employment-type-distribution",
-    "title": "Exploratory Data Analysis",
-    "section": "3 2. Employment Type Distribution",
-    "text": "3 2. Employment Type Distribution\n\n3.1 2.1 Full-Time vs Part-Time vs Contract\nUnderstanding employment type distribution helps job seekers target positions matching their career preferences.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nThe distribution of employment types shows whether the market primarily offers full-time stability, part-time flexibility, or contract-based project work. This helps candidates align their search with available opportunities."
-  },
-  {
-    "objectID": "ML.html#remote-work-analysis",
-    "href": "ML.html#remote-work-analysis",
-    "title": "Exploratory Data Analysis",
-    "section": "4 3. Remote Work Analysis",
-    "text": "4 3. Remote Work Analysis\n\n4.1 3.1 Remote vs Hybrid vs On-Site\nThe prevalence of remote work reflects post-pandemic hiring trends and employer flexibility.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nThe balance between remote, hybrid, and on-site jobs indicates industry acceptance of flexible work arrangements. Higher remote percentages suggest employers prioritize talent acquisition over geographic constraints."
-  },
-  {
-    "objectID": "ML.html#salary-analysis",
-    "href": "ML.html#salary-analysis",
-    "title": "Exploratory Data Analysis",
-    "section": "5 4. Salary Analysis",
-    "text": "5 4. Salary Analysis\n\n5.1 4.1 Salary Distribution Overview\nSalary analysis reveals compensation trends and helps job seekers set realistic expectations.\n\n\n\n\n\n\n  \n\n\n\n\n\n\nSalary Statistics:\n  Mean: $117,928.95\n  Median: $116,300.00\n  25th Percentile: $84,919.50\n  75th Percentile: $145,600.00\n\n\n\n\n5.2 4.2 Salary by Top Job Titles\nCompare compensation across the most common job titles to identify high-paying roles.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nSalary variations across job titles highlight which roles command premium compensation. Technical roles often show higher median salaries compared to administrative positions.\n\n\n\n\n5.3 4.3 Salary Comparison: Remote vs On-Site\nDoes remote work affect compensation? Let’s find out.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nComparing salaries across work arrangements reveals whether remote positions offer competitive compensation or if on-site roles command premium pay due to location requirements."
-  },
-  {
-    "objectID": "ML.html#geographic-analysis",
-    "href": "ML.html#geographic-analysis",
-    "title": "Exploratory Data Analysis",
-    "section": "6 5. Geographic Analysis",
-    "text": "6 5. Geographic Analysis\n\n6.1 5.1 Top States for Job Opportunities\nGeographic distribution shows where job opportunities are concentrated.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n6.2 5.2 Salary by State (Top 10 States)\nCompare salaries across states to identify high-paying regions.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nGeographic salary variations reflect regional cost of living and market demand. Tech hubs like California and New York typically show higher median salaries."
-  },
-  {
-    "objectID": "ML.html#top-hiring-companies",
-    "href": "ML.html#top-hiring-companies",
-    "title": "Exploratory Data Analysis",
-    "section": "7 6. Top Hiring Companies",
-    "text": "7 6. Top Hiring Companies\n\n7.1 6.1 Companies with Most Job Openings\nIdentifying top hiring companies helps job seekers target organizations with multiple opportunities.\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nNoteKey Insight\n\n\n\nCompanies with the highest number of job postings indicate organizations actively expanding their workforce. These companies may offer better opportunities for multiple role applications and career growth."
-  },
-  {
-    "objectID": "ML.html#multi-dimensional-analysis",
-    "href": "ML.html#multi-dimensional-analysis",
-    "title": "Exploratory Data Analysis",
-    "section": "8 7. Multi-Dimensional Analysis",
-    "text": "8 7. Multi-Dimensional Analysis\n\n8.1 7.1 Job Postings Over Time (if date data available)\n\n\nDate column not available for time-series analysis"
+    "objectID": "ML.html#references",
+    "href": "ML.html#references",
+    "title": "Machine Learning Methods",
+    "section": "8 References",
+    "text": "8 References\n\nScikit-learn documentation\nK-Means clustering best practices\nPCA for dimensionality reduction\nRandom Forest for regression"
   },
   {
     "objectID": "NLP.html",
@@ -385,18 +322,18 @@
     "text": "3 2. Keyword Extraction\n\n3.1 2.1 Top 20 Most Common Words"
   },
   {
-    "objectID": "NLP.html#skill-extraction",
-    "href": "NLP.html#skill-extraction",
+    "objectID": "NLP.html#technical-skills-analysis",
+    "href": "NLP.html#technical-skills-analysis",
     "title": "Natural Language Processing Methods",
-    "section": "4 3. Skill Extraction",
-    "text": "4 3. Skill Extraction\n\n4.1 3.1 Technical Skills Analysis\n\n\n\n\n\n\n\n\n\n\nTechnical Skills Mentioned in Job Postings:\ndata analysis        -  5394 jobs (  7.5%)\nsql                  -   382 jobs (  0.5%)\ngit                  -   364 jobs (  0.5%)\nmachine learning     -   324 jobs (  0.4%)\npower bi             -   238 jobs (  0.3%)\nazure                -   188 jobs (  0.3%)\nr                    -   161 jobs (  0.2%)\naws                  -   161 jobs (  0.2%)\nexcel                -   151 jobs (  0.2%)\npython               -    93 jobs (  0.1%)\njava                 -    83 jobs (  0.1%)\ntableau              -    37 jobs (  0.1%)\nhadoop               -    30 jobs (  0.0%)\nspark                -    10 jobs (  0.0%)\njavascript           -     7 jobs (  0.0%)"
+    "section": "4 3. Technical Skills Analysis",
+    "text": "4 3. Technical Skills Analysis\n\n4.1 3.1 Skills Extraction\n\n\n\n\n\n\n\n\n\n\n📊 Top Technical Skills:\n  Data Analysis        - 25204 jobs ( 34.8%)\n  Machine Learning     -   608 jobs (  0.8%)\n  SQL                  -   311 jobs (  0.4%)\n  Excel                -   291 jobs (  0.4%)\n  AWS                  -   201 jobs (  0.3%)\n  Power BI             -   113 jobs (  0.2%)\n  Azure                -    93 jobs (  0.1%)\n  Java                 -    47 jobs (  0.1%)\n  Python               -    46 jobs (  0.1%)\n  Hadoop               -    29 jobs (  0.0%)\n  Tableau              -    28 jobs (  0.0%)\n  Spark                -    28 jobs (  0.0%)\n  Git                  -     1 jobs (  0.0%)\n  Kubernetes           -     1 jobs (  0.0%)"
   },
   {
-    "objectID": "NLP.html#job-title-analysis",
-    "href": "NLP.html#job-title-analysis",
+    "objectID": "NLP.html#job-title-frequency",
+    "href": "NLP.html#job-title-frequency",
     "title": "Natural Language Processing Methods",
-    "section": "5 4. Job Title Analysis",
-    "text": "5 4. Job Title Analysis\n\n5.1 4.1 Most Common Job Titles\n\n\n\n\n\n\n\n\n\n\nTop 15 Job Titles:\n 1. Data Analyst                             -  4201 postings\n 2. Enterprise Architect                     -   808 postings\n 3. Senior Data Analyst                      -   724 postings\n 4. Business Intelligence Analyst            -   686 postings\n 5. Data Modeler                             -   281 postings\n 6. ERP Senior Business Analyst - FP&A       -   279 postings\n 7. Unlock Your Future Career Path in Data Analytics! -   238 postings\n 8. Lead Data Analyst                        -   238 postings\n 9. Solution Architect                       -   210 postings\n10. Data Governance Analyst                  -   204 postings\n11. Data Quality Analyst                     -   191 postings\n12. Data Management Analyst                  -   191 postings\n13. Data Analyst II                          -   172 postings\n14. Sr. Data Analyst                         -   163 postings\n15. Master Data Analyst                      -   148 postings"
+    "section": "5 4. Job Title Frequency",
+    "text": "5 4. Job Title Frequency\n\n5.1 4.1 Most Common Job Titles"
   },
   {
     "objectID": "NLP.html#text-length-analysis",
@@ -404,6 +341,20 @@
     "title": "Natural Language Processing Methods",
     "section": "6 5. Text Length Analysis",
     "text": "6 5. Text Length Analysis\n\n6.1 5.1 Job Description Length Distribution\n\n\n\n\n\n\n\n\n\n\n📊 Text Length Statistics:\n  Average characters: 171\n  Median characters: 79\n  Average words: 2\n  Median words: 1"
+  },
+  {
+    "objectID": "NLP.html#skill-requirements-by-job-title",
+    "href": "NLP.html#skill-requirements-by-job-title",
+    "title": "Natural Language Processing Methods",
+    "section": "7 6. Skill Requirements by Job Title",
+    "text": "7 6. Skill Requirements by Job Title\n\n7.1 6.1 Skills vs Top Job Titles - Heatmap"
+  },
+  {
+    "objectID": "NLP.html#keyword-correlation-analysis",
+    "href": "NLP.html#keyword-correlation-analysis",
+    "title": "Natural Language Processing Methods",
+    "section": "8 7. Keyword Correlation Analysis",
+    "text": "8 7. Keyword Correlation Analysis\n\n8.1 7.1 Top Keyword Pairs"
   },
   {
     "objectID": "NLP.html#summary",
@@ -425,33 +376,5 @@
     "title": "Natural Language Processing Methods",
     "section": "11 References",
     "text": "11 References\n\nNLTK Documentation: https://www.nltk.org/\nspaCy Documentation: https://spacy.io/\nSeaborn Documentation: https://seaborn.pydata.org/\nScikit-learn Text Processing: https://scikit-learn.org/stable/tutorial/text_analytics/"
-  },
-  {
-    "objectID": "NLP.html#technical-skills-analysis",
-    "href": "NLP.html#technical-skills-analysis",
-    "title": "Natural Language Processing Methods",
-    "section": "4 3. Technical Skills Analysis",
-    "text": "4 3. Technical Skills Analysis\n\n4.1 3.1 Skills Extraction\n\n\n\n\n\n\n\n\n\n\n📊 Top Technical Skills:\n  Data Analysis        - 25204 jobs ( 34.8%)\n  Machine Learning     -   608 jobs (  0.8%)\n  SQL                  -   311 jobs (  0.4%)\n  Excel                -   291 jobs (  0.4%)\n  AWS                  -   201 jobs (  0.3%)\n  Power BI             -   113 jobs (  0.2%)\n  Azure                -    93 jobs (  0.1%)\n  Java                 -    47 jobs (  0.1%)\n  Python               -    46 jobs (  0.1%)\n  Hadoop               -    29 jobs (  0.0%)\n  Tableau              -    28 jobs (  0.0%)\n  Spark                -    28 jobs (  0.0%)\n  Git                  -     1 jobs (  0.0%)\n  Kubernetes           -     1 jobs (  0.0%)"
-  },
-  {
-    "objectID": "NLP.html#job-title-frequency",
-    "href": "NLP.html#job-title-frequency",
-    "title": "Natural Language Processing Methods",
-    "section": "5 4. Job Title Frequency",
-    "text": "5 4. Job Title Frequency\n\n5.1 4.1 Most Common Job Titles"
-  },
-  {
-    "objectID": "NLP.html#skill-requirements-by-job-title",
-    "href": "NLP.html#skill-requirements-by-job-title",
-    "title": "Natural Language Processing Methods",
-    "section": "7 6. Skill Requirements by Job Title",
-    "text": "7 6. Skill Requirements by Job Title\n\n7.1 6.1 Skills vs Top Job Titles - Heatmap"
-  },
-  {
-    "objectID": "NLP.html#keyword-correlation-analysis",
-    "href": "NLP.html#keyword-correlation-analysis",
-    "title": "Natural Language Processing Methods",
-    "section": "8 7. Keyword Correlation Analysis",
-    "text": "8 7. Keyword Correlation Analysis\n\n8.1 7.1 Top Keyword Pairs"
   }
 ]
