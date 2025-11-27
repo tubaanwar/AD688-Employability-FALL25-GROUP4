@@ -1,6 +1,5 @@
 project:
   type: website
-  execute-dir: project
   
 execute:
   freeze: auto
@@ -14,15 +13,13 @@ website:
     left:
       - href: index.qmd
         text: "Home"
-      - href: research_introduction.qmd
-        text: "Introduction"
       - href: data_cleaning.qmd
         text: "Data Cleaning & Exploration"
       - href: eda.qmd
         text: "Exploratory Data Analysis"
       - href: SKILL_GAP_ANALYSIS.QMD
         text: "Skill Gap Analysis"
-      - href: "ML.QMD"
+      - href: ML.QMD
         text: "Machine Learning Methods"
       - href: NLP.QMD
         text: "Natural Language Processing Methods"

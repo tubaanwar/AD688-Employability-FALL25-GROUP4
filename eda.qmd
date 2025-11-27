@@ -21,9 +21,7 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme: 
-      light: [cosmo, custom.scss]
-    css: styles.css
+    theme: cosmo
 jupyter: python3
 execute:
   echo: false
@@ -33,7 +31,7 @@ execute:
 
 ## Introduction
 
-This document presents a comprehensive exploratory data analysis of the 2024 job market. We examine hiring trends, salary distributions, geographic patterns, employment types, and remote work opportunities to provide actionable insights for job seekers and market analysts.
+This document presents a comprehensive exploratory data analysis of the 2024 job market. We examine hiring trends, employment types, geographic patterns, and remote work opportunities to provide actionable insights for job seekers and market analysts.
 
 ```{python}
 import pandas as pd
@@ -50,7 +48,7 @@ pn.extension()
 COLORS = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#34495e', '#e67e22']
 
 # Load cleaned data
-df = pd.read_csv('lightcast_job_postings.csv')
+df = pd.read_csv('cleanedjob_postings.csv')
 
 print(f"Dataset shape: {df.shape}")
 print(f"Analysis period: 2024 Job Market")
@@ -163,122 +161,9 @@ remote_df.hvplot.bar(
 The balance between remote, hybrid, and on-site jobs indicates industry acceptance of flexible work arrangements. Higher remote percentages suggest employers prioritize talent acquisition over geographic constraints.
 :::
 
-## 4. Salary Analysis
+## 4. Geographic Analysis
 
-### 4.1 Salary Distribution Overview
-
-Salary analysis reveals compensation trends and helps job seekers set realistic expectations.
-
-```{python}
-# Filter out unrealistic salaries (likely errors)
-salary_data = df[df['SALARY'].notna() & (df['SALARY'] > 0) & (df['SALARY'] < 500000)].copy()
-
-mean_salary = salary_data['SALARY'].mean()
-median_salary = salary_data['SALARY'].median()
-
-# Create histogram
-salary_data.hvplot.hist(
-    y='SALARY',
-    bins=50,
-    title='Salary Distribution in Job Market (2024)',
-    height=500,
-    width=900,
-    color='#3498db',
-    alpha=0.7,
-    ylabel='Number of Job Postings',
-    xlabel='Annual Salary ($)'
-)
-```
-
-```{python}
-print(f"Salary Statistics:")
-print(f"  Mean: ${mean_salary:,.2f}")
-print(f"  Median: ${median_salary:,.2f}")
-print(f"  25th Percentile: ${salary_data['SALARY'].quantile(0.25):,.2f}")
-print(f"  75th Percentile: ${salary_data['SALARY'].quantile(0.75):,.2f}")
-```
-
-### 4.2 Salary by Top Job Titles
-
-Compare compensation across the most common job titles to identify high-paying roles.
-
-```{python}
-# Get top 10 job titles
-top_titles = df['TITLE_NAME'].value_counts().head(10).index
-
-# Filter salary data for top titles
-salary_by_title = df[
-    df['TITLE_NAME'].isin(top_titles) & 
-    df['SALARY'].notna() & 
-    (df['SALARY'] > 0) & 
-    (df['SALARY'] < 500000)
-].groupby('TITLE_NAME')['SALARY'].agg(['median', 'mean', 'count']).reset_index()
-
-salary_by_title = salary_by_title.sort_values('median', ascending=True)
-
-# Create horizontal bar chart
-salary_by_title.hvplot.barh(
-    x='TITLE_NAME',
-    y='median',
-    title='Median Salary by Top 10 Job Titles (2024)',
-    height=600,
-    width=900,
-    color='#2ecc71',
-    hover_cols=['mean', 'count'],
-    ylabel='',
-    xlabel='Median Annual Salary ($)',
-    flip_yaxis=True
-)
-```
-
-::: {.callout-note icon=false}
-## Key Insight
-Salary variations across job titles highlight which roles command premium compensation. Technical roles often show higher median salaries compared to administrative positions.
-:::
-
-### 4.3 Salary Comparison: Remote vs On-Site
-
-Does remote work affect compensation? Let's find out.
-
-```{python}
-# Compare salary by remote type
-salary_remote = df[
-    df['SALARY'].notna() & 
-    (df['SALARY'] > 0) & 
-    (df['SALARY'] < 500000)
-].groupby('REMOTE_TYPE_NAME')['SALARY'].agg(['median', 'mean', 'count']).reset_index()
-
-# Reshape for grouped bar chart
-salary_remote_melted = salary_remote.melt(
-    id_vars='REMOTE_TYPE_NAME',
-    value_vars=['median', 'mean'],
-    var_name='Metric',
-    value_name='Salary'
-)
-
-# Create grouped bar chart
-salary_remote_melted.hvplot.bar(
-    x='REMOTE_TYPE_NAME',
-    y='Salary',
-    by='Metric',
-    title='Salary Comparison: Remote vs Hybrid vs On-Site (2024)',
-    height=500,
-    width=800,
-    ylabel='Annual Salary ($)',
-    xlabel='Work Location Type',
-    legend='top_right',
-    rot=0
-)
-```
-
-::: {.callout-note icon=false}
-## Key Insight
-Comparing salaries across work arrangements reveals whether remote positions offer competitive compensation or if on-site roles command premium pay due to location requirements.
-:::
-
-## 5. Geographic Analysis
-
-### 5.1 Top States for Job Opportunities
+### 4.1 Top States for Job Opportunities
 
 Geographic distribution shows where job opportunities are concentrated.
 
@@ -306,43 +191,14 @@ state_df.hvplot.bar(
 )
 ```
 
-### 5.2 Salary by State (Top 10 States)
-
-Compare salaries across states to identify high-paying regions.
-
-```{python}
-# Get salary data for top 10 states
-top_states = df['STATE_NAME'].value_counts().head(10).index
-
-salary_by_state = df[
-    df['STATE_NAME'].isin(top_states) & 
-    df['SALARY'].notna() & 
-    (df['SALARY'] > 0) & 
-    (df['SALARY'] < 500000)
-].groupby('STATE_NAME')['SALARY'].median().sort_values(ascending=False).reset_index()
-
-# Create bar chart
-salary_by_state.hvplot.bar(
-    x='STATE_NAME',
-    y='SALARY',
-    title='Median Salary by Top 10 States (2024)',
-    height=500,
-    width=900,
-    color='#f39c12',
-    ylabel='Median Annual Salary ($)',
-    xlabel='State',
-    rot=45
-)
-```
-
 ::: {.callout-note icon=false}
 ## Key Insight
-Geographic salary variations reflect regional cost of living and market demand. Tech hubs like California and New York typically show higher median salaries.
+Geographic concentration shows tech hubs and major metropolitan areas dominate job postings. Regional variations help identify where to focus job searches based on market demand.
 :::
 
-## 6. Top Hiring Companies
+## 5. Top Hiring Companies
 
-### 6.1 Companies with Most Job Openings
+### 5.1 Companies with Most Job Openings
 
 Identifying top hiring companies helps job seekers target organizations with multiple opportunities.
 
@@ -373,19 +229,20 @@ company_df.hvplot.barh(
 Companies with the highest number of job postings indicate organizations actively expanding their workforce. These companies may offer better opportunities for multiple role applications and career growth.
 :::
 
-## 7. Multi-Dimensional Analysis
+## 6. Job Posting Timeline
 
-### 7.1 Job Postings Over Time (if date data available)
+### 6.1 When Jobs Are Posted
+
+Understanding posting patterns helps with strategic job search timing.
 
 ```{python}
 # Check if date column exists
-if 'POSTED_DATE' in df.columns or 'POST_DATE' in df.columns:
-    date_col = 'POSTED_DATE' if 'POSTED_DATE' in df.columns else 'POST_DATE'
-    df[date_col] = pd.to_datetime(df[date_col], errors='coerce')
+if 'POSTED' in df.columns:
+    df['POSTED'] = pd.to_datetime(df['POSTED'], errors='coerce')
     
     # Filter valid dates
-    time_data = df[df[date_col].notna()].copy()
-    time_data['Month'] = time_data[date_col].dt.to_period('M').astype(str)
+    time_data = df[df['POSTED'].notna()].copy()
+    time_data['Month'] = time_data['POSTED'].dt.to_period('M').astype(str)
     
     # Group by month
     monthly_counts = time_data['Month'].value_counts().sort_index()
@@ -410,13 +267,33 @@ else:
     print("Date column not available for time-series analysis")
 ```
 
-## Next Steps
+## 7. Experience Requirements
 
-With comprehensive EDA completed, we proceed to:
+### 7.1 Minimum Years of Experience Required
 
-1. **Skill Gap Analysis** - Compare our team's skills against market requirements
-2. **Machine Learning Methods** - Apply clustering to identify job categories
-3. **NLP Analysis** - Extract insights from job descriptions
+Understanding experience requirements helps assess job market accessibility.
+
+```{python}
+# Analyze minimum years of experience
+exp_counts = df['MIN_YEARS_EXPERIENCE'].value_counts().sort_index()
+exp_df = pd.DataFrame({
+    'Years of Experience': exp_counts.index,
+    'Job Postings': exp_counts.values
+})
+
+# Create bar chart
+exp_df.hvplot.bar(
+    x='Years of Experience',
+    y='Job Postings',
+    title='Job Postings by Minimum Years of Experience Required (2024)',
+    height=500,
+    width=900,
+    color='#2ecc71',
+    ylabel='Number of Job Postings',
+    xlabel='Minimum Years of Experience'
+)
+```
+
 
 ## References
 

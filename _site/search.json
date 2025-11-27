@@ -376,5 +376,61 @@
     "title": "Natural Language Processing Methods",
     "section": "11 References",
     "text": "11 References\n\nNLTK Documentation: https://www.nltk.org/\nspaCy Documentation: https://spacy.io/\nSeaborn Documentation: https://seaborn.pydata.org/\nScikit-learn Text Processing: https://scikit-learn.org/stable/tutorial/text_analytics/"
+  },
+  {
+    "objectID": " data_cleaning.html",
+    "href": " data_cleaning.html",
+    "title": "Data Cleaning & Exploration",
+    "section": "",
+    "text": "This document details the comprehensive data cleaning and preprocessing steps applied to the 2024 job market dataset. Our goal is to prepare a high-quality dataset for subsequent exploratory and advanced analyses by removing redundant information, handling missing values strategically, and eliminating duplicate entries.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nInitial dataset shape: (72498, 131)\nTotal rows: 72,498\nTotal columns: 131"
+  },
+  {
+    "objectID": " data_cleaning.html#introduction",
+    "href": " data_cleaning.html#introduction",
+    "title": "Data Cleaning & Exploration",
+    "section": "",
+    "text": "This document details the comprehensive data cleaning and preprocessing steps applied to the 2024 job market dataset. Our goal is to prepare a high-quality dataset for subsequent exploratory and advanced analyses by removing redundant information, handling missing values strategically, and eliminating duplicate entries.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nInitial dataset shape: (72498, 131)\nTotal rows: 72,498\nTotal columns: 131"
+  },
+  {
+    "objectID": " data_cleaning.html#step-1-removing-redundant-columns",
+    "href": " data_cleaning.html#step-1-removing-redundant-columns",
+    "title": "Data Cleaning & Exploration",
+    "section": "2 Step 1: Removing Redundant Columns",
+    "text": "2 Step 1: Removing Redundant Columns\n\n2.1 Rationale for Column Removal\nWe remove redundant columns to improve dataset quality and analysis efficiency. Our removal strategy targets:\n\nTracking & Administrative Columns: ID, URL, DUPLICATES, LAST_UPDATED_TIMESTAMP - metadata that doesn’t contribute to analysis\nRaw Text Fields: BODY, TITLE_RAW, COMPANY_RAW - we retain cleaned versions (TITLE, COMPANY_NAME, TITLE_CLEAN)\nDeprecated Classifications: Keep only latest standards (NAICS_2022_6, SOC_2021_4, CIP4)\nDuplicate Geographic Fields: Multiple versions of county/MSA data create redundancy\nRedundant Salary Fields: Consolidate to primary SALARY field\n\n\n\nColumns removed: 69\nNew dataset shape: (72498, 62)"
+  },
+  {
+    "objectID": " data_cleaning.html#step-2-handling-missing-values",
+    "href": " data_cleaning.html#step-2-handling-missing-values",
+    "title": "Data Cleaning & Exploration",
+    "section": "3 Step 2: Handling Missing Values",
+    "text": "3 Step 2: Handling Missing Values\n\n3.1 Missing Data Assessment\nBefore imputation, we analyze the extent and distribution of missing data across all columns.\n\n\nColumns with missing values: 62\n\nTop 10 columns with highest missing percentages:\n                    Column  Missing_Count  Missing_Percentage\n18    MAX_YEARS_EXPERIENCE          64068               88.37\n13           MAX_EDULEVELS          56183               77.50\n14      MAX_EDULEVELS_NAME          56183               77.50\n50       LIGHTCAST_SECTORS          54711               75.47\n51  LIGHTCAST_SECTORS_NAME          54711               75.47\n20                  SALARY          41690               57.51\n3                 DURATION          27316               37.68\n17    MIN_YEARS_EXPERIENCE          23146               31.93\n2                  EXPIRED           7844               10.82\n30       MSA_NAME_INCOMING           3962                5.46\n\n\n\n\n3.2 Visualizing Missing Data\n\n\n3.3 Missing Value Imputation Strategy\nOur approach to handling missing data:\n\nDrop columns with more than 50% missing values (unreliable data)\nFill numerical columns with median values to maintain distribution\nFill categorical columns with “Unknown” for transparency\n\n\n\nColumns dropped due to &gt;50% missing values: 6\nFilled DURATION with median: 18.00\nFilled COMPANY with median: 37615159.00\nFilled MIN_EDULEVELS with median: 2.00\nFilled EMPLOYMENT_TYPE with median: 1.00\nFilled MIN_YEARS_EXPERIENCE with median: 5.00\nFilled REMOTE_TYPE with median: 0.00\nFilled STATE with median: 29.00\nFilled NAICS_2022_2 with median: 54.00\nFilled NAICS_2022_3 with median: 541.00\nFilled NAICS_2022_4 with median: 5415.00\nFilled NAICS_2022_5 with median: 54151.00\nFilled NAICS_2022_6 with median: 541519.00\nFilled LAST_UPDATED_DATE: 22 missing values with 'Unknown'\nFilled POSTED: 22 missing values with 'Unknown'\nFilled EXPIRED: 7844 missing values with 'Unknown'\nFilled SOURCE_TYPES: 22 missing values with 'Unknown'\nFilled SOURCES: 22 missing values with 'Unknown'\nFilled COMPANY_NAME: 44 missing values with 'Unknown'\nFilled COMPANY_IS_STAFFING: 44 missing values with 'Unknown'\nFilled EDUCATION_LEVELS: 44 missing values with 'Unknown'\nFilled EDUCATION_LEVELS_NAME: 44 missing values with 'Unknown'\nFilled MIN_EDULEVELS_NAME: 44 missing values with 'Unknown'\nFilled EMPLOYMENT_TYPE_NAME: 44 missing values with 'Unknown'\nFilled IS_INTERNSHIP: 44 missing values with 'Unknown'\nFilled REMOTE_TYPE_NAME: 44 missing values with 'Unknown'\nFilled LOCATION: 44 missing values with 'Unknown'\nFilled CITY: 44 missing values with 'Unknown'\nFilled CITY_NAME: 44 missing values with 'Unknown'\nFilled MSA_NAME: 3949 missing values with 'Unknown'\nFilled STATE_NAME: 44 missing values with 'Unknown'\nFilled MSA_NAME_OUTGOING: 3949 missing values with 'Unknown'\nFilled MSA_NAME_INCOMING: 3962 missing values with 'Unknown'\nFilled TITLE: 44 missing values with 'Unknown'\nFilled TITLE_NAME: 44 missing values with 'Unknown'\nFilled TITLE_CLEAN: 140 missing values with 'Unknown'\nFilled SKILLS: 44 missing values with 'Unknown'\nFilled SKILLS_NAME: 44 missing values with 'Unknown'\nFilled SPECIALIZED_SKILLS: 44 missing values with 'Unknown'\nFilled SPECIALIZED_SKILLS_NAME: 44 missing values with 'Unknown'\nFilled CERTIFICATIONS: 44 missing values with 'Unknown'\nFilled CERTIFICATIONS_NAME: 44 missing values with 'Unknown'\nFilled COMMON_SKILLS: 44 missing values with 'Unknown'\nFilled COMMON_SKILLS_NAME: 44 missing values with 'Unknown'\nFilled SOFTWARE_SKILLS: 44 missing values with 'Unknown'\nFilled SOFTWARE_SKILLS_NAME: 44 missing values with 'Unknown'\nFilled ONET: 44 missing values with 'Unknown'\nFilled ONET_NAME: 44 missing values with 'Unknown'\nFilled CIP4: 44 missing values with 'Unknown'\nFilled CIP4_NAME: 44 missing values with 'Unknown'\nFilled SOC_2021_4: 44 missing values with 'Unknown'\nFilled SOC_2021_4_NAME: 44 missing values with 'Unknown'\nFilled NAICS_2022_2_NAME: 44 missing values with 'Unknown'\nFilled NAICS_2022_3_NAME: 44 missing values with 'Unknown'\nFilled NAICS_2022_4_NAME: 44 missing values with 'Unknown'\nFilled NAICS_2022_5_NAME: 44 missing values with 'Unknown'\nFilled NAICS_2022_6_NAME: 44 missing values with 'Unknown'\n\nTotal missing values after imputation: 0"
+  },
+  {
+    "objectID": " data_cleaning.html#step-3-removing-duplicates",
+    "href": " data_cleaning.html#step-3-removing-duplicates",
+    "title": "Data Cleaning & Exploration",
+    "section": "4 Step 3: Removing Duplicates",
+    "text": "4 Step 3: Removing Duplicates\n\n4.1 Duplicate Detection Strategy\nDuplicate job postings can skew our analysis by overcounting certain positions. We identify duplicates based on key identifiers: job title, company name, and location.\n\n\nInitial rows: 72,498\nDuplicate rows detected: 13,278\nDuplicate percentage: 18.31%\n\nFinal rows after duplicate removal: 59,220\nRows removed: 13,278"
+  },
+  {
+    "objectID": " data_cleaning.html#step-4-data-quality-summary",
+    "href": " data_cleaning.html#step-4-data-quality-summary",
+    "title": "Data Cleaning & Exploration",
+    "section": "5 Step 4: Data Quality Summary",
+    "text": "5 Step 4: Data Quality Summary\n\n5.1 Final Dataset Overview\n\n\n                Metric  Value\n            Total Rows 59,220\n         Total Columns     56\n     Numerical Columns     12\n   Categorical Columns     44\n        Missing Values      0\nDuplicate Rows Removed 13,278\n\n Cleaned dataset saved as 'cleaned_job_postings.csv'\n\n\n\n\n5.2 Data Cleaning Pipeline Visualization"
+  },
+  {
+    "objectID": " data_cleaning.html#summary",
+    "href": " data_cleaning.html#summary",
+    "title": "Data Cleaning & Exploration",
+    "section": "6 Summary",
+    "text": "6 Summary\n\n\n\n\n\n\nImportantData Cleaning Completed\n\n\n\nThe data cleaning process has successfully prepared the job market dataset for analysis:\nRemoved {len(columns_to_drop)} redundant columns - Eliminated administrative metadata and deprecated classification systems\nHandled missing values strategically - Dropped unreliable columns (&gt;50% missing), imputed numerical medians, and labeled categorical unknowns\nRemoved {initial_rows - final_rows:,} duplicate postings - Ensured each unique job position is counted only once\nFinal clean dataset: {len(df_cleaned):,} rows × {len(df_cleaned.columns)} columns with zero missing values\nThe cleaned dataset is now ready for exploratory data analysis, skill gap analysis, and advanced machine learning techniques."
+  },
+  {
+    "objectID": " data_cleaning.html#references",
+    "href": " data_cleaning.html#references",
+    "title": "Data Cleaning & Exploration",
+    "section": "7 References",
+    "text": "7 References\n\nData source: Lightcast Job Postings Dataset (2024)\nAnalysis tools: Python, pandas, NumPy, hvPlot, HoloViews\nCleaning methodology: Industry best practices for data preprocessing"
   }
 ]

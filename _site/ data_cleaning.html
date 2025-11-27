@@ -10,7 +10,7 @@
 <meta name="author" content="Kriti Singh">
 <meta name="author" content="Soham Deshkhaire">
 
-<title>Exploratory Data Analysis – Job Market Analysis 2024</title>
+<title>Data Cleaning &amp; Exploration – Job Market Analysis 2024</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3847,6 +3847,119 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<style type="text/css">
+:root {
+--primary-navy: #1D3557;
+--secondary-blue: #457B9D;
+--accent-teal: #2A9D8F;
+--accent-red: #E63946;
+--light-bg: #F1FAEE;
+--text-dark: #1D3557;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+color: var(--text-dark);
+line-height: 1.8;
+}
+
+h1, h2, h3 {
+color: var(--primary-navy);
+font-weight: 600;
+margin-top: 2rem;
+}
+h1 {
+border-bottom: 3px solid var(--accent-teal);
+padding-bottom: 0.5rem;
+}
+h2 {
+border-left: 4px solid var(--secondary-blue);
+padding-left: 1rem;
+margin-top: 2.5rem;
+}
+h3 {
+color: var(--secondary-blue);
+}
+
+.cell-code {
+background-color: #f8f9fa;
+border-left: 3px solid var(--secondary-blue);
+border-radius: 4px;
+padding: 1rem;
+margin: 1rem 0;
+}
+
+p strong {
+color: var(--accent-red);
+}
+
+blockquote {
+border-left: 4px solid var(--accent-teal);
+background-color: var(--light-bg);
+padding: 1rem 1.5rem;
+margin: 1.5rem 0;
+font-style: italic;
+}
+
+#TOC {
+background-color: var(--light-bg);
+border: 1px solid var(--secondary-blue);
+border-radius: 8px;
+padding: 1.5rem;
+}
+#TOC a {
+color: var(--primary-navy);
+text-decoration: none;
+transition: all 0.3s ease;
+}
+#TOC a:hover {
+color: var(--accent-teal);
+padding-left: 0.5rem;
+}
+
+.plotly, .bk-root {
+margin: 2rem 0;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+overflow: hidden;
+}
+
+section {
+margin-bottom: 3rem;
+}
+
+a {
+color: var(--secondary-blue);
+transition: color 0.3s ease;
+}
+a:hover {
+color: var(--accent-teal);
+}
+
+.quarto-title-block {
+background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+color: white;
+padding: 3rem 2rem;
+margin-bottom: 3rem;
+border-radius: 0 0 8px 8px;
+}
+.quarto-title-block h1,
+.quarto-title-block .subtitle {
+color: white !important;
+border: none;
+}
+
+.quarto-title-meta {
+color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+.plotly, .bk-root {
+width: 100% !important;
+height: auto !important;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -3873,11 +3986,15 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./data_cleaning.html"> 
+    <a class="nav-link" href="./research_introduction.html"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.qmd"> 
 <span class="menu-text">Data Cleaning &amp; Exploration</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./eda.html" aria-current="page"> 
+    <a class="nav-link" href="./eda.html"> 
 <span class="menu-text">Exploratory Data Analysis</span></a>
   </li>  
   <li class="nav-item">
@@ -3909,35 +4026,27 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#job-title-analysis" id="toc-job-title-analysis" class="nav-link" data-scroll-target="#job-title-analysis"><span class="header-section-number">2</span> 1. Job Title Analysis</a>
+  <li><a href="#step-1-removing-redundant-columns" id="toc-step-1-removing-redundant-columns" class="nav-link" data-scroll-target="#step-1-removing-redundant-columns"><span class="header-section-number">2</span> Step 1: Removing Redundant Columns</a>
   <ul class="collapse">
-  <li><a href="#top-in-demand-job-titles" id="toc-top-in-demand-job-titles" class="nav-link" data-scroll-target="#top-in-demand-job-titles"><span class="header-section-number">2.1</span> 1.1 Top In-Demand Job Titles</a></li>
+  <li><a href="#rationale-for-column-removal" id="toc-rationale-for-column-removal" class="nav-link" data-scroll-target="#rationale-for-column-removal"><span class="header-section-number">2.1</span> Rationale for Column Removal</a></li>
   </ul></li>
-  <li><a href="#employment-type-distribution" id="toc-employment-type-distribution" class="nav-link" data-scroll-target="#employment-type-distribution"><span class="header-section-number">3</span> 2. Employment Type Distribution</a>
+  <li><a href="#step-2-handling-missing-values" id="toc-step-2-handling-missing-values" class="nav-link" data-scroll-target="#step-2-handling-missing-values"><span class="header-section-number">3</span> Step 2: Handling Missing Values</a>
   <ul class="collapse">
-  <li><a href="#full-time-vs-part-time-vs-contract" id="toc-full-time-vs-part-time-vs-contract" class="nav-link" data-scroll-target="#full-time-vs-part-time-vs-contract"><span class="header-section-number">3.1</span> 2.1 Full-Time vs Part-Time vs Contract</a></li>
+  <li><a href="#missing-data-assessment" id="toc-missing-data-assessment" class="nav-link" data-scroll-target="#missing-data-assessment"><span class="header-section-number">3.1</span> Missing Data Assessment</a></li>
+  <li><a href="#visualizing-missing-data" id="toc-visualizing-missing-data" class="nav-link" data-scroll-target="#visualizing-missing-data"><span class="header-section-number">3.2</span> Visualizing Missing Data</a></li>
+  <li><a href="#missing-value-imputation-strategy" id="toc-missing-value-imputation-strategy" class="nav-link" data-scroll-target="#missing-value-imputation-strategy"><span class="header-section-number">3.3</span> Missing Value Imputation Strategy</a></li>
   </ul></li>
-  <li><a href="#remote-work-analysis" id="toc-remote-work-analysis" class="nav-link" data-scroll-target="#remote-work-analysis"><span class="header-section-number">4</span> 3. Remote Work Analysis</a>
+  <li><a href="#step-3-removing-duplicates" id="toc-step-3-removing-duplicates" class="nav-link" data-scroll-target="#step-3-removing-duplicates"><span class="header-section-number">4</span> Step 3: Removing Duplicates</a>
   <ul class="collapse">
-  <li><a href="#remote-vs-hybrid-vs-on-site" id="toc-remote-vs-hybrid-vs-on-site" class="nav-link" data-scroll-target="#remote-vs-hybrid-vs-on-site"><span class="header-section-number">4.1</span> 3.1 Remote vs Hybrid vs On-Site</a></li>
+  <li><a href="#duplicate-detection-strategy" id="toc-duplicate-detection-strategy" class="nav-link" data-scroll-target="#duplicate-detection-strategy"><span class="header-section-number">4.1</span> Duplicate Detection Strategy</a></li>
   </ul></li>
-  <li><a href="#geographic-analysis" id="toc-geographic-analysis" class="nav-link" data-scroll-target="#geographic-analysis"><span class="header-section-number">5</span> 4. Geographic Analysis</a>
+  <li><a href="#step-4-data-quality-summary" id="toc-step-4-data-quality-summary" class="nav-link" data-scroll-target="#step-4-data-quality-summary"><span class="header-section-number">5</span> Step 4: Data Quality Summary</a>
   <ul class="collapse">
-  <li><a href="#top-states-for-job-opportunities" id="toc-top-states-for-job-opportunities" class="nav-link" data-scroll-target="#top-states-for-job-opportunities"><span class="header-section-number">5.1</span> 4.1 Top States for Job Opportunities</a></li>
+  <li><a href="#final-dataset-overview" id="toc-final-dataset-overview" class="nav-link" data-scroll-target="#final-dataset-overview"><span class="header-section-number">5.1</span> Final Dataset Overview</a></li>
+  <li><a href="#data-cleaning-pipeline-visualization" id="toc-data-cleaning-pipeline-visualization" class="nav-link" data-scroll-target="#data-cleaning-pipeline-visualization"><span class="header-section-number">5.2</span> Data Cleaning Pipeline Visualization</a></li>
   </ul></li>
-  <li><a href="#top-hiring-companies" id="toc-top-hiring-companies" class="nav-link" data-scroll-target="#top-hiring-companies"><span class="header-section-number">6</span> 5. Top Hiring Companies</a>
-  <ul class="collapse">
-  <li><a href="#companies-with-most-job-openings" id="toc-companies-with-most-job-openings" class="nav-link" data-scroll-target="#companies-with-most-job-openings"><span class="header-section-number">6.1</span> 5.1 Companies with Most Job Openings</a></li>
-  </ul></li>
-  <li><a href="#job-posting-timeline" id="toc-job-posting-timeline" class="nav-link" data-scroll-target="#job-posting-timeline"><span class="header-section-number">7</span> 6. Job Posting Timeline</a>
-  <ul class="collapse">
-  <li><a href="#when-jobs-are-posted" id="toc-when-jobs-are-posted" class="nav-link" data-scroll-target="#when-jobs-are-posted"><span class="header-section-number">7.1</span> 6.1 When Jobs Are Posted</a></li>
-  </ul></li>
-  <li><a href="#experience-requirements" id="toc-experience-requirements" class="nav-link" data-scroll-target="#experience-requirements"><span class="header-section-number">8</span> 7. Experience Requirements</a>
-  <ul class="collapse">
-  <li><a href="#minimum-years-of-experience-required" id="toc-minimum-years-of-experience-required" class="nav-link" data-scroll-target="#minimum-years-of-experience-required"><span class="header-section-number">8.1</span> 7.1 Minimum Years of Experience Required</a></li>
-  </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">9</span> References</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -3946,8 +4055,8 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exploratory Data Analysis</h1>
-<p class="subtitle lead">Uncovering Job Market Trends and Patterns in 2024</p>
+<h1 class="title">Data Cleaning &amp; Exploration</h1>
+<p class="subtitle lead">Preparing the Job Market Dataset for Analysis</p>
 </div>
 
 
@@ -3995,8 +4104,8 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>This document presents a comprehensive exploratory data analysis of the 2024 job market. We examine hiring trends, employment types, geographic patterns, and remote work opportunities to provide actionable insights for job seekers and market analysts.</p>
-<div id="e7da79ac" class="cell" data-execution_count="1">
+<p>This document details the comprehensive data cleaning and preprocessing steps applied to the 2024 job market dataset. Our goal is to prepare a high-quality dataset for subsequent exploratory and advanced analyses by removing redundant information, handling missing values strategically, and eliminating duplicate entries.</p>
+<div id="82df41af" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="esms-options">{"shimMode": true}</script><style>*[data-root-id],
 *[data-root-id] > * {
@@ -4524,11 +4633,11 @@ if (window.Jupyter !== undefined) {
 </div>
 <div class="cell-output cell-output-display">
 <div id="p1002">
-  <div id="e1bac5b5-22e4-4341-9175-b9fe9d7e38e1" data-root-id="p1002" style="display: contents;"></div>
+  <div id="f6a5ab22-7d0c-4152-870c-d680fee0e909" data-root-id="p1002" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"a1f2297a-b4b7-409c-81c9-e8fd37196b6d":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1002"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"p1003","attributes":{"plot_id":"p1002","comm_id":"af904c7ddf05401d843588341cffef9b","client_comm_id":"750fce53552e4bc7b796de1d3ef64cfb"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"a1f2297a-b4b7-409c-81c9-e8fd37196b6d","roots":{"p1002":"e1bac5b5-22e4-4341-9175-b9fe9d7e38e1"},"root_ids":["p1002"]}];
+  var docs_json = {"d7540e57-370b-4e23-9d90-9afe1c548a49":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1002"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"p1003","attributes":{"plot_id":"p1002","comm_id":"fd9816f4745b470ca96c268c1e0a69ca","client_comm_id":"343664ccbe3f4633a5329ea042275335"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
+  var render_items = [{"docid":"d7540e57-370b-4e23-9d90-9afe1c548a49","roots":{"p1002":"f6a5ab22-7d0c-4152-870c-d680fee0e909"},"root_ids":["p1002"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
@@ -5120,520 +5229,180 @@ if (window.Jupyter !== undefined) {
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Dataset shape: (59220, 56)
-Analysis period: 2024 Job Market
-Total job postings analyzed: 59,220</code></pre>
+<pre><code>Initial dataset shape: (72498, 131)
+Total rows: 72,498
+Total columns: 131</code></pre>
 </div>
 </div>
 </section>
-<section id="job-title-analysis" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="job-title-analysis"><span class="header-section-number">2</span> 1. Job Title Analysis</h2>
-<section id="top-in-demand-job-titles" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="top-in-demand-job-titles"><span class="header-section-number">2.1</span> 1.1 Top In-Demand Job Titles</h3>
-<p>Understanding which job titles dominate the market helps identify high-demand roles and emerging career opportunities.</p>
-<div id="22012446" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display">
+<section id="step-1-removing-redundant-columns" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="step-1-removing-redundant-columns"><span class="header-section-number">2</span> Step 1: Removing Redundant Columns</h2>
+<section id="rationale-for-column-removal" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="rationale-for-column-removal"><span class="header-section-number">2.1</span> Rationale for Column Removal</h3>
+<p>We remove redundant columns to improve dataset quality and analysis efficiency. Our removal strategy targets:</p>
+<ul>
+<li><strong>Tracking &amp; Administrative Columns</strong>: ID, URL, DUPLICATES, LAST_UPDATED_TIMESTAMP - metadata that doesn’t contribute to analysis</li>
+<li><strong>Raw Text Fields</strong>: BODY, TITLE_RAW, COMPANY_RAW - we retain cleaned versions (TITLE, COMPANY_NAME, TITLE_CLEAN)</li>
+<li><strong>Deprecated Classifications</strong>: Keep only latest standards (NAICS_2022_6, SOC_2021_4, CIP4)</li>
+<li><strong>Duplicate Geographic Fields</strong>: Multiple versions of county/MSA data create redundancy</li>
+<li><strong>Redundant Salary Fields</strong>: Consolidate to primary SALARY field</li>
+</ul>
+<div id="c5966693" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>Columns removed: 69
+New dataset shape: (72498, 62)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-2-handling-missing-values" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="step-2-handling-missing-values"><span class="header-section-number">3</span> Step 2: Handling Missing Values</h2>
+<section id="missing-data-assessment" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="missing-data-assessment"><span class="header-section-number">3.1</span> Missing Data Assessment</h3>
+<p>Before imputation, we analyze the extent and distribution of missing data across all columns.</p>
+<div id="48ac3c3a" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>Columns with missing values: 62
 
-</div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div id="91c24f77-2c43-4fa4-9cf5-4947941a9101">
-  <div id="a012e506-3c10-4b81-8b6c-d7f8a3f45e66" data-root-id="91c24f77-2c43-4fa4-9cf5-4947941a9101" style="display: contents;"></div>
-</div>
-<script type="application/javascript">(function(root) {
-  var docs_json = {"cf00a209-b92e-4ca9-a2e5-6949ac3f2ec0":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"91c24f77-2c43-4fa4-9cf5-4947941a9101","attributes":{"name":"Row00966","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"0402d7da-d1bb-4541-8d80-c4a13d051495","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"d8d2522a-01ef-47aa-91f6-6c4cb487f7cb","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"3d4099c7-fc73-4bf8-8073-eaf4112e4e66","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"607dd351-eb4d-48ab-bab6-adaaa50f44f3","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":900,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"9b4c03b6-50ea-408a-807e-0b76b911840c","attributes":{"name":"HSpacer00973","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"0402d7da-d1bb-4541-8d80-c4a13d051495"},{"id":"3d4099c7-fc73-4bf8-8073-eaf4112e4e66"},{"id":"607dd351-eb4d-48ab-bab6-adaaa50f44f3"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"fac956ab-58df-4775-9f78-07f0f582e6f4","attributes":{"width":900,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"Range1d","id":"7de2c495-f5a5-4c89-937d-5c611852654e","attributes":{"tags":[[["Count",null]],[]],"end":7018.2,"reset_start":0.0,"reset_end":7018.2}},"y_range":{"type":"object","name":"FactorRange","id":"9397e9b1-7bd5-4d10-aa4a-a271a55a5540","attributes":{"tags":[[["Job Title",null]],{"type":"map","entries":[["invert_yaxis",true],["autorange",false]]}],"factors":["Data Management Analysts","Lead Data Analysts","Data Analytics Interns","SAP Consultants","Data Analytics Engineers","Data Quality Analysts","ERP Business Analysts","Solutions Architects","Oracle Cloud HCM Consultants","Data Governance Analysts","Data Modelers","Enterprise Architects","Business Intelligence Analysts","Unclassified","Data Analysts"]}},"x_scale":{"type":"object","name":"LinearScale","id":"ae991806-60f7-4f6c-b3c3-8ba5df13e354"},"y_scale":{"type":"object","name":"CategoricalScale","id":"893c0cb0-c4dc-4366-a0bf-5a1b0d2bc397"},"title":{"type":"object","name":"Title","id":"cc32c8c7-ec11-4814-8cbe-a88d42f86416","attributes":{"text":"Top 15 Most In-Demand Job Titles (2024)","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"57211a0d-553b-4671-b32f-0109c9d29829","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"ba33ebd9-bbe4-44b1-809a-33b33aa12945","attributes":{"selected":{"type":"object","name":"Selection","id":"5417fa40-6ac8-4c69-a431-4ab632eeb31b","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"5228faef-c097-446b-b6ad-b6cceb818f64"},"data":{"type":"map","entries":[["Job_Title",["Data Analysts","Unclassified","Business Intelligence Analysts","Enterprise Architects","Data Modelers","Data Governance Analysts","Oracle Cloud HCM Consultants","Solutions Architects","ERP Business Analysts","Data Quality Analysts","Data Analytics Engineers","SAP Consultants","Data Analytics Interns","Lead Data Analysts","Data Management Analysts"]],["Count",{"type":"ndarray","array":{"type":"bytes","data":"CRkAAGUJAABYBgAA/wUAAEICAADYAQAAjAEAAHkBAABxAQAAZwEAAFcBAABSAQAASAEAAD8BAAA9AQAA"},"shape":[15],"dtype":"int32","order":"little"}],["Percentage",{"type":"ndarray","array":{"type":"bytes","data":"pHA9CtejJUA9CtejcD0QQOxRuB6F6wVAuB6F61G4BEBcj8L1KFzvP5qZmZmZmek/cT0K16Nw5T97FK5H4XrkP9ejcD0K1+M/hetRuB6F4z+PwvUoXI/iPz0K16NwPeI/mpmZmZmZ4T9I4XoUrkfhP0jhehSuR+E/"},"shape":[15],"dtype":"float64","order":"little"}]]}}},"view":{"type":"object","name":"CDSView","id":"1c1e0a1a-b7f4-4b87-ae33-a86ac96cc722","attributes":{"filter":{"type":"object","name":"AllIndices","id":"819c0d61-07de-4730-967d-a34d8d12a6c5"}}},"glyph":{"type":"object","name":"HBar","id":"1556f0dd-be36-407d-bbca-d04c83662d6d","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Job_Title"},"height":{"type":"value","value":0.8},"right":{"type":"field","field":"Count"},"fill_color":{"type":"value","value":"#3498db"},"hatch_color":{"type":"value","value":"#3498db"}}},"selection_glyph":{"type":"object","name":"HBar","id":"26c4fcda-c432-4735-a48e-02556d9120a6","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Job_Title"},"height":{"type":"value","value":0.8},"left":{"type":"value","value":0},"right":{"type":"field","field":"Count"},"line_color":{"type":"value","value":"black"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#3498db"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#3498db"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0}}},"nonselection_glyph":{"type":"object","name":"HBar","id":"cab09891-9658-4f54-9e5a-ae912da70cf8","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Job_Title"},"height":{"type":"value","value":0.8},"right":{"type":"field","field":"Count"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#3498db"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#3498db"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"HBar","id":"9dda23ee-a416-4305-b7bc-d54452591b49","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Job_Title"},"height":{"type":"value","value":0.8},"right":{"type":"field","field":"Count"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#3498db"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#3498db"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"e50fb524-c0d9-45b9-a4e2-21f9c63c441d","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"72da9b66-658c-4460-8443-83b1555d5f04","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"a97d86a9-15e6-4c34-92ea-9e44a6a983a0","attributes":{"tags":["hv_created"],"renderers":[{"id":"57211a0d-553b-4671-b32f-0109c9d29829"}],"tooltips":[["Job Title","@{Job_Title}"],["Count","@{Count}"],["Percentage","@{Percentage}"]]}},{"type":"object","name":"SaveTool","id":"60f9cfea-ee9b-4e71-8b6e-66a890142a43"},{"type":"object","name":"PanTool","id":"a98af379-af57-48ff-ad8e-ac3eb0b0ea7a"},{"type":"object","name":"BoxZoomTool","id":"42dfd2ed-9d14-4292-8bb5-b54fe99e105a","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"433d2c56-2cbd-4074-8928-b9bb47fa518f","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"d79679a3-374d-41f7-859b-29f890d7f563","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"6e874db3-3823-4fdc-a9d8-55f7d7038c28","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"1cc7eedc-8b47-4649-8bc8-c7d969438f05"}],"active_drag":{"id":"a98af379-af57-48ff-ad8e-ac3eb0b0ea7a"},"active_scroll":{"id":"72da9b66-658c-4460-8443-83b1555d5f04"}}},"left":[{"type":"object","name":"CategoricalAxis","id":"94007fc2-9992-457c-8bc6-9a8a1ee7487d","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"487ec535-5a69-4a2a-80b3-6a449eab7f58"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"65d35f8a-f734-47f2-a43a-4379c4992e83"},"axis_label":"Number of Job Postings","major_label_policy":{"type":"object","name":"AllLabels","id":"1e86b49e-3a81-43d9-91f8-648a58130217"}}}],"below":[{"type":"object","name":"LinearAxis","id":"59cd9f36-2e0b-4b5b-bf77-7b8239026929","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"ce796fc1-c1f9-40a6-b408-4d61df86992a","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"f5c25295-5a6b-4dc0-be23-f65cadd8d0a6"},"axis_label":"","major_label_policy":{"type":"object","name":"AllLabels","id":"79df83a3-6c27-4408-8aae-830327a881f4"}}}],"center":[{"type":"object","name":"Grid","id":"e85e0849-582e-45b2-982a-17644e35aab4","attributes":{"axis":{"id":"59cd9f36-2e0b-4b5b-bf77-7b8239026929"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"a24a49dc-f7ab-4e5f-b50c-e88e6e0d4510","attributes":{"dimension":1,"axis":{"id":"94007fc2-9992-457c-8bc6-9a8a1ee7487d"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"bee147a7-5a2a-40af-8343-fd391f65febe","attributes":{"name":"HSpacer00974","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"0402d7da-d1bb-4541-8d80-c4a13d051495"},{"id":"3d4099c7-fc73-4bf8-8073-eaf4112e4e66"},{"id":"607dd351-eb4d-48ab-bab6-adaaa50f44f3"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"cf00a209-b92e-4ca9-a2e5-6949ac3f2ec0","roots":{"91c24f77-2c43-4fa4-9cf5-4947941a9101":"a012e506-3c10-4b81-8b6c-d7f8a3f45e66"},"root_ids":["91c24f77-2c43-4fa4-9cf5-4947941a9101"]}];
-  var docs = Object.values(docs_json)
-  if (!docs) {
-    return
-  }
-  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  async function embed_document(root) {
-    var Bokeh = get_bokeh(root)
-    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
-    for (const render_item of render_items) {
-      for (const root_id of render_item.root_ids) {
-    const id_el = document.getElementById(root_id)
-    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
-      const root_el = id_el.children[0]
-      root_el.id = root_el.id + '-rendered'
-      for (const child of root_el.children) {
-            // Ensure JupyterLab does not capture keyboard shortcuts
-            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
-        child.setAttribute('data-lm-suppress-shortcuts', 'true')
-      }
-    }
-      }
-    }
-  }
-  function get_bokeh(root) {
-    if (root.Bokeh === undefined) {
-      return null
-    } else if (root.Bokeh.version !== py_version) {
-      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
-    return null
-      }
-      return root.Bokeh.versions.get(py_version);
-    } else if (root.Bokeh.version === py_version) {
-      return root.Bokeh
-    }
-    return null
-  }
-  function is_loaded(root) {
-    var Bokeh = get_bokeh(root)
-    return (Bokeh != null && Bokeh.Panel !== undefined)
-  }
-  if (is_loaded(root)) {
-    embed_document(root);
-  } else {
-    var attempts = 0;
-    var timer = setInterval(function(root) {
-      if (is_loaded(root)) {
-        clearInterval(timer);
-        embed_document(root);
-      } else if (document.readyState == "complete") {
-        attempts++;
-        if (attempts > 200) {
-          clearInterval(timer);
-      var Bokeh = get_bokeh(root)
-      if (Bokeh == null || Bokeh.Panel == null) {
-            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
-      } else {
-        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
-        embed_document(root)
-      }
-        }
-      }
-    }, 25, root)
-  }
-})(window);</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Key Insight
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The top job titles reveal where the market has the highest demand. Software engineers, data analysts, and project managers consistently lead the rankings, indicating strong demand for technical and leadership roles.</p>
+Top 10 columns with highest missing percentages:
+                    Column  Missing_Count  Missing_Percentage
+18    MAX_YEARS_EXPERIENCE          64068               88.37
+13           MAX_EDULEVELS          56183               77.50
+14      MAX_EDULEVELS_NAME          56183               77.50
+50       LIGHTCAST_SECTORS          54711               75.47
+51  LIGHTCAST_SECTORS_NAME          54711               75.47
+20                  SALARY          41690               57.51
+3                 DURATION          27316               37.68
+17    MIN_YEARS_EXPERIENCE          23146               31.93
+2                  EXPIRED           7844               10.82
+30       MSA_NAME_INCOMING           3962                5.46</code></pre>
 </div>
 </div>
 </section>
+<section id="visualizing-missing-data" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="visualizing-missing-data"><span class="header-section-number">3.2</span> Visualizing Missing Data</h3>
 </section>
-<section id="employment-type-distribution" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="employment-type-distribution"><span class="header-section-number">3</span> 2. Employment Type Distribution</h2>
-<section id="full-time-vs-part-time-vs-contract" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="full-time-vs-part-time-vs-contract"><span class="header-section-number">3.1</span> 2.1 Full-Time vs Part-Time vs Contract</h3>
-<p>Understanding employment type distribution helps job seekers target positions matching their career preferences.</p>
-<div id="8f6e1397" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display">
+<section id="missing-value-imputation-strategy" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="missing-value-imputation-strategy"><span class="header-section-number">3.3</span> Missing Value Imputation Strategy</h3>
+<p>Our approach to handling missing data:</p>
+<ol type="1">
+<li><strong>Drop columns</strong> with more than 50% missing values (unreliable data)</li>
+<li><strong>Fill numerical columns</strong> with median values to maintain distribution</li>
+<li><strong>Fill categorical columns</strong> with “Unknown” for transparency</li>
+</ol>
+<div id="1f4a61ae" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-stdout">
+<pre><code>Columns dropped due to &gt;50% missing values: 6
+Filled DURATION with median: 18.00
+Filled COMPANY with median: 37615159.00
+Filled MIN_EDULEVELS with median: 2.00
+Filled EMPLOYMENT_TYPE with median: 1.00
+Filled MIN_YEARS_EXPERIENCE with median: 5.00
+Filled REMOTE_TYPE with median: 0.00
+Filled STATE with median: 29.00
+Filled NAICS_2022_2 with median: 54.00
+Filled NAICS_2022_3 with median: 541.00
+Filled NAICS_2022_4 with median: 5415.00
+Filled NAICS_2022_5 with median: 54151.00
+Filled NAICS_2022_6 with median: 541519.00
+Filled LAST_UPDATED_DATE: 22 missing values with &#39;Unknown&#39;
+Filled POSTED: 22 missing values with &#39;Unknown&#39;
+Filled EXPIRED: 7844 missing values with &#39;Unknown&#39;
+Filled SOURCE_TYPES: 22 missing values with &#39;Unknown&#39;
+Filled SOURCES: 22 missing values with &#39;Unknown&#39;
+Filled COMPANY_NAME: 44 missing values with &#39;Unknown&#39;
+Filled COMPANY_IS_STAFFING: 44 missing values with &#39;Unknown&#39;
+Filled EDUCATION_LEVELS: 44 missing values with &#39;Unknown&#39;
+Filled EDUCATION_LEVELS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled MIN_EDULEVELS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled EMPLOYMENT_TYPE_NAME: 44 missing values with &#39;Unknown&#39;
+Filled IS_INTERNSHIP: 44 missing values with &#39;Unknown&#39;
+Filled REMOTE_TYPE_NAME: 44 missing values with &#39;Unknown&#39;
+Filled LOCATION: 44 missing values with &#39;Unknown&#39;
+Filled CITY: 44 missing values with &#39;Unknown&#39;
+Filled CITY_NAME: 44 missing values with &#39;Unknown&#39;
+Filled MSA_NAME: 3949 missing values with &#39;Unknown&#39;
+Filled STATE_NAME: 44 missing values with &#39;Unknown&#39;
+Filled MSA_NAME_OUTGOING: 3949 missing values with &#39;Unknown&#39;
+Filled MSA_NAME_INCOMING: 3962 missing values with &#39;Unknown&#39;
+Filled TITLE: 44 missing values with &#39;Unknown&#39;
+Filled TITLE_NAME: 44 missing values with &#39;Unknown&#39;
+Filled TITLE_CLEAN: 140 missing values with &#39;Unknown&#39;
+Filled SKILLS: 44 missing values with &#39;Unknown&#39;
+Filled SKILLS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled SPECIALIZED_SKILLS: 44 missing values with &#39;Unknown&#39;
+Filled SPECIALIZED_SKILLS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled CERTIFICATIONS: 44 missing values with &#39;Unknown&#39;
+Filled CERTIFICATIONS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled COMMON_SKILLS: 44 missing values with &#39;Unknown&#39;
+Filled COMMON_SKILLS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled SOFTWARE_SKILLS: 44 missing values with &#39;Unknown&#39;
+Filled SOFTWARE_SKILLS_NAME: 44 missing values with &#39;Unknown&#39;
+Filled ONET: 44 missing values with &#39;Unknown&#39;
+Filled ONET_NAME: 44 missing values with &#39;Unknown&#39;
+Filled CIP4: 44 missing values with &#39;Unknown&#39;
+Filled CIP4_NAME: 44 missing values with &#39;Unknown&#39;
+Filled SOC_2021_4: 44 missing values with &#39;Unknown&#39;
+Filled SOC_2021_4_NAME: 44 missing values with &#39;Unknown&#39;
+Filled NAICS_2022_2_NAME: 44 missing values with &#39;Unknown&#39;
+Filled NAICS_2022_3_NAME: 44 missing values with &#39;Unknown&#39;
+Filled NAICS_2022_4_NAME: 44 missing values with &#39;Unknown&#39;
+Filled NAICS_2022_5_NAME: 44 missing values with &#39;Unknown&#39;
+Filled NAICS_2022_6_NAME: 44 missing values with &#39;Unknown&#39;
 
-</div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<div id="c2acfa7c-2f57-4f54-839c-37ce73f5d54a">
-  <div id="cbd30be6-e145-4703-b91f-4dda9b2558ae" data-root-id="c2acfa7c-2f57-4f54-839c-37ce73f5d54a" style="display: contents;"></div>
-</div>
-<script type="application/javascript">(function(root) {
-  var docs_json = {"1aa5c79e-2c16-40a1-93c5-3c167d74d952":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"c2acfa7c-2f57-4f54-839c-37ce73f5d54a","attributes":{"name":"Row01082","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"a00eed02-203e-4169-9a54-0fe0650bf9b6","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"758d1e39-1e29-4224-8f03-f44448f45bb9","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"768bba37-4954-4b54-92d6-0c239712321e","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"b694f597-de46-4f04-a923-4f3c4abc4857","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":800,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"2a097d30-ed09-4466-98e3-75a34182a28e","attributes":{"name":"HSpacer01089","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"a00eed02-203e-4169-9a54-0fe0650bf9b6"},{"id":"768bba37-4954-4b54-92d6-0c239712321e"},{"id":"b694f597-de46-4f04-a923-4f3c4abc4857"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"2b888210-8dc8-4ef1-9b88-cfc0684d2aa4","attributes":{"width":800,"height":500,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"FactorRange","id":"b26254e5-5e05-4a8b-8936-aac7215b6bea","attributes":{"tags":[[["Employment Type",null]],[]],"factors":["Full-time (> 32 hours)","Part-time (\u00e2\u2030\u00a4 32 hours)","Part-time / full-time","Unknown"]}},"y_range":{"type":"object","name":"Range1d","id":"ab1259fb-f3cb-4a90-8f03-605245223eca","attributes":{"tags":[[["Count",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"end":62061.9,"reset_start":0.0,"reset_end":62061.9}},"x_scale":{"type":"object","name":"CategoricalScale","id":"4abfa198-736b-4228-bf06-7377a5deb0f9"},"y_scale":{"type":"object","name":"LinearScale","id":"98fe1036-6733-40d4-872e-6ee546d4ffbc"},"title":{"type":"object","name":"Title","id":"f702ddb2-a280-406a-84c9-e6418f5ac0ee","attributes":{"text":"Job Market Distribution by Employment Type (2024)","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"026f6b76-53f8-46da-803c-a84d3f53da33","attributes":{"name":"color","data_source":{"type":"object","name":"ColumnDataSource","id":"33f003d0-2383-4cb6-98ab-929147537c9a","attributes":{"selected":{"type":"object","name":"Selection","id":"5eda0495-36a8-4b99-bf86-cbbb4be334c9","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"c3b632cd-3a73-427c-884e-fba14940a3f9"},"data":{"type":"map","entries":[["Employment_Type",["Full-time (> 32 hours)","Part-time (\u00e2\u2030\u00a4 32 hours)","Part-time / full-time","Unknown"]],["Count",{"type":"ndarray","array":{"type":"bytes","data":"ZNwAALkHAAA2AwAAAQAAAA=="},"shape":[4],"dtype":"int32","order":"little"}],["Percentage",{"type":"ndarray","array":{"type":"bytes","data":"MzMzMzPTV0BmZmZmZmYKQGZmZmZmZvY/AAAAAAAAAAA="},"shape":[4],"dtype":"float64","order":"little"}],["color",["Full-time (> 32 hours)","Part-time (\u00e2\u2030\u00a4 32 hours)","Part-time / full-time","Unknown"]]]}}},"view":{"type":"object","name":"CDSView","id":"42637cad-1e0f-420b-8806-ebeda01497e0","attributes":{"filter":{"type":"object","name":"AllIndices","id":"cbc8e9ae-4d28-4422-87d3-d3f327d25feb"}}},"glyph":{"type":"object","name":"VBar","id":"65c817fe-d41b-4c95-bf9b-54e8b5c89ffa","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Employment_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"fill_color":{"type":"field","field":"color","transform":{"type":"object","name":"CategoricalColorMapper","id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668","attributes":{"palette":["#3498db","#e74c3c","#2ecc71","#f39c12"],"factors":["Full-time (> 32 hours)","Part-time (\u00e2\u2030\u00a4 32 hours)","Part-time / full-time","Unknown"]}}},"hatch_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}}}},"selection_glyph":{"type":"object","name":"VBar","id":"d93f8712-984b-4ef2-b5ac-7e5bf638cbe6","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Employment_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"fill_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}},"hatch_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"51f60077-b248-448c-b6ac-1915cf1f8b0b","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Employment_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}},"hatch_alpha":{"type":"value","value":0.1}}},"hover_glyph":{"type":"object","name":"VBar","id":"9c415198-e1c2-4ebf-b258-26453f981ae0","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Employment_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"fill_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}},"hatch_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}}}},"muted_glyph":{"type":"object","name":"VBar","id":"b085cdb4-de2f-4db1-aac7-6b2017ca7a49","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Employment_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"field","field":"color","transform":{"id":"e7f2dcab-dc9c-4d5e-9252-4e9a1216a668"}},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"8862c136-e2b4-44e7-973e-7727ac00d9ad","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"8a77cf56-2523-4748-b3d7-7d28e32422b9","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"a7a1d5ef-d464-44a8-b08a-3965d51b0ce5","attributes":{"tags":["hv_created"],"renderers":[{"id":"026f6b76-53f8-46da-803c-a84d3f53da33"}],"tooltips":[["Employment Type","@{Employment_Type}"],["Count","@{Count}"],["Percentage","@{Percentage}"]]}},{"type":"object","name":"SaveTool","id":"ce237219-8338-4103-8d11-e6853a07519a"},{"type":"object","name":"PanTool","id":"80b3a201-b96f-4b76-8532-940748e157b2"},{"type":"object","name":"BoxZoomTool","id":"cf24ebe1-f610-45b9-a885-1ae15f99651e","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"333bafcf-4457-4cfe-b597-942052507849","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"7fafeca2-8efd-4f04-8fa5-1c8b7505dc8c","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"3069599c-e882-4bf9-86fc-224a22b7059d","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"0d42270a-381d-4fa4-bb14-2dc9f0303916"}],"active_drag":{"id":"80b3a201-b96f-4b76-8532-940748e157b2"},"active_scroll":{"id":"8a77cf56-2523-4748-b3d7-7d28e32422b9"}}},"left":[{"type":"object","name":"LinearAxis","id":"b2720d7a-1017-40f1-ba88-75dbe02a9cda","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"e563cf75-5b16-40b7-97f3-79f5e553d140","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"0948a26c-b288-4cd0-8455-711cc762930b"},"axis_label":"Number of Job Postings","major_label_policy":{"type":"object","name":"AllLabels","id":"97ebd9ed-d3ca-4038-acaf-3416f6c89b72"}}}],"right":[{"type":"object","name":"Legend","id":"2db931a7-4ea9-411b-80ed-b16c2360cc19","attributes":{"location":[0,0],"items":[{"type":"object","name":"LegendItem","id":"17a58243-9f6b-4cc7-bdcb-a5cf9a1afe6c","attributes":{"label":{"type":"field","field":"color"},"renderers":[{"id":"026f6b76-53f8-46da-803c-a84d3f53da33"}]}}]}}],"below":[{"type":"object","name":"CategoricalAxis","id":"2a36d01f-8b1e-4f1f-92b0-df18481cae34","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"0a47e7b3-13ad-41ff-8981-7463a446c483"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"3813391d-9a5b-47d9-b933-a6107fa53bc0"},"axis_label":"Employment Type","major_label_orientation":0.7853981633974483,"major_label_policy":{"type":"object","name":"AllLabels","id":"c7edcda2-2b2c-4e8e-bce4-0922c1721647"}}}],"center":[{"type":"object","name":"Grid","id":"4049a94b-2ec4-423f-929a-1ce9cbf7c893","attributes":{"axis":{"id":"2a36d01f-8b1e-4f1f-92b0-df18481cae34"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"12b6d397-c9cd-4869-b6ad-a76a146dc441","attributes":{"dimension":1,"axis":{"id":"b2720d7a-1017-40f1-ba88-75dbe02a9cda"},"grid_line_color":null}},{"id":"2db931a7-4ea9-411b-80ed-b16c2360cc19"}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"0905d59a-e888-4f70-a30a-d0d049cd9b19","attributes":{"name":"HSpacer01090","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"a00eed02-203e-4169-9a54-0fe0650bf9b6"},{"id":"768bba37-4954-4b54-92d6-0c239712321e"},{"id":"b694f597-de46-4f04-a923-4f3c4abc4857"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"1aa5c79e-2c16-40a1-93c5-3c167d74d952","roots":{"c2acfa7c-2f57-4f54-839c-37ce73f5d54a":"cbd30be6-e145-4703-b91f-4dda9b2558ae"},"root_ids":["c2acfa7c-2f57-4f54-839c-37ce73f5d54a"]}];
-  var docs = Object.values(docs_json)
-  if (!docs) {
-    return
-  }
-  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  async function embed_document(root) {
-    var Bokeh = get_bokeh(root)
-    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
-    for (const render_item of render_items) {
-      for (const root_id of render_item.root_ids) {
-    const id_el = document.getElementById(root_id)
-    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
-      const root_el = id_el.children[0]
-      root_el.id = root_el.id + '-rendered'
-      for (const child of root_el.children) {
-            // Ensure JupyterLab does not capture keyboard shortcuts
-            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
-        child.setAttribute('data-lm-suppress-shortcuts', 'true')
-      }
-    }
-      }
-    }
-  }
-  function get_bokeh(root) {
-    if (root.Bokeh === undefined) {
-      return null
-    } else if (root.Bokeh.version !== py_version) {
-      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
-    return null
-      }
-      return root.Bokeh.versions.get(py_version);
-    } else if (root.Bokeh.version === py_version) {
-      return root.Bokeh
-    }
-    return null
-  }
-  function is_loaded(root) {
-    var Bokeh = get_bokeh(root)
-    return (Bokeh != null && Bokeh.Panel !== undefined)
-  }
-  if (is_loaded(root)) {
-    embed_document(root);
-  } else {
-    var attempts = 0;
-    var timer = setInterval(function(root) {
-      if (is_loaded(root)) {
-        clearInterval(timer);
-        embed_document(root);
-      } else if (document.readyState == "complete") {
-        attempts++;
-        if (attempts > 200) {
-          clearInterval(timer);
-      var Bokeh = get_bokeh(root)
-      if (Bokeh == null || Bokeh.Panel == null) {
-            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
-      } else {
-        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
-        embed_document(root)
-      }
-        }
-      }
-    }, 25, root)
-  }
-})(window);</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Key Insight
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The distribution of employment types shows whether the market primarily offers full-time stability, part-time flexibility, or contract-based project work. This helps candidates align their search with available opportunities.</p>
+Total missing values after imputation: 0</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="remote-work-analysis" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="remote-work-analysis"><span class="header-section-number">4</span> 3. Remote Work Analysis</h2>
-<section id="remote-vs-hybrid-vs-on-site" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="remote-vs-hybrid-vs-on-site"><span class="header-section-number">4.1</span> 3.1 Remote vs Hybrid vs On-Site</h3>
-<p>The prevalence of remote work reflects post-pandemic hiring trends and employer flexibility.</p>
-<div id="a99ff952" class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display">
+<section id="step-3-removing-duplicates" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="step-3-removing-duplicates"><span class="header-section-number">4</span> Step 3: Removing Duplicates</h2>
+<section id="duplicate-detection-strategy" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="duplicate-detection-strategy"><span class="header-section-number">4.1</span> Duplicate Detection Strategy</h3>
+<p>Duplicate job postings can skew our analysis by overcounting certain positions. We identify duplicates based on key identifiers: job title, company name, and location.</p>
+<div id="a3d9eabd" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stdout">
+<pre><code>Initial rows: 72,498
+Duplicate rows detected: 13,278
+Duplicate percentage: 18.31%
 
-</div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<div id="d505cdb8-aefe-4ee7-b77b-8d1e8fbfcbbe">
-  <div id="c0ac5652-c234-4c00-9ff3-8abeac00128c" data-root-id="d505cdb8-aefe-4ee7-b77b-8d1e8fbfcbbe" style="display: contents;"></div>
-</div>
-<script type="application/javascript">(function(root) {
-  var docs_json = {"7a3c67eb-cb9c-43c4-9686-14546472a717":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"d505cdb8-aefe-4ee7-b77b-8d1e8fbfcbbe","attributes":{"name":"Row01198","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"923ed477-45b9-40d2-b135-462640e59101","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"99f98a9d-4160-443c-92d2-734127309a62","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"8fe85990-1ef1-40e4-8c21-5e201421d542","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"2c9e8b54-2850-4472-bc86-3f0103d49c39","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":800,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"91201155-0768-4a46-96ee-599e3d0c0cf5","attributes":{"name":"HSpacer01205","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"923ed477-45b9-40d2-b135-462640e59101"},{"id":"8fe85990-1ef1-40e4-8c21-5e201421d542"},{"id":"2c9e8b54-2850-4472-bc86-3f0103d49c39"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"7221c60e-8047-4484-abbf-a3222344c3b7","attributes":{"width":800,"height":500,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"FactorRange","id":"5b5e2710-74b4-4a6a-934e-e2ec91790fea","attributes":{"tags":[[["Remote Type",null]],[]],"factors":["[None]","Remote","Hybrid Remote","Not Remote","Unknown"]}},"y_range":{"type":"object","name":"Range1d","id":"62965f08-29c8-4f9a-b60a-42f742a98e8f","attributes":{"tags":[[["Count",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"end":50775.9,"reset_start":0.0,"reset_end":50775.9}},"x_scale":{"type":"object","name":"CategoricalScale","id":"c5719098-3b69-4eef-8117-42c9244703a4"},"y_scale":{"type":"object","name":"LinearScale","id":"59632d7c-3645-45d2-86d4-20ebb2ef3302"},"title":{"type":"object","name":"Title","id":"42f5eeb6-9756-4775-9182-dfe69caff2df","attributes":{"text":"Job Market Distribution: Remote, Hybrid & On-Site Opportunities (2024)","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"5ecce6e7-8848-4f27-bf07-9c88613d9c58","attributes":{"name":"color","data_source":{"type":"object","name":"ColumnDataSource","id":"a9bd4a13-0a68-4c4d-925c-91e00a2398a2","attributes":{"selected":{"type":"object","name":"Selection","id":"5a23f773-4c29-4ea8-ae79-519514265bb3","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"2bc812f8-9743-4b95-b55c-2d94bc4617cb"},"data":{"type":"map","entries":[["Remote_Type",["[None]","Remote","Hybrid Remote","Not Remote","Unknown"]],["Count",{"type":"ndarray","array":{"type":"bytes","data":"ULQAABcoAABjBwAAiQMAAAEAAAA="},"shape":[5],"dtype":"int32","order":"little"}],["Percentage",{"type":"ndarray","array":{"type":"bytes","data":"mpmZmZl5U0DNzMzMzEwxQJqZmZmZmQlAAAAAAAAA+D8AAAAAAAAAAA=="},"shape":[5],"dtype":"float64","order":"little"}],["color",["[None]","Remote","Hybrid Remote","Not Remote","Unknown"]]]}}},"view":{"type":"object","name":"CDSView","id":"61dcaff4-c7a2-4266-a950-76a7a703e76a","attributes":{"filter":{"type":"object","name":"AllIndices","id":"171ba080-17b9-4d6e-912a-740bf278b46c"}}},"glyph":{"type":"object","name":"VBar","id":"1af64bd5-3532-4b7e-8009-1be30e237f44","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Remote_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"fill_color":{"type":"field","field":"color","transform":{"type":"object","name":"CategoricalColorMapper","id":"68d2461c-897a-4195-b2ee-324237aff8de","attributes":{"palette":["#3498db","#e74c3c","#2ecc71","#f39c12","#9b59b6"],"factors":["[None]","Remote","Hybrid Remote","Not Remote","Unknown"]}}},"hatch_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}}}},"selection_glyph":{"type":"object","name":"VBar","id":"89c6bdf2-70ae-4dc6-b5d1-b24828db7005","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Remote_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"fill_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}},"hatch_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"31dc0baa-4054-4b22-85a5-1c8759a75ffb","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Remote_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}},"hatch_alpha":{"type":"value","value":0.1}}},"hover_glyph":{"type":"object","name":"VBar","id":"32c2ae63-bfa4-4663-82fc-c6de7ac2512b","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Remote_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"fill_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}},"hatch_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}}}},"muted_glyph":{"type":"object","name":"VBar","id":"ac81704b-56c3-43c0-818d-f4c3ce6032c3","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Remote_Type"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Count"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"field","field":"color","transform":{"id":"68d2461c-897a-4195-b2ee-324237aff8de"}},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"d9f74285-1c7a-48b7-9e45-67c1be77e2ad","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"030ac4ee-a949-4677-a3db-b15816e90c00","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"75b4bb78-ab17-4ba9-89f5-8c019e3a0822","attributes":{"tags":["hv_created"],"renderers":[{"id":"5ecce6e7-8848-4f27-bf07-9c88613d9c58"}],"tooltips":[["Remote Type","@{Remote_Type}"],["Count","@{Count}"],["Percentage","@{Percentage}"]]}},{"type":"object","name":"SaveTool","id":"c77125d9-e6a3-4991-bed2-74abec71d8be"},{"type":"object","name":"PanTool","id":"ba2d1075-b85a-4135-b6b5-165f4f672a39"},{"type":"object","name":"BoxZoomTool","id":"b25d0f41-b169-4138-a23c-8539d7d2c7fc","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"288b2b20-5f0f-4de7-a114-99b1b1eb6843","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"5e7e2cb4-7553-479e-b863-42e1e72b7f52","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"5bf15ad5-8f22-4411-8c33-7d80d9a2e5cb","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"6c1f9a63-11d8-47ff-9a32-564b76142352"}],"active_drag":{"id":"ba2d1075-b85a-4135-b6b5-165f4f672a39"},"active_scroll":{"id":"030ac4ee-a949-4677-a3db-b15816e90c00"}}},"left":[{"type":"object","name":"LinearAxis","id":"b67753c4-2063-48c8-a681-1fd7cb293d30","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"ec0e4a1d-b538-4bb6-bfe2-0a64144d0ed7","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"777decca-35b5-4b5f-afab-3f15fa8d48a4"},"axis_label":"Number of Job Postings","major_label_policy":{"type":"object","name":"AllLabels","id":"c065eb5b-c167-4963-a017-2a00de02d43b"}}}],"right":[{"type":"object","name":"Legend","id":"4bb660b1-d259-4f67-b4ac-10d8c8320f3f","attributes":{"location":[0,0],"items":[{"type":"object","name":"LegendItem","id":"20d4b8c1-9c2f-4fdd-be07-ff5d52600a82","attributes":{"label":{"type":"field","field":"color"},"renderers":[{"id":"5ecce6e7-8848-4f27-bf07-9c88613d9c58"}]}}]}}],"below":[{"type":"object","name":"CategoricalAxis","id":"ca838009-9173-4534-a397-7acd6d98047f","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"1705f086-6bd8-42ea-92dd-66946103554b"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"0ac08cf7-f25d-4549-b8d1-0900ff31800e"},"axis_label":"Work Location Type","major_label_policy":{"type":"object","name":"AllLabels","id":"516c4032-3295-4ba9-ba0c-0a495fddc647"}}}],"center":[{"type":"object","name":"Grid","id":"bbf21733-0cee-47e7-8f3d-e2782cd4936c","attributes":{"axis":{"id":"ca838009-9173-4534-a397-7acd6d98047f"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"4ec89c44-3988-4e4d-894d-7a6459ca2c17","attributes":{"dimension":1,"axis":{"id":"b67753c4-2063-48c8-a681-1fd7cb293d30"},"grid_line_color":null}},{"id":"4bb660b1-d259-4f67-b4ac-10d8c8320f3f"}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"e058437c-4e09-48db-a915-a9c31bbb77af","attributes":{"name":"HSpacer01206","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"923ed477-45b9-40d2-b135-462640e59101"},{"id":"8fe85990-1ef1-40e4-8c21-5e201421d542"},{"id":"2c9e8b54-2850-4472-bc86-3f0103d49c39"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"7a3c67eb-cb9c-43c4-9686-14546472a717","roots":{"d505cdb8-aefe-4ee7-b77b-8d1e8fbfcbbe":"c0ac5652-c234-4c00-9ff3-8abeac00128c"},"root_ids":["d505cdb8-aefe-4ee7-b77b-8d1e8fbfcbbe"]}];
-  var docs = Object.values(docs_json)
-  if (!docs) {
-    return
-  }
-  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  async function embed_document(root) {
-    var Bokeh = get_bokeh(root)
-    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
-    for (const render_item of render_items) {
-      for (const root_id of render_item.root_ids) {
-    const id_el = document.getElementById(root_id)
-    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
-      const root_el = id_el.children[0]
-      root_el.id = root_el.id + '-rendered'
-      for (const child of root_el.children) {
-            // Ensure JupyterLab does not capture keyboard shortcuts
-            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
-        child.setAttribute('data-lm-suppress-shortcuts', 'true')
-      }
-    }
-      }
-    }
-  }
-  function get_bokeh(root) {
-    if (root.Bokeh === undefined) {
-      return null
-    } else if (root.Bokeh.version !== py_version) {
-      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
-    return null
-      }
-      return root.Bokeh.versions.get(py_version);
-    } else if (root.Bokeh.version === py_version) {
-      return root.Bokeh
-    }
-    return null
-  }
-  function is_loaded(root) {
-    var Bokeh = get_bokeh(root)
-    return (Bokeh != null && Bokeh.Panel !== undefined)
-  }
-  if (is_loaded(root)) {
-    embed_document(root);
-  } else {
-    var attempts = 0;
-    var timer = setInterval(function(root) {
-      if (is_loaded(root)) {
-        clearInterval(timer);
-        embed_document(root);
-      } else if (document.readyState == "complete") {
-        attempts++;
-        if (attempts > 200) {
-          clearInterval(timer);
-      var Bokeh = get_bokeh(root)
-      if (Bokeh == null || Bokeh.Panel == null) {
-            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
-      } else {
-        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
-        embed_document(root)
-      }
-        }
-      }
-    }, 25, root)
-  }
-})(window);</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Key Insight
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The balance between remote, hybrid, and on-site jobs indicates industry acceptance of flexible work arrangements. Higher remote percentages suggest employers prioritize talent acquisition over geographic constraints.</p>
+Final rows after duplicate removal: 59,220
+Rows removed: 13,278</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="geographic-analysis" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="geographic-analysis"><span class="header-section-number">5</span> 4. Geographic Analysis</h2>
-<section id="top-states-for-job-opportunities" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="top-states-for-job-opportunities"><span class="header-section-number">5.1</span> 4.1 Top States for Job Opportunities</h3>
-<p>Geographic distribution shows where job opportunities are concentrated.</p>
-<div id="c6a921ce" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display">
+<section id="step-4-data-quality-summary" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="step-4-data-quality-summary"><span class="header-section-number">5</span> Step 4: Data Quality Summary</h2>
+<section id="final-dataset-overview" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="final-dataset-overview"><span class="header-section-number">5.1</span> Final Dataset Overview</h3>
+<div id="b2303a80" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-stdout">
+<pre><code>                Metric  Value
+            Total Rows 59,220
+         Total Columns     56
+     Numerical Columns     12
+   Categorical Columns     44
+        Missing Values      0
+Duplicate Rows Removed 13,278
 
-</div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<div id="0adb55ed-269f-4b63-88f1-5759fef024a6">
-  <div id="d90b9d47-3d10-45ce-a184-1b4ba4acc0ac" data-root-id="0adb55ed-269f-4b63-88f1-5759fef024a6" style="display: contents;"></div>
-</div>
-<script type="application/javascript">(function(root) {
-  var docs_json = {"596dde2d-b806-4f1b-b8ff-b6e82754cf7c":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"0adb55ed-269f-4b63-88f1-5759fef024a6","attributes":{"name":"Row01312","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"bab2cfe1-b36a-4e0f-8d7e-325928bf490a","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"6d53f9f2-7bc0-490d-9658-ccdf0d43e279","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"1defa752-a24e-40ec-b0de-13ecd4dbb0c9","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"6b0cd085-965e-49c7-a964-dc031decc003","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":1000,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"131df45d-6e36-470a-b16f-9f29c9aede36","attributes":{"name":"HSpacer01319","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"bab2cfe1-b36a-4e0f-8d7e-325928bf490a"},{"id":"1defa752-a24e-40ec-b0de-13ecd4dbb0c9"},{"id":"6b0cd085-965e-49c7-a964-dc031decc003"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"eb2d185b-024b-4913-96b9-0487e0849d2d","attributes":{"width":1000,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"FactorRange","id":"2a6659d6-391c-4084-bd1b-aa757b70b995","attributes":{"tags":[[["State",null]],[]],"factors":["Texas","California","Virginia","Florida","New York","Illinois","North Carolina","New Jersey","Georgia","Ohio","Pennsylvania","Massachusetts","Michigan","Washington","Arizona"]}},"y_range":{"type":"object","name":"Range1d","id":"d068e74e-3023-4c53-a4f1-93470ba40829","attributes":{"tags":[[["Job Postings",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"end":7070.7,"reset_start":0.0,"reset_end":7070.7}},"x_scale":{"type":"object","name":"CategoricalScale","id":"185ba694-3f2c-4c38-b1d3-217626db28df"},"y_scale":{"type":"object","name":"LinearScale","id":"17346d53-5c81-4cae-b349-1768984fc95d"},"title":{"type":"object","name":"Title","id":"3c381817-69b4-4846-a793-3044644a97a2","attributes":{"text":"Top 15 States by Number of Job Postings (2024)","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"221be213-87c9-42ba-8894-b111c7848823","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"9e1ba271-1f7d-471c-b152-00acb9c4426a","attributes":{"selected":{"type":"object","name":"Selection","id":"aeca17ca-cb09-4850-9800-e8f408d31e8c","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"e6048cab-ca1f-46a5-aa54-f9b13f91138d"},"data":{"type":"map","entries":[["State",["Texas","California","Virginia","Florida","New York","Illinois","North Carolina","New Jersey","Georgia","Ohio","Pennsylvania","Massachusetts","Michigan","Washington","Arizona"]],["Job_Postings",{"type":"ndarray","array":{"type":"bytes","data":"khkAAOQWAAC5CwAASQsAAEILAAD9CgAApAgAAJ8IAACaCAAAdAgAAHEHAACpBgAA5wUAAEsFAAATBQAA"},"shape":[15],"dtype":"int32","order":"little"}],["Percentage",{"type":"ndarray","array":{"type":"bytes","data":"mpmZmZkZJkDNzMzMzMwjQEjhehSuRxRAhetRuB6FE0B7FK5H4XoTQAAAAAAAABNA7FG4HoXrDUDXo3A9CtcNQMP1KFyPwg1AMzMzMzMzDUDD9Shcj8IJQArXo3A9CgdAZmZmZmZmBEBSuB6F61ECQIXrUbgehQFA"},"shape":[15],"dtype":"float64","order":"little"}]]}}},"view":{"type":"object","name":"CDSView","id":"bec90053-4313-45b2-9eb4-08c786b80515","attributes":{"filter":{"type":"object","name":"AllIndices","id":"fcdf1842-22ce-4547-8427-91d9c67b57d9"}}},"glyph":{"type":"object","name":"VBar","id":"c248f138-9e0a-4ef2-845d-f44e6375e31e","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"State"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Job_Postings"},"fill_color":{"type":"value","value":"#9b59b6"},"hatch_color":{"type":"value","value":"#9b59b6"}}},"selection_glyph":{"type":"object","name":"VBar","id":"e4edc7bd-b312-4a05-90c6-18cc7cc51991","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"State"},"width":{"type":"value","value":0.8},"bottom":{"type":"value","value":0},"top":{"type":"field","field":"Job_Postings"},"line_color":{"type":"value","value":"black"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#9b59b6"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#9b59b6"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"24232b9a-26e1-4b71-bd1f-f34fb46f1511","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"State"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Job_Postings"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#9b59b6"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#9b59b6"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"6c09bead-34e9-4ecd-b79a-6b4bfdf253cf","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"State"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Job_Postings"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#9b59b6"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#9b59b6"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"0f0e1727-27be-4477-a129-693343a38e2b","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"d1691b28-6126-442a-95b4-5c628477238e","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"23525403-a31e-40e9-a7c8-ff43244eeba1","attributes":{"tags":["hv_created"],"renderers":[{"id":"221be213-87c9-42ba-8894-b111c7848823"}],"tooltips":[["State","@{State}"],["Job Postings","@{Job_Postings}"],["Percentage","@{Percentage}"]]}},{"type":"object","name":"SaveTool","id":"b4162224-d7db-4130-b284-fc85857fd7fe"},{"type":"object","name":"PanTool","id":"dfddaf85-f8be-4d89-bd7c-720bc7190f0b"},{"type":"object","name":"BoxZoomTool","id":"aac8ac7f-5bee-4727-be7c-c3ed38356df2","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"a9419ceb-5104-4ccd-85fa-25df20c802a9","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"eb1323a3-fba0-41b8-9085-ba2638e56eb3","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"4e1e7eef-0150-4b0a-8468-957fd5f9f3ef","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"bb125dc3-af99-408d-a80c-f0cd4916341d"}],"active_drag":{"id":"dfddaf85-f8be-4d89-bd7c-720bc7190f0b"},"active_scroll":{"id":"d1691b28-6126-442a-95b4-5c628477238e"}}},"left":[{"type":"object","name":"LinearAxis","id":"f57581c0-23d0-4b60-89cb-dcdd82862b82","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"2d725b52-3f73-4c76-a6e5-93b92bc12353","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"2f5b34bf-cd6f-40ca-b7c9-254843578c44"},"axis_label":"Number of Job Postings","major_label_policy":{"type":"object","name":"AllLabels","id":"2389ab44-e185-4ba7-975d-d6b6f1a2edad"}}}],"below":[{"type":"object","name":"CategoricalAxis","id":"6c41598e-fdc9-412d-8cef-86def6a153de","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"cf14ae56-09f3-4ced-a1fa-a2d32afde5cd"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"d46ea0b4-165a-4105-a1c1-35e19cdf16a6"},"axis_label":"State","major_label_orientation":0.7853981633974483,"major_label_policy":{"type":"object","name":"AllLabels","id":"1c507656-7a8b-4b6c-a935-9f0627f03137"}}}],"center":[{"type":"object","name":"Grid","id":"27556b5a-cc16-4558-9736-d092e9f13700","attributes":{"axis":{"id":"6c41598e-fdc9-412d-8cef-86def6a153de"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"a5673981-d5ba-4cd3-b8dd-e3d97eb72acb","attributes":{"dimension":1,"axis":{"id":"f57581c0-23d0-4b60-89cb-dcdd82862b82"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"37dbf795-e3f1-4a7b-a1e5-1c6efff06191","attributes":{"name":"HSpacer01320","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"bab2cfe1-b36a-4e0f-8d7e-325928bf490a"},{"id":"1defa752-a24e-40ec-b0de-13ecd4dbb0c9"},{"id":"6b0cd085-965e-49c7-a964-dc031decc003"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"596dde2d-b806-4f1b-b8ff-b6e82754cf7c","roots":{"0adb55ed-269f-4b63-88f1-5759fef024a6":"d90b9d47-3d10-45ce-a184-1b4ba4acc0ac"},"root_ids":["0adb55ed-269f-4b63-88f1-5759fef024a6"]}];
-  var docs = Object.values(docs_json)
-  if (!docs) {
-    return
-  }
-  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  async function embed_document(root) {
-    var Bokeh = get_bokeh(root)
-    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
-    for (const render_item of render_items) {
-      for (const root_id of render_item.root_ids) {
-    const id_el = document.getElementById(root_id)
-    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
-      const root_el = id_el.children[0]
-      root_el.id = root_el.id + '-rendered'
-      for (const child of root_el.children) {
-            // Ensure JupyterLab does not capture keyboard shortcuts
-            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
-        child.setAttribute('data-lm-suppress-shortcuts', 'true')
-      }
-    }
-      }
-    }
-  }
-  function get_bokeh(root) {
-    if (root.Bokeh === undefined) {
-      return null
-    } else if (root.Bokeh.version !== py_version) {
-      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
-    return null
-      }
-      return root.Bokeh.versions.get(py_version);
-    } else if (root.Bokeh.version === py_version) {
-      return root.Bokeh
-    }
-    return null
-  }
-  function is_loaded(root) {
-    var Bokeh = get_bokeh(root)
-    return (Bokeh != null && Bokeh.Panel !== undefined)
-  }
-  if (is_loaded(root)) {
-    embed_document(root);
-  } else {
-    var attempts = 0;
-    var timer = setInterval(function(root) {
-      if (is_loaded(root)) {
-        clearInterval(timer);
-        embed_document(root);
-      } else if (document.readyState == "complete") {
-        attempts++;
-        if (attempts > 200) {
-          clearInterval(timer);
-      var Bokeh = get_bokeh(root)
-      if (Bokeh == null || Bokeh.Panel == null) {
-            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
-      } else {
-        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
-        embed_document(root)
-      }
-        }
-      }
-    }, 25, root)
-  }
-})(window);</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Key Insight
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Geographic concentration shows tech hubs and major metropolitan areas dominate job postings. Regional variations help identify where to focus job searches based on market demand.</p>
+ Cleaned dataset saved as &#39;cleaned_job_postings.csv&#39;</code></pre>
 </div>
 </div>
 </section>
-</section>
-<section id="top-hiring-companies" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="top-hiring-companies"><span class="header-section-number">6</span> 5. Top Hiring Companies</h2>
-<section id="companies-with-most-job-openings" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="companies-with-most-job-openings"><span class="header-section-number">6.1</span> 5.1 Companies with Most Job Openings</h3>
-<p>Identifying top hiring companies helps job seekers target organizations with multiple opportunities.</p>
-<div id="ca4ed7f2" class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display">
-
-</div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<div id="4dc411c7-d282-473d-8499-c04efaf84dc0">
-  <div id="be5ccc1c-4805-4055-8d42-b248eb80d676" data-root-id="4dc411c7-d282-473d-8499-c04efaf84dc0" style="display: contents;"></div>
-</div>
-<script type="application/javascript">(function(root) {
-  var docs_json = {"4a6fb332-f4c1-4fff-929c-217400f4c362":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"4dc411c7-d282-473d-8499-c04efaf84dc0","attributes":{"name":"Row01444","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"11e56218-71cf-4118-ad78-3d9abad343d3","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"56fb1fdd-ace6-4f0a-9929-663d5cd19d62","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"47dbde08-43f2-4e4d-bcff-822257911b1b","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"ac3aa6ae-ca15-4429-8e60-bb4964e0e651","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":900,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"5cbb3b53-704f-4ac4-830e-94b70cca4ccf","attributes":{"name":"HSpacer01451","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"11e56218-71cf-4118-ad78-3d9abad343d3"},{"id":"47dbde08-43f2-4e4d-bcff-822257911b1b"},{"id":"ac3aa6ae-ca15-4429-8e60-bb4964e0e651"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"6cee5682-0afc-409d-9383-34af2455f856","attributes":{"width":900,"height":700,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"Range1d","id":"e5e31c40-ff04-47de-9840-0226138bb47b","attributes":{"tags":[[["Job Postings",null]],[]],"end":3403.5,"reset_start":0.0,"reset_end":3403.5}},"y_range":{"type":"object","name":"FactorRange","id":"d9d60b76-ff8f-42bb-85fd-92c7bc26eebf","attributes":{"tags":[[["Company",null]],{"type":"map","entries":[["invert_yaxis",true],["autorange",false]]}],"factors":["Beacon Hill Staffing Group","Blue Cross Blue Shield","Robert Half","Allied Universal","Diverse Lynx","Humana","Merit America","Oracle","Lumen Technologies","KPMG","Insight Global","PricewaterhouseCoopers","Accenture","Deloitte","Unclassified"]}},"x_scale":{"type":"object","name":"LinearScale","id":"342b7963-c93a-4ce4-8400-2114853a649d"},"y_scale":{"type":"object","name":"CategoricalScale","id":"4a3ddc91-dd17-410f-b108-e6d261344cac"},"title":{"type":"object","name":"Title","id":"ed6d757c-ad84-4376-8af8-140b8c26b474","attributes":{"text":"Top 15 Companies by Number of Job Postings (2024)","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"5bcd50f5-da38-4e04-b419-aeab57bebf8a","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"a00bc279-7887-41f0-8f23-04ac720cbec7","attributes":{"selected":{"type":"object","name":"Selection","id":"bf7766d2-e77a-4f68-81b9-e1c7f2451f38","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"18409653-900a-4ca7-b5d1-cb23ebe38bf2"},"data":{"type":"map","entries":[["Company",["Unclassified","Deloitte","Accenture","PricewaterhouseCoopers","Insight Global","KPMG","Lumen Technologies","Oracle","Merit America","Humana","Diverse Lynx","Allied Universal","Robert Half","Blue Cross Blue Shield","Beacon Hill Staffing Group"]],["Job_Postings",{"type":"ndarray","array":{"type":"bytes","data":"KwwAALAGAABsBAAAXwIAAGcBAABcAQAAWwEAAEUBAABDAQAAMQEAAPoAAAD1AAAA8AAAAO8AAADmAAAA"},"shape":[15],"dtype":"int32","order":"little"}]]}}},"view":{"type":"object","name":"CDSView","id":"9ff41d8a-94e8-49d4-9fe2-05d49ff335ca","attributes":{"filter":{"type":"object","name":"AllIndices","id":"82b9b943-de49-4293-a029-9268b84b17b9"}}},"glyph":{"type":"object","name":"HBar","id":"f9bbb0cf-79db-4704-8fac-a77d0d9c850f","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Company"},"height":{"type":"value","value":0.8},"right":{"type":"field","field":"Job_Postings"},"fill_color":{"type":"value","value":"#e74c3c"},"hatch_color":{"type":"value","value":"#e74c3c"}}},"selection_glyph":{"type":"object","name":"HBar","id":"cf17dbb8-5545-4d44-b2c4-2d2523e32678","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Company"},"height":{"type":"value","value":0.8},"left":{"type":"value","value":0},"right":{"type":"field","field":"Job_Postings"},"line_color":{"type":"value","value":"black"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#e74c3c"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#e74c3c"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0}}},"nonselection_glyph":{"type":"object","name":"HBar","id":"da828a67-ee0a-4eed-80b7-e6ac659dd5f2","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Company"},"height":{"type":"value","value":0.8},"right":{"type":"field","field":"Job_Postings"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#e74c3c"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#e74c3c"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"HBar","id":"ce25cb48-41e8-433a-b715-962211b8a944","attributes":{"tags":["apply_ranges"],"y":{"type":"field","field":"Company"},"height":{"type":"value","value":0.8},"right":{"type":"field","field":"Job_Postings"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#e74c3c"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#e74c3c"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"828c2bf2-e7f3-4223-82c6-58f2155908e4","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"7647556e-6a64-4c3b-8200-ecb06b8b2bfc","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"b95efa77-af32-4d5e-bf90-fa2a43ccf21b","attributes":{"tags":["hv_created"],"renderers":[{"id":"5bcd50f5-da38-4e04-b419-aeab57bebf8a"}],"tooltips":[["Company","@{Company}"],["Job Postings","@{Job_Postings}"]]}},{"type":"object","name":"SaveTool","id":"802d09da-9756-4023-bda3-de58af767831"},{"type":"object","name":"PanTool","id":"eb0f8fe2-8c44-42a8-a4ee-f50f6441d15f"},{"type":"object","name":"BoxZoomTool","id":"4632684e-ad6e-4e03-a6cf-39dea7f3da74","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"b8126ec1-ad86-4104-b1f2-536a1ee4741a","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"488b9516-b1af-488f-9b33-7b60bae91a8d","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"3ad6d128-d638-4549-868b-e7d1e607ef27","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"13bc7436-7952-45a6-a0ac-e29715178ba4"}],"active_drag":{"id":"eb0f8fe2-8c44-42a8-a4ee-f50f6441d15f"},"active_scroll":{"id":"7647556e-6a64-4c3b-8200-ecb06b8b2bfc"}}},"left":[{"type":"object","name":"CategoricalAxis","id":"bf0bf401-d48d-4420-a563-21fabdeb7f9c","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"68c76b73-16d1-4ae3-bb5f-271e71f46e46"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"129434cd-2e69-4f62-b6a9-affe256a3837"},"axis_label":"Number of Job Postings","major_label_policy":{"type":"object","name":"AllLabels","id":"0465883c-ea60-4570-9368-83ecc1db0f21"}}}],"below":[{"type":"object","name":"LinearAxis","id":"61965e7c-5ef5-4f43-abe0-493e4bc9dda6","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"becc7b72-1f5d-4c7c-b47c-261e3523ce32","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"d8692882-6f4f-49aa-b7bb-e1d7b56ef366"},"axis_label":"","major_label_policy":{"type":"object","name":"AllLabels","id":"2a9cf895-5dc2-4cf8-9458-4873a64759f6"}}}],"center":[{"type":"object","name":"Grid","id":"4d6af161-129c-4dd8-b89f-b18c5d849ce2","attributes":{"axis":{"id":"61965e7c-5ef5-4f43-abe0-493e4bc9dda6"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"724f0a00-e7f3-46de-90bc-343716682b9d","attributes":{"dimension":1,"axis":{"id":"bf0bf401-d48d-4420-a563-21fabdeb7f9c"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"ed931533-c63d-4516-89ad-75a74b05b3bc","attributes":{"name":"HSpacer01452","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"11e56218-71cf-4118-ad78-3d9abad343d3"},{"id":"47dbde08-43f2-4e4d-bcff-822257911b1b"},{"id":"ac3aa6ae-ca15-4429-8e60-bb4964e0e651"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"4a6fb332-f4c1-4fff-929c-217400f4c362","roots":{"4dc411c7-d282-473d-8499-c04efaf84dc0":"be5ccc1c-4805-4055-8d42-b248eb80d676"},"root_ids":["4dc411c7-d282-473d-8499-c04efaf84dc0"]}];
-  var docs = Object.values(docs_json)
-  if (!docs) {
-    return
-  }
-  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  async function embed_document(root) {
-    var Bokeh = get_bokeh(root)
-    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
-    for (const render_item of render_items) {
-      for (const root_id of render_item.root_ids) {
-    const id_el = document.getElementById(root_id)
-    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
-      const root_el = id_el.children[0]
-      root_el.id = root_el.id + '-rendered'
-      for (const child of root_el.children) {
-            // Ensure JupyterLab does not capture keyboard shortcuts
-            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
-        child.setAttribute('data-lm-suppress-shortcuts', 'true')
-      }
-    }
-      }
-    }
-  }
-  function get_bokeh(root) {
-    if (root.Bokeh === undefined) {
-      return null
-    } else if (root.Bokeh.version !== py_version) {
-      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
-    return null
-      }
-      return root.Bokeh.versions.get(py_version);
-    } else if (root.Bokeh.version === py_version) {
-      return root.Bokeh
-    }
-    return null
-  }
-  function is_loaded(root) {
-    var Bokeh = get_bokeh(root)
-    return (Bokeh != null && Bokeh.Panel !== undefined)
-  }
-  if (is_loaded(root)) {
-    embed_document(root);
-  } else {
-    var attempts = 0;
-    var timer = setInterval(function(root) {
-      if (is_loaded(root)) {
-        clearInterval(timer);
-        embed_document(root);
-      } else if (document.readyState == "complete") {
-        attempts++;
-        if (attempts > 200) {
-          clearInterval(timer);
-      var Bokeh = get_bokeh(root)
-      if (Bokeh == null || Bokeh.Panel == null) {
-            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
-      } else {
-        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
-        embed_document(root)
-      }
-        }
-      }
-    }, 25, root)
-  }
-})(window);</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Key Insight
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Companies with the highest number of job postings indicate organizations actively expanding their workforce. These companies may offer better opportunities for multiple role applications and career growth.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="job-posting-timeline" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="job-posting-timeline"><span class="header-section-number">7</span> 6. Job Posting Timeline</h2>
-<section id="when-jobs-are-posted" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="when-jobs-are-posted"><span class="header-section-number">7.1</span> 6.1 When Jobs Are Posted</h3>
-<p>Understanding posting patterns helps with strategic job search timing.</p>
-</section>
-</section>
-<section id="experience-requirements" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="experience-requirements"><span class="header-section-number">8</span> 7. Experience Requirements</h2>
-<section id="minimum-years-of-experience-required" class="level3" data-number="8.1">
-<h3 data-number="8.1" class="anchored" data-anchor-id="minimum-years-of-experience-required"><span class="header-section-number">8.1</span> 7.1 Minimum Years of Experience Required</h3>
-<p>Understanding experience requirements helps assess job market accessibility.</p>
-<div id="fd5e345d" class="cell" data-execution_count="8">
+<section id="data-cleaning-pipeline-visualization" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="data-cleaning-pipeline-visualization"><span class="header-section-number">5.2</span> Data Cleaning Pipeline Visualization</h3>
+<div id="8d3815a0" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 
 </div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<div id="8269601f-68f0-4534-bddf-0aa329803ff7">
-  <div id="af8cc1e2-a692-49c0-b123-92461d3df80b" data-root-id="8269601f-68f0-4534-bddf-0aa329803ff7" style="display: contents;"></div>
+<div id="p1004">
+  <div id="e4a8a790-7cbf-4ca6-8682-277fe45305e2" data-root-id="p1004" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"0a5ba148-0689-4a1b-93df-b24d2b6a4151":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"8269601f-68f0-4534-bddf-0aa329803ff7","attributes":{"name":"Row01634","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"2f0de208-df7d-494f-b407-68ef68cd76a0","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"90495c5c-b5e9-414d-99fb-f508d5828d40","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"097cb55c-7f59-4c97-bfbc-2cab3644f435","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"a6e739ed-cca1-4092-8ff8-1a0affca5735","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":900,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"d04ab426-6eed-4a9b-903f-5b0cfa500d49","attributes":{"name":"HSpacer01641","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"2f0de208-df7d-494f-b407-68ef68cd76a0"},{"id":"097cb55c-7f59-4c97-bfbc-2cab3644f435"},{"id":"a6e739ed-cca1-4092-8ff8-1a0affca5735"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"b21d914c-4454-48b1-bb69-181b9e101409","attributes":{"width":900,"height":500,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"Range1d","id":"3230e4b5-b26c-4cba-a717-f6752d8275eb","attributes":{"tags":[[["Years of Experience",null]],[]],"start":-0.8333333333333334,"end":15.833333333333334,"reset_start":-0.8333333333333334,"reset_end":15.833333333333334}},"y_range":{"type":"object","name":"Range1d","id":"8cfa8851-bf54-4c86-804d-ae19c310a5a8","attributes":{"tags":[[["Job Postings",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"end":30888.2,"reset_start":0.0,"reset_end":30888.2}},"x_scale":{"type":"object","name":"LinearScale","id":"429b6d1d-5569-4f8e-a1a1-7293f390c7b8"},"y_scale":{"type":"object","name":"LinearScale","id":"7aee59d1-83d1-4e55-aeb7-e06da1e7d38d"},"title":{"type":"object","name":"Title","id":"0ff39c1d-7b92-4f51-bb2d-980d4482f25f","attributes":{"text":"Job Postings by Minimum Years of Experience Required (2024)","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"c722ae08-b871-4ef8-95a6-f08e7013470f","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"c94da294-f7e6-4eb3-9c26-817ad54ec725","attributes":{"selected":{"type":"object","name":"Selection","id":"46701976-d14b-4d17-ae2a-87f4acb49135","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"82b4e379-a6d3-4e6a-aa5a-624f65477844"},"data":{"type":"map","entries":[["Years_of_Experience",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAAAAAAAAAAADwPwAAAAAAAABAAAAAAAAACEAAAAAAAAAQQAAAAAAAABRAAAAAAAAAGEAAAAAAAAAcQAAAAAAAACBAAAAAAAAAIkAAAAAAAAAkQAAAAAAAACZAAAAAAAAAKEAAAAAAAAAqQAAAAAAAACxAAAAAAAAALkA="},"shape":[16],"dtype":"float64","order":"little"}],["Job_Postings",{"type":"ndarray","array":{"type":"bytes","data":"DQIAAFwJAACqEwAA6xUAAPkJAAC2bQAAmggAADwKAABtCwAAVAEAAH0QAACBAAAAWQYAAEAAAAB/AAAA+gIAAA=="},"shape":[16],"dtype":"int32","order":"little"}]]}}},"view":{"type":"object","name":"CDSView","id":"4ad76741-0e10-49b1-8c1c-c0c9bc0ae19f","attributes":{"filter":{"type":"object","name":"AllIndices","id":"c0faf7ab-1132-4477-b88d-75701051ec10"}}},"glyph":{"type":"object","name":"VBar","id":"729d84b0-13b0-4e23-b0e3-5a7e79f61a8b","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Years_of_Experience"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Job_Postings"},"fill_color":{"type":"value","value":"#2ecc71"},"hatch_color":{"type":"value","value":"#2ecc71"}}},"selection_glyph":{"type":"object","name":"VBar","id":"b8d90cba-fc5d-49a8-88cb-fbe4b2c42080","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Years_of_Experience"},"width":{"type":"value","value":0.8},"bottom":{"type":"value","value":0},"top":{"type":"field","field":"Job_Postings"},"line_color":{"type":"value","value":"black"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#2ecc71"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#2ecc71"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"8a60fbca-53b9-4638-85b0-5b330ae02f1d","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Years_of_Experience"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Job_Postings"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#2ecc71"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#2ecc71"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"a1cde991-dfa8-413a-8807-c6072f7a765d","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Years_of_Experience"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Job_Postings"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#2ecc71"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#2ecc71"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"1f4cea60-2cf7-43e7-bbdd-d415f4045d98","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"7c7b85d0-15ed-4987-9778-52c2c608dc05","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"56122b5e-04bb-42a2-968d-5b155a86e638","attributes":{"tags":["hv_created"],"renderers":[{"id":"c722ae08-b871-4ef8-95a6-f08e7013470f"}],"tooltips":[["Years of Experience","@{Years_of_Experience}"],["Job Postings","@{Job_Postings}"]]}},{"type":"object","name":"SaveTool","id":"6574d5d4-963b-4a0b-83bf-b4b400f102dc"},{"type":"object","name":"PanTool","id":"c466694f-448a-4287-8275-5503698acc88"},{"type":"object","name":"BoxZoomTool","id":"ee09f80c-6213-4123-b580-82b8b1d661f7","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"bcd1e63b-5fdb-41ee-9e74-083899a46e5d","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"60ed1be9-2401-4278-931b-365a9eeb3a7d","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"7880439e-1c01-41b3-a966-79e0c52203a1","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"2425acb2-213c-4479-99f1-1bf4ffc56da1"}],"active_drag":{"id":"c466694f-448a-4287-8275-5503698acc88"},"active_scroll":{"id":"7c7b85d0-15ed-4987-9778-52c2c608dc05"}}},"left":[{"type":"object","name":"LinearAxis","id":"2673a915-de7e-4c51-888d-ceeb1957e469","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"7e2bc27a-75e5-414e-a1a9-cce4319b70d6","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"44b2ce80-a01f-4aab-ab30-aa2b16824478"},"axis_label":"Number of Job Postings","major_label_policy":{"type":"object","name":"AllLabels","id":"c8cceaa2-47f1-4979-b6c2-b76c86907822"}}}],"below":[{"type":"object","name":"LinearAxis","id":"82056d79-feaa-4b14-9f4b-62ef991f1f21","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"54114317-3170-4180-80c4-787b83574de3","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"d2612311-cf69-4095-8be3-8648600a270d"},"axis_label":"Minimum Years of Experience","major_label_policy":{"type":"object","name":"AllLabels","id":"20fc8ca4-82c0-4aee-932e-c0560f81346b"}}}],"center":[{"type":"object","name":"Grid","id":"f22382d5-c598-4876-b9fa-bf44e5b20fc5","attributes":{"axis":{"id":"82056d79-feaa-4b14-9f4b-62ef991f1f21"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"d167d584-7cba-4632-97c4-0b802c27efa3","attributes":{"dimension":1,"axis":{"id":"2673a915-de7e-4c51-888d-ceeb1957e469"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"0f2c9c86-4269-4b4d-93ff-56326a6925ec","attributes":{"name":"HSpacer01642","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"2f0de208-df7d-494f-b407-68ef68cd76a0"},{"id":"097cb55c-7f59-4c97-bfbc-2cab3644f435"},{"id":"a6e739ed-cca1-4092-8ff8-1a0affca5735"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
-  var render_items = [{"docid":"0a5ba148-0689-4a1b-93df-b24d2b6a4151","roots":{"8269601f-68f0-4534-bddf-0aa329803ff7":"af8cc1e2-a692-49c0-b123-92461d3df80b"},"root_ids":["8269601f-68f0-4534-bddf-0aa329803ff7"]}];
+  var docs_json = {"53b4f12f-a6c3-4399-ba71-5e46ba779e86":{"version":"3.6.2","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"p1004","attributes":{"name":"Row01049","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"p1007","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"p1065","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"p1005","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"p1006","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.2/dist/bundled/theme/native.css"}}],"min_width":1000,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"p1008","attributes":{"name":"HSpacer01056","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"p1007"},{"id":"p1005"},{"id":"p1006"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"p1016","attributes":{"width":1000,"height":500,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"FactorRange","id":"p1009","attributes":{"tags":[[["Stage",null]],[]],"factors":["Original Data","After Column Removal","After Missing Value Handling","After Duplicate Removal"]}},"y_range":{"type":"object","name":"Range1d","id":"p1010","attributes":{"tags":[[["Rows",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"end":73825.8,"reset_start":0.0,"reset_end":73825.8}},"x_scale":{"type":"object","name":"CategoricalScale","id":"p1026"},"y_scale":{"type":"object","name":"LinearScale","id":"p1027"},"title":{"type":"object","name":"Title","id":"p1019","attributes":{"text":"Data Cleaning Pipeline: Row Count by Stage","text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p1058","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1049","attributes":{"selected":{"type":"object","name":"Selection","id":"p1050","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1051"},"data":{"type":"map","entries":[["Stage",["Original Data","After Column Removal","After Missing Value Handling","After Duplicate Removal"]],["Rows",{"type":"ndarray","array":{"type":"bytes","data":"MhsBADIbAQAyGwEAVOcAAA=="},"shape":[4],"dtype":"int32","order":"little"}],["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAA=="},"shape":[4],"dtype":"int32","order":"little"}],["Columns",{"type":"ndarray","array":{"type":"bytes","data":"gwAAAH0AAAA4AAAAOAAAAA=="},"shape":[4],"dtype":"int32","order":"little"}]]}}},"view":{"type":"object","name":"CDSView","id":"p1059","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1060"}}},"glyph":{"type":"object","name":"VBar","id":"p1055","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Stage"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Rows"},"fill_color":{"type":"value","value":"#3498db"},"hatch_color":{"type":"value","value":"#3498db"}}},"selection_glyph":{"type":"object","name":"VBar","id":"p1061","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Stage"},"width":{"type":"value","value":0.8},"bottom":{"type":"value","value":0},"top":{"type":"field","field":"Rows"},"line_color":{"type":"value","value":"black"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#3498db"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#3498db"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"p1056","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Stage"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Rows"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#3498db"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#3498db"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"p1057","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"Stage"},"width":{"type":"value","value":0.8},"top":{"type":"field","field":"Rows"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#3498db"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#3498db"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p1025","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"p1014","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"p1015","attributes":{"tags":["hv_created"],"renderers":[{"id":"p1058"}],"tooltips":[["Stage","@{Stage}"],["Rows","@{Rows}"],["index","@{index}"],["Columns","@{Columns}"]]}},{"type":"object","name":"SaveTool","id":"p1038"},{"type":"object","name":"PanTool","id":"p1039"},{"type":"object","name":"BoxZoomTool","id":"p1040","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p1041","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"p1047","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"p1046","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"p1048"}],"active_drag":{"id":"p1039"},"active_scroll":{"id":"p1014"}}},"left":[{"type":"object","name":"LinearAxis","id":"p1033","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1034","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1035"},"axis_label":"Number of Rows","major_label_policy":{"type":"object","name":"AllLabels","id":"p1036"}}}],"below":[{"type":"object","name":"CategoricalAxis","id":"p1028","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"p1029"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"p1030"},"axis_label":"Cleaning Stage","major_label_orientation":0.7853981633974483,"major_label_policy":{"type":"object","name":"AllLabels","id":"p1031"}}}],"center":[{"type":"object","name":"Grid","id":"p1032","attributes":{"axis":{"id":"p1028"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p1037","attributes":{"dimension":1,"axis":{"id":"p1033"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"p1063","attributes":{"name":"HSpacer01057","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"p1007"},{"id":"p1005"},{"id":"p1006"}],"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
+  var render_items = [{"docid":"53b4f12f-a6c3-4399-ba71-5e46ba779e86","roots":{"p1004":"e4a8a790-7cbf-4ca6-8682-277fe45305e2"},"root_ids":["p1004"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
@@ -5702,12 +5471,33 @@ Total job postings analyzed: 59,220</code></pre>
 </div>
 </section>
 </section>
-<section id="references" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="references"><span class="header-section-number">9</span> References</h2>
+<section id="summary" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="summary"><span class="header-section-number">6</span> Summary</h2>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Data Cleaning Completed
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The data cleaning process has successfully prepared the job market dataset for analysis:</p>
+<p><strong>Removed {len(columns_to_drop)} redundant columns</strong> - Eliminated administrative metadata and deprecated classification systems</p>
+<p><strong>Handled missing values strategically</strong> - Dropped unreliable columns (&gt;50% missing), imputed numerical medians, and labeled categorical unknowns</p>
+<p><strong>Removed {initial_rows - final_rows:,} duplicate postings</strong> - Ensured each unique job position is counted only once</p>
+<p><strong>Final clean dataset</strong>: {len(df_cleaned):,} rows × {len(df_cleaned.columns)} columns with zero missing values</p>
+<p>The cleaned dataset is now ready for exploratory data analysis, skill gap analysis, and advanced machine learning techniques.</p>
+</div>
+</div>
+</section>
+<section id="references" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="references"><span class="header-section-number">7</span> References</h2>
 <ul>
 <li>Data source: Lightcast Job Postings Dataset (2024)</li>
-<li>Visualization tools: hvPlot, Panel, Python</li>
-<li>Analysis framework: Standard EDA best practices</li>
+<li>Analysis tools: Python, pandas, NumPy, hvPlot, HoloViews</li>
+<li>Cleaning methodology: Industry best practices for data preprocessing</li>
 </ul>
 
 
