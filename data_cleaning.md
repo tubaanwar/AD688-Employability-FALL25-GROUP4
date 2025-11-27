@@ -1,0 +1,177 @@
+---
+title: "Data Cleaning & Exploration"
+subtitle: "Preparing the Job Market Dataset for Analysis"
+author:
+  - name: Tuba Anwar
+  - name: Kriti Singh
+  - name: Soham Deshkhaire
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code-overflow: wrap
+    embed-resources: true
+    theme: cosmo
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Introduction
+
+This document details the comprehensive data cleaning and preprocessing steps applied to the 2024 job market dataset.
+
+```{python}
+import pandas as pd
+import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
+
+# Load raw data
+df = pd.read_csv('lightcast_job_postings.csv')
+
+print(f"Initial dataset shape: {df.shape}")
+print(f"Total rows: {df.shape[0]:,}")
+print(f"Total columns: {df.shape[1]}")
+```
+
+## Step 1: Removing Redundant Columns
+
+We remove redundant columns to improve dataset quality and analysis efficiency.
+
+```{python}
+# List of columns to drop
+columns_to_drop = [
+    "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+    "BODY", "TITLE_RAW", "COMPANY_RAW", "ACTIVE_SOURCES_INFO",
+    "NAICS2", "NAICS2_NAME", "NAICS3", "NAICS3_NAME", 
+    "NAICS4", "NAICS4_NAME", "NAICS5", "NAICS5_NAME", 
+    "NAICS6", "NAICS6_NAME",
+    "SOC_2", "SOC_2_NAME", "SOC_3", "SOC_3_NAME", 
+    "SOC_4", "SOC_4_NAME", "SOC_5", "SOC_5_NAME",
+    "SOC_2021_2", "SOC_2021_2_NAME", "SOC_2021_3", "SOC_2021_3_NAME", 
+    "SOC_2021_5", "SOC_2021_5_NAME",
+    "LOT_CAREER_AREA", "LOT_CAREER_AREA_NAME", "LOT_OCCUPATION", "LOT_OCCUPATION_NAME",
+    "LOT_SPECIALIZED_OCCUPATION", "LOT_SPECIALIZED_OCCUPATION_NAME", 
+    "LOT_OCCUPATION_GROUP", "LOT_OCCUPATION_GROUP_NAME",
+    "LOT_V6_SPECIALIZED_OCCUPATION", "LOT_V6_SPECIALIZED_OCCUPATION_NAME", 
+    "LOT_V6_OCCUPATION", "LOT_V6_OCCUPATION_NAME",
+    "LOT_V6_OCCUPATION_GROUP", "LOT_V6_OCCUPATION_GROUP_NAME", 
+    "LOT_V6_CAREER_AREA", "LOT_V6_CAREER_AREA_NAME",
+    "ONET_2019", "ONET_2019_NAME", "CIP6", "CIP6_NAME", "CIP2", "CIP2_NAME",
+    "COUNTY", "COUNTY_NAME", "COUNTY_OUTGOING", "COUNTY_NAME_OUTGOING", 
+    "COUNTY_INCOMING", "COUNTY_NAME_INCOMING",
+    "MSA", "MSA_OUTGOING", "MSA_INCOMING",
+    "SALARY_TO", "SALARY_FROM", "ORIGINAL_PAY_PERIOD",
+    "MODELED_EXPIRED", "MODELED_DURATION"
+]
+
+# Drop only columns that exist
+columns_to_drop = [col for col in columns_to_drop if col in df.columns]
+df_cleaned = df.drop(columns=columns_to_drop, inplace=False)
+
+print(f"Columns removed: {len(columns_to_drop)}")
+print(f"New dataset shape: {df_cleaned.shape}")
+```
+
+## Step 2: Handling Missing Values
+
+```{python}
+# Missing value statistics
+missing_stats = pd.DataFrame({
+    'Column': df_cleaned.columns,
+    'Missing_Count': df_cleaned.isnull().sum().values,
+    'Missing_Percentage': (df_cleaned.isnull().sum().values / len(df_cleaned) * 100).round(2)
+})
+missing_stats = missing_stats[missing_stats['Missing_Count'] > 0].sort_values('Missing_Percentage', ascending=False)
+
+print(f"Columns with missing values: {len(missing_stats)}")
+print("\nTop 10 columns with highest missing percentages:")
+print(missing_stats.head(10))
+```
+
+```{python}
+# Drop columns with >50% missing values
+threshold = len(df_cleaned) * 0.5
+cols_before = len(df_cleaned.columns)
+df_cleaned = df_cleaned.dropna(thresh=threshold, axis=1)
+cols_after = len(df_cleaned.columns)
+
+print(f"Columns dropped due to >50% missing values: {cols_before - cols_after}")
+
+# Fill numerical columns with median
+numerical_cols = df_cleaned.select_dtypes(include=[np.number]).columns.tolist()
+for col in numerical_cols:
+    if df_cleaned[col].isnull().sum() > 0:
+        median_val = df_cleaned[col].median()
+        df_cleaned[col].fillna(median_val, inplace=True)
+
+# Fill categorical columns with "Unknown"
+categorical_cols = df_cleaned.select_dtypes(include=['object']).columns.tolist()
+for col in categorical_cols:
+    if df_cleaned[col].isnull().sum() > 0:
+        df_cleaned[col].fillna("Unknown", inplace=True)
+
+print(f"Total missing values after imputation: {df_cleaned.isnull().sum().sum()}")
+```
+
+## Step 3: Removing Duplicates
+
+```{python}
+# Check for duplicates
+initial_rows = len(df_cleaned)
+duplicates_count = df_cleaned.duplicated(subset=['TITLE_NAME', 'COMPANY_NAME', 'LOCATION']).sum()
+
+print(f"Initial rows: {initial_rows:,}")
+print(f"Duplicate rows detected: {duplicates_count:,}")
+
+# Remove duplicates
+df_cleaned = df_cleaned.drop_duplicates(
+    subset=['TITLE_NAME', 'COMPANY_NAME', 'LOCATION'], 
+    keep='first'
+)
+
+final_rows = len(df_cleaned)
+print(f"Final rows after duplicate removal: {final_rows:,}")
+print(f"Rows removed: {initial_rows - final_rows:,}")
+```
+
+## Step 4: Final Summary
+
+```{python}
+# Create summary statistics
+summary_stats = pd.DataFrame({
+    'Metric': [
+        'Total Rows',
+        'Total Columns',
+        'Numerical Columns',
+        'Categorical Columns',
+        'Missing Values'
+    ],
+    'Value': [
+        f"{len(df_cleaned):,}",
+        f"{len(df_cleaned.columns)}",
+        f"{len(df_cleaned.select_dtypes(include=[np.number]).columns)}",
+        f"{len(df_cleaned.select_dtypes(include=['object']).columns)}",
+        f"{df_cleaned.isnull().sum().sum()}"
+    ]
+})
+
+print(summary_stats.to_string(index=False))
+
+# Save cleaned dataset
+df_cleaned.to_csv('cleanedjob_postings.csv', index=False)
+print("\nCleaned dataset saved as 'cleanedjob_postings.csv'")
+```
+
+## Summary
+
+The data cleaning process has successfully prepared the job market dataset:
+
+- Removed redundant columns
+- Handled missing values strategically
+- Removed duplicate postings
+- Final clean dataset ready for analysis
