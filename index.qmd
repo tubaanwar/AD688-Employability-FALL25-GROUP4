@@ -1,14 +1,14 @@
 ---
-title: "Job Market Analysis 2024: Business Analytics, Data Science, and Machine Learning Trends"
-author: "Team 4 Members: Tuba Anwar, Kriti Singh, Soham Deshkhaire"
+title: "Job Market Analysis 2024- Business Analytics, Data Science, and Machine Learning Trends"
+author: "Team 4 Members- Tuba Anwar, Kriti Singh, Soham Deshkhaire"
 date: today
 format: 
   html:
-    bibliography: references.bib
     toc: true
-    theme: cosmo
-    highlight-style: github
+    
+bibliography: references.bib
 ---
+    
 
 # Introduction
 
