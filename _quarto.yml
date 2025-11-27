@@ -17,11 +17,11 @@ website:
         text: "Data Cleaning & Exploration"
       - href: eda.qmd
         text: "Exploratory Data Analysis"
-      - href: SKILL_GAP_ANALYSIS.QMD
+      - href: Skill_Gap_Analysis.qmd
         text: "Skill Gap Analysis"
-      - href: ML.QMD
+      - href: ml.qmd
         text: "Machine Learning Methods"
-      - href: NLP.QMD
+      - href: nlp.qmd
         text: "Natural Language Processing Methods"
 
 format:

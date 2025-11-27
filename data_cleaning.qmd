@@ -12,7 +12,8 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme: cosmo
+    theme:
+      light: [cosmo, custom.scss]
 jupyter: python3
 execute:
   echo: false
