@@ -1,29 +1,31 @@
-name: Build & Publish Quarto site
-
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+  push:
+    branches: main
 
-permissions:
-  contents: write
+name: Quarto Publish
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout repo
+      - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Render site (no execute; uses _freeze/)
-        run: quarto render --no-execute
+      - name: Install Python and Dependencies
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - run: pip install jupyter
+      - run: pip install -r requirements-gh.txt
 
-      - name: Publish to gh-pages
+      - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
