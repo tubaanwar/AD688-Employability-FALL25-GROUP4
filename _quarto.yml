@@ -2,8 +2,8 @@ project:
   type: website
   
 execute:
-  freeze: auto
-  echo: false
+  freeze: false
+  echo: true
   eval: true
   code-fold: false
 
