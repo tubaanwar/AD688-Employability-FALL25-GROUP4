@@ -1,19 +1,6 @@
 ---
 title: "Exploratory Data Analysis"
 subtitle: "Uncovering Job Market Trends and Patterns in 2024"
-author:
-  - name: Tuba Anwar
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Kriti Singh
-    affiliations:
-      - ref: bu
-  - name: Soham Deshkhaire
-    affiliations:
-      - ref: bu
 format: 
   html:
     toc: true
@@ -21,7 +8,9 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme: cosmo
+    theme: 
+      light: [cosmo, custom.scss]
+    css: styles.css 
 jupyter: python3
 execute:
   echo: false
@@ -44,8 +33,8 @@ warnings.filterwarnings('ignore')
 # Enable panel for rendering
 pn.extension()
 
-# Color palette
-COLORS = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#34495e', '#e67e22']
+# Updated color palette - blue, pink, purple, red
+COLORS = ['#2196F3', '#E91E63', '#9B59B6', '#F44336', '#00BCD4', '#FF4081', '#7E57C2', '#EF5350']
 
 # Load cleaned data
 df = pd.read_csv('cleanedjob_postings.csv')
@@ -62,27 +51,29 @@ print(f"Total job postings analyzed: {len(df):,}")
 Understanding which job titles dominate the market helps identify high-demand roles and emerging career opportunities.
 
 ```{python}
-# Get top 15 job titles
-title_counts = df['TITLE_NAME'].value_counts().head(15)
+# Get top 10 job titles 
+title_counts = df[df['TITLE_NAME'].notna()]['TITLE_NAME'].value_counts().head(10)
 title_df = pd.DataFrame({
     'Job Title': title_counts.index, 
     'Count': title_counts.values,
-    'Percentage': (title_counts.values / len(df) * 100).round(2)
+    'Percentage': (title_counts.values / len(df[df['TITLE_NAME'].notna()]) * 100).round(2)
 })
+
+print(f"\nTop job titles : {len(title_counts)} titles")
 
 # Create interactive horizontal bar chart
 title_df.hvplot.barh(
     x='Job Title',
     y='Count',
-    title='Top 15 Most In-Demand Job Titles (2024)',
-    height=600,
-    width=900,
-    color='#3498db',
+    title='Top 10 Most In-Demand Job Titles (2024)',
+    height=500,
+    width=800,
+    color='#2196F3',
     hover_cols=['Percentage'],
     ylabel='',
     xlabel='Number of Job Postings',
     flip_yaxis=True
-)
+).opts(xformatter='%.0f')
 ```
 
 ::: {.callout-note icon=false}
@@ -97,27 +88,35 @@ The top job titles reveal where the market has the highest demand. Software engi
 Understanding employment type distribution helps job seekers target positions matching their career preferences.
 
 ```{python}
-# Count jobs by employment type
-employment_counts = df['EMPLOYMENT_TYPE_NAME'].value_counts()
+# Count jobs by employment type 
+df_employment = df[df['EMPLOYMENT_TYPE_NAME'].notna()].copy()
+
+# Remove "Unknown" values
+df_employment = df_employment[df_employment['EMPLOYMENT_TYPE_NAME'] != 'Unknown']
+
+employment_counts = df_employment['EMPLOYMENT_TYPE_NAME'].value_counts()
 employment_df = pd.DataFrame({
     'Employment Type': employment_counts.index, 
     'Count': employment_counts.values,
     'Percentage': (employment_counts.values / employment_counts.sum() * 100).round(1)
 })
 
+print(f"\nEmployment types : {len(df_employment):,} jobs")
+print(employment_df.to_string(index=False))
+
 # Create bar chart
 employment_df.hvplot.bar(
     x='Employment Type',
     y='Count',
     title='Job Market Distribution by Employment Type (2024)',
-    height=500,
-    width=800,
+    height=400,
+    width=700,
     color='Employment Type',
     cmap=COLORS,
     hover_cols=['Percentage'],
     ylabel='Number of Job Postings',
     rot=45
-)
+).opts(yformatter='%.0f')
 ```
 
 ::: {.callout-note icon=false}
@@ -132,28 +131,48 @@ The distribution of employment types shows whether the market primarily offers f
 The prevalence of remote work reflects post-pandemic hiring trends and employer flexibility.
 
 ```{python}
+# Count jobs by remote type and remove not specified values
+df_remote = df.copy()
+
+# Replace None, NaN, Unknown, empty strings with NaN
+df_remote['REMOTE_TYPE_NAME'] = df_remote['REMOTE_TYPE_NAME'].replace({
+    '[None]': np.nan,
+    'None': np.nan,
+    'Unknown': np.nan,
+    '': np.nan,
+    'Not Specified': np.nan
+})
+
+# Drop rows with NaN in REMOTE_TYPE_NAME
+df_remote = df_remote[df_remote['REMOTE_TYPE_NAME'].notna()]
+
+print(f"\nRemote type distribution (excluding not specified):")
+print(f"Total jobs with remote info: {len(df_remote):,}")
+
 # Count jobs by remote type
-remote_counts = df['REMOTE_TYPE_NAME'].value_counts()
+remote_counts = df_remote['REMOTE_TYPE_NAME'].value_counts()
 remote_df = pd.DataFrame({
     'Remote Type': remote_counts.index,
     'Count': remote_counts.values,
     'Percentage': (remote_counts.values / remote_counts.sum() * 100).round(1)
 })
 
-# Create bar chart with percentages
+print(remote_df.to_string(index=False))
+
+# Create bar chart with custom colors
 remote_df.hvplot.bar(
     x='Remote Type',
     y='Count',
     title='Job Market Distribution: Remote, Hybrid & On-Site Opportunities (2024)',
-    height=500,
-    width=800,
+    height=400,
+    width=700,
     color='Remote Type',
-    cmap=COLORS,
+    cmap=['#2196F3', '#E91E63', '#9B59B6', '#F44336'],
     hover_cols=['Percentage'],
     ylabel='Number of Job Postings',
     xlabel='Work Location Type',
     rot=0
-)
+).opts(yformatter='%.0f')
 ```
 
 ::: {.callout-note icon=false}
@@ -168,27 +187,31 @@ The balance between remote, hybrid, and on-site jobs indicates industry acceptan
 Geographic distribution shows where job opportunities are concentrated.
 
 ```{python}
-# Get top 15 states by job postings
-state_counts = df['STATE_NAME'].value_counts().head(15)
+# Get top 10 states by job postings 
+df_states = df[df['STATE_NAME'].notna()].copy()
+
+state_counts = df_states['STATE_NAME'].value_counts().head(10)
 state_df = pd.DataFrame({
     'State': state_counts.index,
     'Job Postings': state_counts.values,
-    'Percentage': (state_counts.values / len(df) * 100).round(2)
+    'Percentage': (state_counts.values / len(df_states) * 100).round(2)
 })
+
+print(f"\nStates with job postings : {len(df_states):,} jobs")
 
 # Create bar chart
 state_df.hvplot.bar(
     x='State',
     y='Job Postings',
-    title='Top 15 States by Number of Job Postings (2024)',
-    height=600,
-    width=1000,
-    color='#9b59b6',
+    title='Top 10 States by Number of Job Postings (2024)',
+    height=450,
+    width=850,
+    color='#9B59B6',
     hover_cols=['Percentage'],
     ylabel='Number of Job Postings',
     xlabel='State',
     rot=45
-)
+).opts(yformatter='%.0f')
 ```
 
 ::: {.callout-note icon=false}
@@ -203,25 +226,29 @@ Geographic concentration shows tech hubs and major metropolitan areas dominate j
 Identifying top hiring companies helps job seekers target organizations with multiple opportunities.
 
 ```{python}
-# Get top 15 companies by job postings
-company_counts = df['COMPANY_NAME'].value_counts().head(15)
+# Get top 10 companies by job postings (remove None values)
+df_companies = df[df['COMPANY_NAME'].notna()].copy()
+
+company_counts = df_companies['COMPANY_NAME'].value_counts().head(10)
 company_df = pd.DataFrame({
     'Company': company_counts.index,
     'Job Postings': company_counts.values
 })
+
+print(f"\nCompanies with job postings : {len(df_companies):,} jobs")
 
 # Create horizontal bar chart
 company_df.hvplot.barh(
     x='Company',
     y='Job Postings',
     title='Top 15 Companies by Number of Job Postings (2024)',
-    height=700,
-    width=900,
-    color='#e74c3c',
+    height=550,
+    width=800,
+    color='#E91E63',
     ylabel='',
     xlabel='Number of Job Postings',
     flip_yaxis=True
-)
+).opts(xformatter='%.0f')
 ```
 
 ::: {.callout-note icon=false}
@@ -236,36 +263,70 @@ Companies with the highest number of job postings indicate organizations activel
 Understanding posting patterns helps with strategic job search timing.
 
 ```{python}
-# Check if date column exists
-if 'POSTED' in df.columns:
-    df['POSTED'] = pd.to_datetime(df['POSTED'], errors='coerce')
+# Print diagnostics
+print("\nAnalyzing POSTED column:")
+print(f"Sample values: {df['POSTED'].head(10)}")
+print(f"Data type: {df['POSTED'].dtype}")
+
+# Convert POSTED to datetime
+df_time = df.copy()
+df_time['POSTED'] = pd.to_datetime(df_time['POSTED'], errors='coerce')
+
+print(f"\nAfter conversion:")
+print(f"Date range: {df_time['POSTED'].min()} to {df_time['POSTED'].max()}")
+print(f"Valid dates: {df_time['POSTED'].notna().sum():,} out of {len(df_time):,}")
+print(f"Missing dates: {df_time['POSTED'].isna().sum():,}")
+
+# Filter valid dates
+time_data = df_time[df_time['POSTED'].notna()].copy()
+
+if len(time_data) > 0:
+    # Extract year-month
+    time_data['YearMonth'] = time_data['POSTED'].dt.to_period('M')
     
-    # Filter valid dates
-    time_data = df[df['POSTED'].notna()].copy()
-    time_data['Month'] = time_data['POSTED'].dt.to_period('M').astype(str)
+    # Group by month and count
+    monthly_counts = time_data.groupby('YearMonth').size().reset_index(name='Job Postings')
+    monthly_counts['Month'] = monthly_counts['YearMonth'].astype(str)
     
-    # Group by month
-    monthly_counts = time_data['Month'].value_counts().sort_index()
-    monthly_df = pd.DataFrame({
-        'Month': monthly_counts.index,
-        'Job Postings': monthly_counts.values
-    })
+    # Sort by month
+    monthly_counts = monthly_counts.sort_values('Month')
     
-    # Create line chart
-    monthly_df.hvplot.line(
+    print(f"\nMonthly posting counts:")
+    print(monthly_counts[['Month', 'Job Postings']].to_string(index=False))
+    
+    # Create line and area chart
+    line_chart = monthly_counts.hvplot.line(
         x='Month',
         y='Job Postings',
         title='Job Posting Trends Over Time (2024)',
-        height=500,
-        width=900,
-        color='#3498db',
+        height=400,
+        width=850,
+        color='#2196F3',
         line_width=3,
         ylabel='Number of Job Postings',
-        xlabel='Month'
+        xlabel='Month',
+        rot=45
+    ).opts(yformatter='%.0f')
+    
+    area_chart = monthly_counts.hvplot.area(
+        x='Month',
+        y='Job Postings',
+        alpha=0.3,
+        color='#2196F3'
     )
+    
+    # Combine line and area
+    (line_chart * area_chart)
 else:
-    print("Date column not available for time-series analysis")
+    print("\nWarning: No valid dates found in POSTED column")
+    print("Sample of POSTED values:")
+    print(df['POSTED'].head(20))
 ```
+
+::: {.callout-note icon=false}
+## Key Insight
+Temporal patterns in job postings reveal seasonal hiring trends and peak recruitment periods. Understanding these patterns helps time job applications for maximum visibility and response rates.
+:::
 
 ## 7. Experience Requirements
 
@@ -274,26 +335,39 @@ else:
 Understanding experience requirements helps assess job market accessibility.
 
 ```{python}
-# Analyze minimum years of experience
-exp_counts = df['MIN_YEARS_EXPERIENCE'].value_counts().sort_index()
+# Analyze minimum years of experience (remove None values)
+df_experience = df[df['MIN_YEARS_EXPERIENCE'].notna()].copy()
+
+exp_counts = df_experience['MIN_YEARS_EXPERIENCE'].value_counts().sort_index()
 exp_df = pd.DataFrame({
     'Years of Experience': exp_counts.index,
     'Job Postings': exp_counts.values
 })
 
-# Create bar chart
+# Convert Years of Experience to string for better labels
+exp_df['Years Label'] = exp_df['Years of Experience'].astype(int).astype(str) + ' years'
+
+print(f"\nJobs with experience requirements (excluding None): {len(df_experience):,} jobs")
+print(exp_df[['Years of Experience', 'Job Postings']].to_string(index=False))
+
+# Create bar chart with pastel purple color
 exp_df.hvplot.bar(
-    x='Years of Experience',
+    x='Years Label',
     y='Job Postings',
     title='Job Postings by Minimum Years of Experience Required (2024)',
-    height=500,
-    width=900,
-    color='#2ecc71',
+    height=400,
+    width=800,
+    color='#B39DDB',
     ylabel='Number of Job Postings',
-    xlabel='Minimum Years of Experience'
-)
+    xlabel='Minimum Years of Experience',
+    rot=45
+).opts(yformatter='%.0f')
 ```
 
+::: {.callout-note icon=false}
+## Key Insight
+Experience distribution shows the accessibility of the job market for entry-level versus experienced professionals. A healthy mix indicates opportunities across career stages.
+:::
 
 ## References
 

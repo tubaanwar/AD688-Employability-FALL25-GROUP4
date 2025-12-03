@@ -1,19 +1,6 @@
 ---
 title: "Skill Gap Analysis"
 subtitle: "Comparing Team Skills Against Market Demands"
-author:
-  - name: Tuba Anwar
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Kriti Singh
-    affiliations:
-      - ref: bu
-  - name: Soham Deshkhaire
-    affiliations:
-      - ref: bu
 format: 
   html:
     toc: true
@@ -52,7 +39,7 @@ pn.extension()
 COLORS = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c']
 
 # Load cleaned job data
-df = pd.read_csv('lightcast_job_postings.csv')
+df = pd.read_csv('cleanedjob_postings.csv')
 print(f"Analyzing {len(df):,} job postings for skill requirements")
 ```
 

@@ -1,10 +1,6 @@
 ---
 title: "Data Cleaning & Exploration"
 subtitle: "Preparing the Job Market Dataset for Analysis"
-author:
-  - name: Tuba Anwar
-  - name: Kriti Singh
-  - name: Soham Deshkhaire
 format: 
   html:
     toc: true
@@ -12,8 +8,9 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme:
+    theme: 
       light: [cosmo, custom.scss]
+    css: styles.css 
 jupyter: python3
 execute:
   echo: false

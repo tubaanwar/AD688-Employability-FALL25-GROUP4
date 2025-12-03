@@ -1,12 +1,29 @@
 ---
 title: "Job Market Analysis 2024- Business Analytics, Data Science, and Machine Learning Trends"
-author: "Team 4 Members- Tuba Anwar, Kriti Singh, Soham Deshkhaire"
-date: today
+author:
+  - name: Tuba Anwar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Kriti Singh
+    affiliations:
+      - ref: bu
+  - name: Soham Deshkhaire
+    affiliations:
+      - ref: bu
 format: 
   html:
     toc: true
-    
-bibliography: references.bib
+    number-sections: true
+    df-print: paged
+    code-overflow: wrap
+    embed-resources: true
+    theme: 
+      light: [cosmo, custom.scss]
+    css: styles.css
+    bibliography: references.bib
 ---
     
 

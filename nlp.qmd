@@ -1,19 +1,6 @@
 ---
 title: "Natural Language Processing Methods"
 subtitle: "Extracting Insights from Job Descriptions"
-author:
-  - name: Tuba Anwar
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Kriti Singh
-    affiliations:
-      - ref: bu
-  - name: Soham Deshkhaire
-    affiliations:
-      - ref: bu
 format: 
   html:
     toc: true
@@ -48,7 +35,7 @@ warnings.filterwarnings('ignore')
 # Set seaborn style
 sns.set_style("whitegrid")
 sns.set_palette("husl")
-plt.rcParams['figure.figsize'] = (14, 7)
+plt.rcParams['figure.figsize'] = (10, 5)
 
 # Load data - try multiple filenames
 try:
@@ -57,7 +44,7 @@ except:
     try:
         df = pd.read_csv('lightcast_job_postings.csv')
     except:
-        df = pd.read_csv('cleaned_job_posting.csv')
+        df = pd.read_csv('cleanedjob_postings.csv')
 
 print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
 print(f"Columns: {list(df.columns)}")
@@ -110,52 +97,87 @@ else:
 
 ## 2. Keyword Extraction
 
-### 2.1 Top 20 Most Common Words
+### 2.1 Top 10 Most Common Keywords
 
 ```{python}
-# Extract most common words
+# Extract most common meaningful words
 if len(text_columns) > 0 and len(df_text) > 0:
-    stopwords = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 
-                 'of', 'is', 'are', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 
-                 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 
-                 'must', 'can', 'this', 'that', 'with', 'as', 'by', 'from', 'your', 
-                 'we', 'you', 'they', 'our', 'their', 'what', 'which', 'who', 
-                 'where', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more', 
-                 'most', 'other', 'such', 'no', 'nor', 'not', 'only', 'same', 'so', 
-                 'than', 'too', 'very', 'if', 'about', 'above', 'after', 'again',
-                 'years', 'experience', 'job', 'position', 'role', 'work', 'required',
-                 'day', 'time', 'would', 'one', 'two', 'three', 'well', 'also'}
+    # Comprehensive stopwords list including common non-meaningful terms
+    stopwords = {
+        # Basic stopwords
+        'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 
+        'of', 'is', 'are', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 
+        'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 
+        'must', 'can', 'this', 'that', 'with', 'as', 'by', 'from', 'your', 
+        'we', 'you', 'they', 'our', 'their', 'what', 'which', 'who', 
+        'where', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more', 
+        'most', 'other', 'such', 'no', 'nor', 'not', 'only', 'same', 'so', 
+        'than', 'too', 'very', 'if', 'about', 'above', 'after', 'again',
+        # Job posting specific stopwords
+        'years', 'experience', 'job', 'position', 'role', 'work', 'required',
+        'day', 'time', 'one', 'two', 'three', 'well', 'also', 'new', 'us',
+        'www', 'http', 'https', 'com', 'org', 'net', 'html', 'php', 'asp',
+        'jobs', 'job', 'career', 'careers', 'apply', 'application',
+        'company', 'position', 'opportunity', 'opportunities',
+        # Common filler words
+        'including', 'within', 'through', 'during', 'before', 'after',
+        'over', 'between', 'out', 'off', 'then', 'once', 'here', 'there',
+        'when', 'while', 'who', 'whom', 'whose', 'whether', 'why',
+        'make', 'made', 'many', 'much', 'get', 'got', 'give', 'take',
+        'see', 'know', 'use', 'find', 'tell', 'ask', 'seem', 'feel',
+        'try', 'leave', 'call', 'etc', 'ie', 'eg', 'per', 'via'
+    }
     
     all_words = []
     for text in df_text['processed_text']:
-        words = [w for w in text.split() if w not in stopwords and len(w) > 2]
-        all_words.extend(words)
+        # Split into words
+        words = text.split()
+        # Filter: remove stopwords, short words, and words that look like URLs/codes
+        filtered_words = [
+            w for w in words 
+            if w not in stopwords 
+            and len(w) > 3  # At least 4 characters
+            and len(w) < 20  # Not too long (likely URLs or codes)
+            and not any(char.isdigit() for char in w)  # No numbers
+            and w.isalpha()  # Only alphabetic characters
+        ]
+        all_words.extend(filtered_words)
     
-    word_freq = Counter(all_words)
-    top_words = word_freq.most_common(20)
-    words, counts = zip(*top_words)
-    
-    # Create dataframe for seaborn
-    word_df = pd.DataFrame({'Word': words, 'Frequency': counts})
-    word_df = word_df.sort_values('Frequency')
-    
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.barplot(data=word_df, y='Word', x='Frequency', palette='Blues_r', ax=ax)
-    ax.set_title('Top 20 Most Common Words in Job Descriptions', fontsize=16, fontweight='bold', pad=20)
-    ax.set_xlabel('Frequency', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Word', fontsize=12, fontweight='bold')
-    
-    # Add value labels
-    for i, v in enumerate(word_df['Frequency']):
-        ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold')
-    
-    plt.tight_layout()
-    plt.show()
+    if len(all_words) > 0:
+        word_freq = Counter(all_words)
+        top_words = word_freq.most_common(10)
+        words, counts = zip(*top_words)
+        
+        # Create dataframe for seaborn
+        word_df = pd.DataFrame({'Keyword': words, 'Frequency': counts})
+        word_df = word_df.sort_values('Frequency')
+        
+        # Capitalize first letter of each keyword for better presentation
+        word_df['Keyword'] = word_df['Keyword'].str.capitalize()
+        
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.barplot(data=word_df, y='Keyword', x='Frequency', palette='Blues_r', ax=ax)
+        ax.set_title('Top 10 Most Common Keywords in Job Descriptions', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Frequency', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Keyword', fontsize=11, fontweight='bold')
+        
+        # Add value labels
+        for i, v in enumerate(word_df['Frequency']):
+            ax.text(v + max(word_df['Frequency'])*0.02, i, f'{int(v):,}', va='center', fontweight='bold', fontsize=9)
+        
+        plt.tight_layout()
+        plt.show()
+        
+        print("\n📊 Top 10 Keywords Found:")
+        for word, count in zip(word_df['Keyword'], word_df['Frequency']):
+            print(f"  {word:20s} - {count:,} occurrences")
+    else:
+        print("No meaningful keywords found after filtering")
 ```
 
 ## 3. Technical Skills Analysis
 
-### 3.1 Skills Extraction
+### 3.1 Top 10 Technical Skills
 
 ```{python}
 # Extract technical skills
@@ -193,99 +215,35 @@ if len(text_columns) > 0 and len(df_text) > 0:
     if skill_counts:
         sorted_skills = dict(sorted(skill_counts.items(), key=lambda x: x[1], reverse=True))
         
+        # Get top 10 skills
+        top_10_skills = dict(list(sorted_skills.items())[:10])
+        
         # Create dataframe for seaborn
-        skill_df = pd.DataFrame(list(sorted_skills.items()), columns=['Skill', 'Count'])
+        skill_df = pd.DataFrame(list(top_10_skills.items()), columns=['Skill', 'Count'])
         skill_df = skill_df.sort_values('Count')
         
-        fig, ax = plt.subplots(figsize=(12, 7))
+        fig, ax = plt.subplots(figsize=(8, 5))
         sns.barplot(data=skill_df, y='Skill', x='Count', palette='viridis_r', ax=ax)
-        ax.set_title('Technical Skills Frequency in Job Descriptions', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Number of Job Postings', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Skill', fontsize=12, fontweight='bold')
+        ax.set_title('Top 10 Technical Skills in Job Descriptions', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Number of Job Postings', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Skill', fontsize=11, fontweight='bold')
         
         # Add value labels
         for i, v in enumerate(skill_df['Count']):
-            ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold')
+            ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold', fontsize=9)
         
         plt.tight_layout()
         plt.show()
         
-        print("\n📊 Top Technical Skills:")
-        for skill, count in sorted_skills.items():
+        print("\n📊 Top 10 Technical Skills:")
+        for skill, count in top_10_skills.items():
             pct = (count / len(df_text)) * 100
             print(f"  {skill:20s} - {count:5d} jobs ({pct:5.1f}%)")
 ```
 
-## 4. Job Title Frequency
+## 4. Skill Requirements by Job Title
 
-### 4.1 Most Common Job Titles
-
-```{python}
-# Analyze job titles
-if 'TITLE_NAME' in df.columns:
-    top_titles = df['TITLE_NAME'].value_counts().head(15)
-    
-    # Create dataframe for seaborn
-    title_df = pd.DataFrame({'Title': top_titles.index, 'Count': top_titles.values})
-    title_df = title_df.sort_values('Count')
-    
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.barplot(data=title_df, y='Title', x='Count', palette='RdYlGn_r', ax=ax)
-    ax.set_title('Top 15 Most Common Job Titles', fontsize=16, fontweight='bold', pad=20)
-    ax.set_xlabel('Number of Postings', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Job Title', fontsize=12, fontweight='bold')
-    
-    # Add value labels
-    for i, v in enumerate(title_df['Count']):
-        ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold')
-    
-    plt.tight_layout()
-    plt.show()
-else:
-    print("TITLE_NAME column not found")
-```
-
-## 5. Text Length Analysis
-
-### 5.1 Job Description Length Distribution
-
-```{python}
-# Analyze description lengths
-if len(df_text) > 0:
-    df_text['text_length'] = df_text['processed_text'].str.len()
-    df_text['word_count'] = df_text['processed_text'].str.split().str.len()
-    
-    fig, axes = plt.subplots(1, 2, figsize=(15, 5))
-    
-    # Character length distribution
-    sns.histplot(data=df_text, x='text_length', bins=50, kde=True, color='#3498db', ax=axes[0])
-    axes[0].set_title('Character Count Distribution', fontsize=14, fontweight='bold')
-    axes[0].set_xlabel('Character Count', fontsize=11, fontweight='bold')
-    axes[0].set_ylabel('Frequency', fontsize=11, fontweight='bold')
-    axes[0].axvline(df_text['text_length'].mean(), color='red', linestyle='--', linewidth=2, label=f"Mean: {df_text['text_length'].mean():.0f}")
-    axes[0].legend()
-    
-    # Word count distribution
-    sns.histplot(data=df_text, x='word_count', bins=50, kde=True, color='#e74c3c', ax=axes[1])
-    axes[1].set_title('Word Count Distribution', fontsize=14, fontweight='bold')
-    axes[1].set_xlabel('Word Count', fontsize=11, fontweight='bold')
-    axes[1].set_ylabel('Frequency', fontsize=11, fontweight='bold')
-    axes[1].axvline(df_text['word_count'].mean(), color='red', linestyle='--', linewidth=2, label=f"Mean: {df_text['word_count'].mean():.0f}")
-    axes[1].legend()
-    
-    plt.tight_layout()
-    plt.show()
-    
-    print("\n📊 Text Length Statistics:")
-    print(f"  Average characters: {df_text['text_length'].mean():.0f}")
-    print(f"  Median characters: {df_text['text_length'].median():.0f}")
-    print(f"  Average words: {df_text['word_count'].mean():.0f}")
-    print(f"  Median words: {df_text['word_count'].median():.0f}")
-```
-
-## 6. Skill Requirements by Job Title
-
-### 6.1 Skills vs Top Job Titles - Heatmap
+### 4.1 Skills vs Top Job Titles - Heatmap
 
 ```{python}
 # Cross-tabulate skills by top job titles
@@ -324,20 +282,20 @@ if 'TITLE_NAME' in df.columns and len(text_columns) > 0:
         skill_df = pd.DataFrame(skill_title_matrix)
         skill_df = skill_df.set_index('Title')
         
-        fig, ax = plt.subplots(figsize=(12, 7))
+        fig, ax = plt.subplots(figsize=(8, 5))
         sns.heatmap(skill_df, annot=True, fmt='.1f', cmap='YlOrRd', cbar_kws={'label': 'Percentage (%)'}, 
                     ax=ax, linewidths=0.5, linecolor='gray')
-        ax.set_title('Skill Requirements by Job Title (% of postings)', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Skill', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Job Title', fontsize=12, fontweight='bold')
+        ax.set_title('Skill Requirements by Job Title (% of postings)', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Skill', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Job Title', fontsize=11, fontweight='bold')
         
         plt.tight_layout()
         plt.show()
 ```
 
-## 7. Keyword Correlation Analysis
+## 5. Keyword Correlation Analysis
 
-### 7.1 Top Keyword Pairs
+### 5.1 Top 10 Keyword Pairs
 
 ```{python}
 # Find commonly co-occurring keywords
@@ -356,22 +314,22 @@ if len(text_columns) > 0 and len(df_text) > 0:
                     keyword_cooccurrence[pair] = keyword_cooccurrence.get(pair, 0) + 1
     
     if keyword_cooccurrence:
-        sorted_pairs = sorted(keyword_cooccurrence.items(), key=lambda x: x[1], reverse=True)[:12]
+        sorted_pairs = sorted(keyword_cooccurrence.items(), key=lambda x: x[1], reverse=True)[:10]
         pair_names = [f"{p[0][0].capitalize()}-{p[0][1].capitalize()}" for p in sorted_pairs]
         pair_counts = [p[1] for p in sorted_pairs]
         
         pair_df = pd.DataFrame({'Keyword Pair': pair_names, 'Co-occurrence': pair_counts})
         pair_df = pair_df.sort_values('Co-occurrence')
         
-        fig, ax = plt.subplots(figsize=(12, 7))
+        fig, ax = plt.subplots(figsize=(8, 5))
         sns.barplot(data=pair_df, y='Keyword Pair', x='Co-occurrence', palette='coolwarm', ax=ax)
-        ax.set_title('Top Keyword Pairs in Job Descriptions', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Co-occurrence Count', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Keyword Pair', fontsize=12, fontweight='bold')
+        ax.set_title('Top 10 Keyword Pairs in Job Descriptions', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Co-occurrence Count', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Keyword Pair', fontsize=11, fontweight='bold')
         
         # Add value labels
         for i, v in enumerate(pair_df['Co-occurrence']):
-            ax.text(v + 5, i, str(int(v)), va='center', fontweight='bold')
+            ax.text(v + 5, i, str(int(v)), va='center', fontweight='bold', fontsize=9)
         
         plt.tight_layout()
         plt.show()
@@ -382,37 +340,28 @@ if len(text_columns) > 0 and len(df_text) > 0:
 ::: {.callout-important icon=false}
 ## NLP Analysis Key Findings
 
-**Text Analysis Results:**
+*Text Analysis Results:*
 - ✓ Successfully processed job descriptions using NLP techniques
-- ✓ Identified most common keywords and technical terms
-- ✓ Extracted and ranked technical skills mentioned in postings
-- ✓ Analyzed job title distribution and text characteristics
-- ✓ Cross-referenced skills with job title requirements
-- ✓ Discovered commonly co-occurring keywords
+- ✓ Identified top 10 most common keywords in job postings
+- ✓ Extracted and ranked top 10 technical skills
+- ✓ Cross-referenced skills with job title requirements via heatmap
+- ✓ Discovered top 10 commonly co-occurring keyword pairs
 
-**Key Insights:**
-- Top technical skills dominate the job market
-- Job descriptions follow consistent patterns in length and language
-- Specific tools and frameworks are frequently required
-- Job titles show clear industry segmentation
-- Skills vary significantly by job title
-- Certain skills frequently appear together in job postings
+*Key Insights:*
+- Top 10 technical skills dominate the job market requirements
+- Specific keywords appear consistently across job descriptions
+- Skills requirements vary significantly by job title
+- Certain keyword pairs frequently appear together, indicating related competencies
+- Job descriptions follow consistent patterns in technical terminology
 
-**Recommendations for Job Seekers:**
-- Prioritize learning top-mentioned technical skills
-- Tailor resume language to match common terms found in postings
-- Focus on roles matching your skill set based on frequency analysis
-- Use identified keywords to optimize job search strategy
-- Target jobs where your skills are in highest demand
-- Consider developing complementary skills that frequently co-occur
+*Recommendations for Job Seekers:*
+- Prioritize learning the top 10 technical skills identified
+- Tailor resume language to match common keywords found in postings
+- Focus on developing complementary skills that frequently co-occur
+- Target jobs where your skills align with the identified requirements
+- Use heatmap insights to understand skill priorities by job title
 :::
 
-## Next Steps
-
-- Integrate NLP findings with machine learning clustering results
-- Compare skill requirements across job clusters
-- Develop personalized career strategy based on combined insights
-- Create targeted skill development plan
 
 ## References
 
