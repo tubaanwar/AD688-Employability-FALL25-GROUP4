@@ -6,9 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tuba Anwar">
-<meta name="author" content="Kriti Singh">
-<meta name="author" content="Soham Deshkhaire">
 
 <title>Data Cleaning &amp; Exploration – Job Market Analysis 2024</title>
 <style>
@@ -3831,6 +3828,119 @@ vertical-align: -.125em;
 }</script>
 
 
+<style type="text/css">
+:root {
+--primary-navy: #1D3557;
+--secondary-blue: #457B9D;
+--accent-teal: #2A9D8F;
+--accent-red: #E63946;
+--light-bg: #F1FAEE;
+--text-dark: #1D3557;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+color: var(--text-dark);
+line-height: 1.8;
+}
+
+h1, h2, h3 {
+color: var(--primary-navy);
+font-weight: 600;
+margin-top: 2rem;
+}
+h1 {
+border-bottom: 3px solid var(--accent-teal);
+padding-bottom: 0.5rem;
+}
+h2 {
+border-left: 4px solid var(--secondary-blue);
+padding-left: 1rem;
+margin-top: 2.5rem;
+}
+h3 {
+color: var(--secondary-blue);
+}
+
+.cell-code {
+background-color: #f8f9fa;
+border-left: 3px solid var(--secondary-blue);
+border-radius: 4px;
+padding: 1rem;
+margin: 1rem 0;
+}
+
+p strong {
+color: var(--accent-red);
+}
+
+blockquote {
+border-left: 4px solid var(--accent-teal);
+background-color: var(--light-bg);
+padding: 1rem 1.5rem;
+margin: 1.5rem 0;
+font-style: italic;
+}
+
+#TOC {
+background-color: var(--light-bg);
+border: 1px solid var(--secondary-blue);
+border-radius: 8px;
+padding: 1.5rem;
+}
+#TOC a {
+color: var(--primary-navy);
+text-decoration: none;
+transition: all 0.3s ease;
+}
+#TOC a:hover {
+color: var(--accent-teal);
+padding-left: 0.5rem;
+}
+
+.plotly, .bk-root {
+margin: 2rem 0;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+overflow: hidden;
+}
+
+section {
+margin-bottom: 3rem;
+}
+
+a {
+color: var(--secondary-blue);
+transition: color 0.3s ease;
+}
+a:hover {
+color: var(--accent-teal);
+}
+
+.quarto-title-block {
+background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+color: white;
+padding: 3rem 2rem;
+margin-bottom: 3rem;
+border-radius: 0 0 8px 8px;
+}
+.quarto-title-block h1,
+.quarto-title-block .subtitle {
+color: white !important;
+border: none;
+}
+
+.quarto-title-meta {
+color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+.plotly, .bk-root {
+width: 100% !important;
+height: auto !important;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -3912,14 +4022,6 @@ vertical-align: -.125em;
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Authors</div>
-    <div class="quarto-title-meta-contents">
-             <p>Tuba Anwar </p>
-             <p>Kriti Singh </p>
-             <p>Soham Deshkhaire </p>
-          </div>
-  </div>
     
   
     
@@ -3933,7 +4035,7 @@ vertical-align: -.125em;
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>This document details the comprehensive data cleaning and preprocessing steps applied to the 2024 job market dataset.</p>
-<div id="4b3ed33e" class="cell" data-execution_count="1">
+<div id="9f1639f8" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Initial dataset shape: (72498, 131)
 Total rows: 72,498
@@ -3944,7 +4046,7 @@ Total columns: 131</code></pre>
 <section id="step-1-removing-redundant-columns" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="step-1-removing-redundant-columns"><span class="header-section-number">2</span> Step 1: Removing Redundant Columns</h2>
 <p>We remove redundant columns to improve dataset quality and analysis efficiency.</p>
-<div id="ffb3e0f2" class="cell" data-execution_count="2">
+<div id="4e615f31" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Columns removed: 69
 New dataset shape: (72498, 62)</code></pre>
@@ -3953,7 +4055,7 @@ New dataset shape: (72498, 62)</code></pre>
 </section>
 <section id="step-2-handling-missing-values" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="step-2-handling-missing-values"><span class="header-section-number">3</span> Step 2: Handling Missing Values</h2>
-<div id="dfbafa63" class="cell" data-execution_count="3">
+<div id="eec98a1a" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Columns with missing values: 62
 
@@ -3971,7 +4073,7 @@ Top 10 columns with highest missing percentages:
 30       MSA_NAME_INCOMING           3962                5.46</code></pre>
 </div>
 </div>
-<div id="b7c1de43" class="cell" data-execution_count="4">
+<div id="bce6ad04" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>Columns dropped due to &gt;50% missing values: 6
 Total missing values after imputation: 0</code></pre>
@@ -3980,7 +4082,7 @@ Total missing values after imputation: 0</code></pre>
 </section>
 <section id="step-3-removing-duplicates" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="step-3-removing-duplicates"><span class="header-section-number">4</span> Step 3: Removing Duplicates</h2>
-<div id="2fe105c8" class="cell" data-execution_count="5">
+<div id="b4a0df2c" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>Initial rows: 72,498
 Duplicate rows detected: 13,278
@@ -3991,7 +4093,7 @@ Rows removed: 13,278</code></pre>
 </section>
 <section id="step-4-final-summary" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="step-4-final-summary"><span class="header-section-number">5</span> Step 4: Final Summary</h2>
-<div id="8c952eca" class="cell" data-execution_count="6">
+<div id="6d716fc4" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>             Metric  Value
          Total Rows 59,220
