@@ -8,8 +8,6 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme: 
-      light: [cosmo, custom.scss]
     css: styles.css
 jupyter: python3
 execute:
@@ -83,14 +81,16 @@ df_team_skills = pd.DataFrame(skills_data)
 df_team_skills.set_index("Name", inplace=True)
 
 # Display team skills
-print("Team Skills Profile:")
-print(df_team_skills)
+#print("Team Skills Profile:")
+#print(df_team_skills)
 
 # Calculate team averages
 team_avg = df_team_skills.mean().sort_values(ascending=False)
-print(f"\nTeam Average Skills (sorted):")
-print(team_avg)
+#print(f"\nTeam Average Skills (sorted):")
+#print(team_avg)
 ```
+
+The team’s strongest skills are *Excel, Python, and Data Analysis, showing solid readiness for analytical and data-focused roles. Skills like **SQL, Git, Tableau, and Machine Learning* are moderately strong, indicating reliable but improvable proficiency. Meanwhile, areas such as *AWS, Azure, TensorFlow, Docker, and Cloud Computing* show lower scores, highlighting clear opportunities for growth—especially important given rising market demand for cloud and ML engineering skills. Overall, the team has a strong analytical foundation but should focus on boosting cloud and advanced technical competencies to stay competitive.
 
 ### 1.2 Team Skills Heatmap
 
@@ -111,10 +111,7 @@ heatmap = df_team_skills.T.hvplot.heatmap(
 heatmap
 ```
 
-::: {.callout-note icon=false}
-## Key Observation
-The heatmap reveals individual strengths and team-wide patterns. Skills with consistently high ratings represent team strengths, while low ratings across the board indicate collective skill gaps requiring attention.
-:::
+This heatmap shows how strong each team member is across key tech skills like AWS, Excel, SQL, Machine Learning, and more. The greener the box, the stronger the skill—red means the weakest. From a job seeker’s perspective, this quickly highlights which skills are common strengths and which ones need improvement to stay competitive. For example, Excel, Data Analysis, and SQL show strong proficiency across the team, meaning these are essential, in-demand skills worth mastering. Meanwhile, AWS and JavaScript show weaker proficiency, signaling great opportunities for upskilling—especially since cloud and coding skills are highly valued in today’s market.
 
 ### 1.3 Team Average Skills Bar Chart
 
@@ -139,6 +136,7 @@ chart = team_avg_df.sort_values('Average Proficiency', ascending=True).hvplot.ba
 )
 chart
 ```
+The team’s top 10 skills show strong proficiency in high-value areas like *Excel, Data Analysis, Python, Git, and SQL, which are core requirements for most analytics and tech roles. Mid-level strengths in **Machine Learning, Tableau, R, and JavaScript* show the team can handle more advanced tasks but still has room to grow. Overall, these skills place the team in a competitive position for data and tech jobs, while highlighting opportunities to strengthen cloud and AI-related tools for even better market readiness.
 
 ## 2. Market Skill Demand Analysis
 
@@ -201,20 +199,22 @@ market_skills_df = pd.DataFrame(skill_counts.items(), columns=['Skill', 'Job Pos
 market_skills_df = market_skills_df.sort_values('Job Postings', ascending=False)
 market_skills_df['Percentage'] = (market_skills_df['Job Postings'] / len(df) * 100).round(2)
 
-print("Market Skill Demand (Top Skills):")
-print(market_skills_df.head(15))
+#print("Market Skill Demand (Top Skills):")
+#print(market_skills_df.head(10))
 ```
+
+The skill extraction shows that *Data Analysis, **Cloud Computing, and **TensorFlow* are the most frequently requested skills in job postings, making them top priorities for job seekers. Technical fundamentals like *Git, **SQL, and **Azure* also appear often, highlighting the importance of both data-related and cloud skills. Lower-frequency skills such as *Spark* or *AWS* still matter but are requested less often, suggesting they may serve as valuable “bonus” skills rather than core requirements.
 
 ### 2.2 Top In-Demand Skills Visualization
 
 ```{python}
-# Create bar chart of top 15 market skills
-top_market_skills = market_skills_df.head(15).sort_values('Job Postings', ascending=True)
+# Create bar chart of top 10 market skills
+top_market_skills = market_skills_df.head(10).sort_values('Job Postings', ascending=True)
 
 chart = top_market_skills.hvplot.barh(
     x='Skill',
     y='Job Postings',
-    title='Top 15 Most In-Demand Skills in Job Market (2024)',
+    title='Top 10 Most In-Demand Skills in Job Market (2024)',
     height=600,
     width=900,
     color='#3498db',
@@ -226,10 +226,7 @@ chart = top_market_skills.hvplot.barh(
 chart
 ```
 
-::: {.callout-note icon=false}
-## Market Insight
-These are the skills most frequently mentioned in job postings. High-demand skills represent critical areas where job seekers should focus their learning efforts.
-:::
+The chart shows that *Data Analysis* and *Cloud Computing* are the most in-demand skills in the 2024 job market, with far more postings than any other skill. This means employers are strongly prioritizing candidates who can analyze data and work with cloud platforms. Skills like *TensorFlow, Git, SQL, Azure, and **Java* are also highly requested, making them great additions to your skillset. Lower-demand skills such as *Spark, AWS, Tableau, and **Machine Learning* still matter, but they won’t give as much of a competitive edge as the top skills.
 
 ## 3. Skill Gap Identification
 
@@ -268,9 +265,16 @@ for skill in df_team_skills.columns:
 comparison_df = pd.DataFrame(comparison_data)
 comparison_df = comparison_df.sort_values('Gap', ascending=False)
 
-print("Skill Gap Analysis:")
-print(comparison_df)
+#print("Skill Gap Analysis:")
+#print(comparison_df)
 ```
+
+The analysis shows that our team is *strong in most core skills, especially Python, SQL, Tableau, Machine Learning, and Git — all areas where market demand is relatively low to moderate. However, there are **two skills with clear gaps* compared to what employers want:
+
+* *Cloud Computing* (e.g., AWS, Azure)
+* *Data Analysis*
+
+These areas are in *very high demand*, but our team’s proficiency is lower than what the job market expects. Strengthening Cloud tools and advanced Data Analysis techniques would significantly boost job readiness and competitiveness in today’s tech hiring landscape.
 
 ### 3.2 Skill Gap Visualization
 
@@ -302,6 +306,10 @@ chart = comparison_melted.hvplot.bar(
 chart
 ```
 
+The chart clearly shows that *market demand is much higher than the team’s current skill levels across nearly all skills. The biggest gaps appear in **Cloud Computing, Data Analysis, TensorFlow, Azure, and AWS, meaning these are the most urgent areas for development. Skills like **Git, SQL, Python, and Machine Learning* are team strengths, but still trail behind what employers expect.
+
+For job seekers like us, this means focusing on cloud technologies, advanced analytics, and AI frameworks will significantly boost competitiveness and align better with real market needs.
+
 ### 3.3 Skill Gap Priority Matrix
 
 Identify which skills need immediate attention based on gap size.
@@ -325,10 +333,11 @@ chart = comparison_df.hvplot.scatter(
 chart
 ```
 
-::: {.callout-important icon=false}
-## Critical Skill Gaps
-Skills appearing in the **lower right area** (high market demand, low team proficiency) represent critical gaps requiring immediate attention. These should be prioritized in our learning plan.
-:::
+The matrix helps identify which skills your team should focus on first.
+
+* *Green (Moderate Gap):* These skills—like Cloud Computing, Data Analysis, and TensorFlow—are *high in market demand but lower in team proficiency*, meaning they should be top priority for upskilling.
+* *Orange (Strength):* Most other skills fall in this category. These are areas where the team is already strong compared to market demand—great to maintain but not urgent for improvement.
+
 
 ## 4. Individual Skill Gap Analysis
 
@@ -366,12 +375,23 @@ individual_gaps_df = pd.DataFrame(individual_gaps)
 individual_gaps_df = individual_gaps_df.sort_values(['Member', 'Gap'], ascending=[True, False])
 
 # Show top 5 gaps per member
-print("Top 5 Skill Gaps per Team Member:")
+#print("Top 5 Skill Gaps per Team Member:")
 for member in df_team_skills.index:
-    print(f"\n{member}:")
+    #print(f"\n{member}:")
     member_gaps = individual_gaps_df[individual_gaps_df['Member'] == member].head(5)
-    print(member_gaps[['Skill', 'Current Level', 'Gap']].to_string(index=False))
+    #print(member_gaps[['Skill', 'Current Level', 'Gap']].to_string(index=False))
 ```
+
+ach team member has two main skill gaps: Cloud Computing and Data Analysis.
+
+Tuba Anwar needs improvement mainly in Cloud Computing, with a smaller gap in Data Analysis.
+
+Kriti Singh also shows the same pattern—Cloud Computing is the biggest gap, followed by Data Analysis.
+
+Soham Deshkhaires has the highest gap in Data Analysis, and a moderate gap in Cloud Computing.
+
+Overall Insight:
+All three team members share the same critical areas for improvement. Strengthening Cloud Computing and Data Analysis should be the top priority for the team.
 
 ### 4.2 Individual Gap Visualization
 
@@ -398,6 +418,18 @@ for member in df_team_skills.index:
     display(plot)
 ```
 
+Across all three members—Tuba, Kriti, and Soham—the largest skill gap is in Cloud Computing, meaning the market demands this skill at a much higher level than the team currently possesses. This makes Cloud Computing the top priority area for improvement for everyone.
+
+Additionally, Data Analysis appears as a major gap for both Tuba and Kriti, while Soham shows a moderate gap in Cloud Computing only. This indicates that although the team already has some analytical skills, the job market expects a stronger command in this area.
+
+The charts highlight two urgent development needs for the team:
+
+Cloud Computing → biggest gap for all members
+
+Data Analysis → second-highest gap for Tuba & Kriti
+
+Focusing training efforts on these skills will significantly improve alignment with market expectations.individual
+
 ## 5. Skill Development Plan
 
 ### 5.1 Priority Skills for Team Development
@@ -408,19 +440,17 @@ Based on our analysis, here are the priority skills the team should focus on:
 # Identify critical gaps (gap > 2)
 critical_gaps = comparison_df[comparison_df['Gap'] > 2].sort_values('Gap', ascending=False)
 
-print("CRITICAL SKILLS TO DEVELOP (Gap > 2):")
-print(critical_gaps[['Skill', 'Team Average', 'Market Demand', 'Gap']])
+#print("CRITICAL SKILLS TO DEVELOP (Gap > 2):")
+#print(critical_gaps[['Skill', 'Team Average', 'Market Demand', 'Gap']])
 
 # Identify moderate gaps (1 < gap <= 2)
 moderate_gaps = comparison_df[(comparison_df['Gap'] > 1) & (comparison_df['Gap'] <= 2)].sort_values('Gap', ascending=False)
 
-print("\n\nMODERATE PRIORITY SKILLS (1 < Gap <= 2):")
-print(moderate_gaps[['Skill', 'Team Average', 'Market Demand', 'Gap']])
+#print("\n\nMODERATE PRIORITY SKILLS (1 < Gap <= 2):")
+#print(moderate_gaps[['Skill', 'Team Average', 'Market Demand', 'Gap']])
 ```
 
-### 5.2 Recommended Learning Resources
-
-Based on identified gaps, here are recommended learning resources:
+The analysis shows that the team has *no critical skill gaps, meaning no skill is urgently below market expectations. However, two areas — **Cloud Computing* and *Data Analysis* — fall into the *moderate-priority* category. These skills have higher market demand than the team’s current proficiency levels, making them important for upskilling. Focusing on these areas will help the team stay competitive, align with industry expectations, and strengthen overall technical capability.
 
 ```{python}
 # Create learning recommendations
@@ -456,17 +486,7 @@ learning_resources = {
         'Time': '2-4 months'
     }
 }
-
-# Display learning plan for critical skills
-print("RECOMMENDED LEARNING PLAN:\n")
-for _, row in critical_gaps.head(5).iterrows():
-    skill = row['Skill']
-    if skill in learning_resources:
-        print(f"📚 {skill} (Gap: {row['Gap']:.2f})")
-        print(f"   Courses: {', '.join(learning_resources[skill]['Courses'])}")
-        print(f"   Practice: {', '.join(learning_resources[skill]['Practice'])}")
-        print(f"   Estimated Time: {learning_resources[skill]['Time']}")
-        print()
+        
 ```
 
 ### 5.3 Team Collaboration Strategy
@@ -477,19 +497,15 @@ How can team members help each other?
 # Identify team strengths (where team exceeds market demand)
 team_strengths = comparison_df[comparison_df['Gap'] < 0].sort_values('Team Average', ascending=False)
 
-print("TEAM STRENGTHS (Can mentor others):")
-print(team_strengths[['Skill', 'Team Average', 'Market Demand']])
+#print("TEAM STRENGTHS (Can mentor others):")
+#print(team_strengths[['Skill', 'Team Average', 'Market Demand']])
 
 # Create mentoring pairs based on individual strengths
-print("\n\nSUGGESTED MENTORING OPPORTUNITIES:")
+#print("\n\nSUGGESTED MENTORING OPPORTUNITIES:")
 
-for skill in df_team_skills.columns:
-    skill_levels = df_team_skills[skill].sort_values(ascending=False)
-    if skill_levels.max() - skill_levels.min() >= 2:  # Significant difference
-        expert = skill_levels.index[0]
-        learner = skill_levels.index[-1]
-        print(f"  {skill}: {expert} (Level {skill_levels.iloc[0]}) can mentor {learner} (Level {skill_levels.iloc[-1]})")
 ```
+
+The team collaboration strategy highlights how members can support one another by leveraging individual strengths to address skill gaps. Team strengths such as Excel, Python, SQL, Git, Tableau, Machine Learning, JavaScript, NLP, R, Spark, Power BI, Java, TensorFlow, Docker, Azure, and AWS show which members have above-average proficiency and can mentor others. Suggested mentoring pathways include: Soham Deshkhaire (Level 4) mentoring Kriti Singh (Level 2) in Machine Learning, Kriti Singh (Level 4) mentoring Soham in Tableau, Kriti (Level 5) mentoring Soham (Level 3) in Excel, and Soham (Level 3) mentoring Kriti (Level 1) in Docker. These targeted pairings ensure knowledge transfer, help close individual skill gaps, and strengthen overall team capability.
 
 ### 5.4 3-Month, 6-Month, and 1-Year Goals
 

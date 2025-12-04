@@ -8,8 +8,6 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme: 
-      light: [cosmo, custom.scss]
     css: styles.css 
 jupyter: python3
 execute:
@@ -39,9 +37,9 @@ COLORS = ['#2196F3', '#E91E63', '#9B59B6', '#F44336', '#00BCD4', '#FF4081', '#7E
 # Load cleaned data
 df = pd.read_csv('cleanedjob_postings.csv')
 
-print(f"Dataset shape: {df.shape}")
-print(f"Analysis period: 2024 Job Market")
-print(f"Total job postings analyzed: {len(df):,}")
+#print(f"Dataset shape: {df.shape}")
+#print(f"Analysis period: 2024 Job Market")
+#print(f"Total job postings analyzed: {len(df):,}")
 ```
 
 ## 1. Job Title Analysis
@@ -76,10 +74,7 @@ title_df.hvplot.barh(
 ).opts(xformatter='%.0f')
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-The top job titles reveal where the market has the highest demand. Software engineers, data analysts, and project managers consistently lead the rankings, indicating strong demand for technical and leadership roles.
-:::
+The Top 10 most in-demand jobs are dominated by Data Analyst roles, which appear far more frequently than any other title. Business Intelligence Analysts, Enterprise Architects, and Data Modelers also rank highly, highlighting strong employer demand for data-focused and technical architecture skills. Overall, the top roles show a clear market emphasis on analytics, data management, and solution-oriented positions in 2024.
 
 ## 2. Employment Type Distribution
 
@@ -101,8 +96,8 @@ employment_df = pd.DataFrame({
     'Percentage': (employment_counts.values / employment_counts.sum() * 100).round(1)
 })
 
-print(f"\nEmployment types : {len(df_employment):,} jobs")
-print(employment_df.to_string(index=False))
+#print(f"\nEmployment types : {len(df_employment):,} jobs")
+#print(employment_df.to_string(index=False))
 
 # Create bar chart
 employment_df.hvplot.bar(
@@ -119,10 +114,7 @@ employment_df.hvplot.bar(
 ).opts(yformatter='%.0f')
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-The distribution of employment types shows whether the market primarily offers full-time stability, part-time flexibility, or contract-based project work. This helps candidates align their search with available opportunities.
-:::
+Most job postings in 2024 require around 5 years of experience, making it the dominant requirement across roles. Entry-level opportunities (0–2 years) exist but are significantly fewer, showing that employers prioritize mid-level talent with proven skills. Requirements beyond 7+ years drop sharply, indicating limited demand for highly senior roles compared to mid-level positions, jobs that are full-time, makes up over 95% of all postings only a small share of roles are part-time (3.3%) or mixed part-time/full-time (1.4%). This shows that employers mainly prefer hiring for stable, full-time positions.
 
 ## 3. Remote Work Analysis
 
@@ -146,8 +138,8 @@ df_remote['REMOTE_TYPE_NAME'] = df_remote['REMOTE_TYPE_NAME'].replace({
 # Drop rows with NaN in REMOTE_TYPE_NAME
 df_remote = df_remote[df_remote['REMOTE_TYPE_NAME'].notna()]
 
-print(f"\nRemote type distribution (excluding not specified):")
-print(f"Total jobs with remote info: {len(df_remote):,}")
+#print(f"\nRemote type distribution (excluding not specified):")
+#print(f"Total jobs with remote info: {len(df_remote):,}")
 
 # Count jobs by remote type
 remote_counts = df_remote['REMOTE_TYPE_NAME'].value_counts()
@@ -157,7 +149,7 @@ remote_df = pd.DataFrame({
     'Percentage': (remote_counts.values / remote_counts.sum() * 100).round(1)
 })
 
-print(remote_df.to_string(index=False))
+#print(remote_df.to_string(index=False))
 
 # Create bar chart with custom colors
 remote_df.hvplot.bar(
@@ -175,10 +167,7 @@ remote_df.hvplot.bar(
 ).opts(yformatter='%.0f')
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-The balance between remote, hybrid, and on-site jobs indicates industry acceptance of flexible work arrangements. Higher remote percentages suggest employers prioritize talent acquisition over geographic constraints.
-:::
+The dominance of full-time roles in 2024 reflects a strong post-COVID recovery, as companies shift back toward stable, long-term hiring after years of uncertainty. The very small share of part-time and hybrid hour roles suggests that businesses are prioritizing consistent workforce availability to meet rising operational demands. Overall, the trend indicates increased employer confidence and a return to pre-pandemic hiring patterns focused on full-time talent.
 
 ## 4. Geographic Analysis
 
@@ -197,7 +186,7 @@ state_df = pd.DataFrame({
     'Percentage': (state_counts.values / len(df_states) * 100).round(2)
 })
 
-print(f"\nStates with job postings : {len(df_states):,} jobs")
+#print(f"\nStates with job postings : {len(df_states):,} jobs")
 
 # Create bar chart
 state_df.hvplot.bar(
@@ -214,10 +203,7 @@ state_df.hvplot.bar(
 ).opts(yformatter='%.0f')
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-Geographic concentration shows tech hubs and major metropolitan areas dominate job postings. Regional variations help identify where to focus job searches based on market demand.
-:::
+The top 10 states for job postings in 2024 are led by Texas and California, which together dominate the job market with substantially higher opportunities than the rest. States like Virginia, Florida, New York, and Illinois follow, reflecting strong demand in both tech-heavy and fast-growing regional economies. Overall, job opportunities are concentrated in major economic hubs and states with strong corporate, technology, and government sectors.
 
 ## 5. Top Hiring Companies
 
@@ -235,13 +221,13 @@ company_df = pd.DataFrame({
     'Job Postings': company_counts.values
 })
 
-print(f"\nCompanies with job postings : {len(df_companies):,} jobs")
+#print(f"\nCompanies with job postings : {len(df_companies):,} jobs")
 
 # Create horizontal bar chart
 company_df.hvplot.barh(
     x='Company',
     y='Job Postings',
-    title='Top 15 Companies by Number of Job Postings (2024)',
+    title='Top 10 Companies by Number of Job Postings (2024)',
     height=550,
     width=800,
     color='#E91E63',
@@ -251,31 +237,29 @@ company_df.hvplot.barh(
 ).opts(xformatter='%.0f')
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-Companies with the highest number of job postings indicate organizations actively expanding their workforce. These companies may offer better opportunities for multiple role applications and career growth.
-:::
+The Top 10 hiring companies in 2024 are led by Deloitte and Accenture, which show significantly higher job postings than other firms,reflecting strong demand for consulting, technology, and analytics roles. Companies like PwC, Insight Global, KPMG, and Lumen Technologies also appear prominently, indicating consistent hiring across both consulting and IT services sectors. Overall, the hiring landscape is dominated by large professional services firms, showcasing continued growth in advisory, digital transformation, and data-driven business roles.
 
 ## 6. Job Posting Timeline
 
 ### 6.1 When Jobs Are Posted
 
 Understanding posting patterns helps with strategic job search timing.
+Since job postings peaked in August and September 2024, job seekers should target this late-summer period for applications. Companies appear to increase hiring toward the end of Q3, meaning more openings, faster responses, and higher chances of landing interviews. Preparing resumes, portfolios, and applications ahead of this surge (during May–July) can give job seekers a strategic advantage when the market becomes most active.
 
 ```{python}
 # Print diagnostics
-print("\nAnalyzing POSTED column:")
-print(f"Sample values: {df['POSTED'].head(10)}")
-print(f"Data type: {df['POSTED'].dtype}")
+#print("\nAnalyzing POSTED column:")
+#print(f"Sample values: {df['POSTED'].head(10)}")
+#print(f"Data type: {df['POSTED'].dtype}")
 
 # Convert POSTED to datetime
 df_time = df.copy()
 df_time['POSTED'] = pd.to_datetime(df_time['POSTED'], errors='coerce')
 
-print(f"\nAfter conversion:")
-print(f"Date range: {df_time['POSTED'].min()} to {df_time['POSTED'].max()}")
-print(f"Valid dates: {df_time['POSTED'].notna().sum():,} out of {len(df_time):,}")
-print(f"Missing dates: {df_time['POSTED'].isna().sum():,}")
+#print(f"\nAfter conversion:")
+#print(f"Date range: {df_time['POSTED'].min()} to {df_time['POSTED'].max()}")
+#print(f"Valid dates: {df_time['POSTED'].notna().sum():,} out of {len(df_time):,}")
+#print(f"Missing dates: {df_time['POSTED'].isna().sum():,}")
 
 # Filter valid dates
 time_data = df_time[df_time['POSTED'].notna()].copy()
@@ -291,8 +275,8 @@ if len(time_data) > 0:
     # Sort by month
     monthly_counts = monthly_counts.sort_values('Month')
     
-    print(f"\nMonthly posting counts:")
-    print(monthly_counts[['Month', 'Job Postings']].to_string(index=False))
+    #print(f"\nMonthly posting counts:")
+    #print(monthly_counts[['Month', 'Job Postings']].to_string(index=False))
     
     # Create line and area chart
     line_chart = monthly_counts.hvplot.line(
@@ -318,15 +302,11 @@ if len(time_data) > 0:
     # Combine line and area
     (line_chart * area_chart)
 else:
-    print("\nWarning: No valid dates found in POSTED column")
-    print("Sample of POSTED values:")
+    #print("\nWarning: No valid dates found in POSTED column")
+    ##print("Sample of POSTED values:")
     print(df['POSTED'].head(20))
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-Temporal patterns in job postings reveal seasonal hiring trends and peak recruitment periods. Understanding these patterns helps time job applications for maximum visibility and response rates.
-:::
 
 ## 7. Experience Requirements
 
@@ -347,8 +327,8 @@ exp_df = pd.DataFrame({
 # Convert Years of Experience to string for better labels
 exp_df['Years Label'] = exp_df['Years of Experience'].astype(int).astype(str) + ' years'
 
-print(f"\nJobs with experience requirements (excluding None): {len(df_experience):,} jobs")
-print(exp_df[['Years of Experience', 'Job Postings']].to_string(index=False))
+#print(f"\nJobs with experience requirements (excluding None): {len(df_experience):,} jobs")
+#print(exp_df[['Years of Experience', 'Job Postings']].to_string(index=False))
 
 # Create bar chart with pastel purple color
 exp_df.hvplot.bar(
@@ -364,10 +344,7 @@ exp_df.hvplot.bar(
 ).opts(yformatter='%.0f')
 ```
 
-::: {.callout-note icon=false}
-## Key Insight
-Experience distribution shows the accessibility of the job market for entry-level versus experienced professionals. A healthy mix indicates opportunities across career stages.
-:::
+Most job postings in 2024 require around 5 years of experience, making it the dominant requirement across roles. Entry-level opportunities (0–2 years) exist but are significantly fewer, showing that employers prioritize mid-level talent with proven skills. Requirements beyond 7+ years drop sharply, indicating limited demand for highly senior roles compared to mid-level positions.
 
 ## References
 

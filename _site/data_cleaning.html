@@ -4037,7 +4037,7 @@ height: auto !important;
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>This document details the comprehensive data cleaning and preprocessing steps applied to the 2024 job market dataset.</p>
-<div id="881701e4" class="cell" data-execution_count="1">
+<div id="4b199a8b" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Initial dataset shape: (72498, 131)
 Total rows: 72,498
@@ -4048,7 +4048,7 @@ Total columns: 131</code></pre>
 <section id="step-1-removing-redundant-columns" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="step-1-removing-redundant-columns"><span class="header-section-number">2</span> Step 1: Removing Redundant Columns</h2>
 <p>We remove redundant columns to improve dataset quality and analysis efficiency.</p>
-<div id="a8cebd1e" class="cell" data-execution_count="2">
+<div id="0f46cbf0" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Columns removed: 69
 New dataset shape: (72498, 62)</code></pre>
@@ -4057,7 +4057,7 @@ New dataset shape: (72498, 62)</code></pre>
 </section>
 <section id="step-2-handling-missing-values" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="step-2-handling-missing-values"><span class="header-section-number">3</span> Step 2: Handling Missing Values</h2>
-<div id="c43078d2" class="cell" data-execution_count="3">
+<div id="426324a7" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Columns with missing values: 62
 
@@ -4075,7 +4075,7 @@ Top 10 columns with highest missing percentages:
 30       MSA_NAME_INCOMING           3962                5.46</code></pre>
 </div>
 </div>
-<div id="2e4dde5a" class="cell" data-execution_count="4">
+<div id="767a9296" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>Columns dropped due to &gt;50% missing values: 6
 Total missing values after imputation: 0</code></pre>
@@ -4084,7 +4084,7 @@ Total missing values after imputation: 0</code></pre>
 </section>
 <section id="step-3-removing-duplicates" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="step-3-removing-duplicates"><span class="header-section-number">4</span> Step 3: Removing Duplicates</h2>
-<div id="d90f1875" class="cell" data-execution_count="5">
+<div id="4a610999" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>Initial rows: 72,498
 Duplicate rows detected: 13,278
@@ -4095,7 +4095,7 @@ Rows removed: 13,278</code></pre>
 </section>
 <section id="step-4-final-summary" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="step-4-final-summary"><span class="header-section-number">5</span> Step 4: Final Summary</h2>
-<div id="c6141b35" class="cell" data-execution_count="6">
+<div id="e0af4c90" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>             Metric  Value
          Total Rows 59,220
