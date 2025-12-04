@@ -1,19 +1,6 @@
 ---
 title: "Data Analysis"
 subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
-author:
-  - name: Tuba Anwar
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Kriti Singh
-    affiliations:
-      - ref: bu
-  - name: Soham Deshkhaire
-    affiliations:
-      - ref: bu
 format: 
   html:
     toc: true
