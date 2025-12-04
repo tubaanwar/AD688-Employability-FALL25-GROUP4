@@ -21,12 +21,10 @@ format:
     df-print: paged
     code-overflow: wrap
     embed-resources: true
-    theme: 
-      light: [cosmo, custom.scss]
     css: styles.css
 jupyter: python3
 execute:
-  echo: false  # This hides all code blocks
+  echo: false  
   warning: false
   message: false
 ---

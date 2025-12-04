@@ -2,7 +2,7 @@ project:
   type: website
   
 execute:
-  freeze: false
+  freeze: auto 
   echo: true
   eval: true
   code-fold: false
