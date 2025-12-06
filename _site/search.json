@@ -123,14 +123,14 @@
     "href": "nlp.html",
     "title": "Natural Language Processing Methods",
     "section": "",
-    "text": "This section applies Natural Language Processing (NLP) techniques to analyze job postings and extract meaningful insights about skills, requirements, and industry trends. By processing structured skills data, we can uncover patterns about the most in-demand competencies.\n\n\nDataset loaded: 59,220 rows, 56 columns\nSkills columns found: ['SKILLS', 'SKILLS_NAME', 'SPECIALIZED_SKILLS', 'SPECIALIZED_SKILLS_NAME', 'COMMON_SKILLS', 'COMMON_SKILLS_NAME', 'SOFTWARE_SKILLS', 'SOFTWARE_SKILLS_NAME']"
+    "text": "This section applies Natural Language Processing (NLP) techniques to analyze job postings and extract meaningful insights about skills, requirements, and industry trends. By processing structured skills data, we can uncover patterns about the most in-demand competencies.\nData Loading Summary:\nThe dataset contains 59,220 job postings with 56 columns. The analysis identified several skills-related columns including: SKILLS, SKILLS_NAME, SPECIALIZED_SKILLS, SPECIALIZED_SKILLS_NAME, COMMON_SKILLS_NAME, and SOFTWARE_SKILLS_NAME."
   },
   {
     "objectID": "nlp.html#introduction",
     "href": "nlp.html#introduction",
     "title": "Natural Language Processing Methods",
     "section": "",
-    "text": "This section applies Natural Language Processing (NLP) techniques to analyze job postings and extract meaningful insights about skills, requirements, and industry trends. By processing structured skills data, we can uncover patterns about the most in-demand competencies.\n\n\nDataset loaded: 59,220 rows, 56 columns\nSkills columns found: ['SKILLS', 'SKILLS_NAME', 'SPECIALIZED_SKILLS', 'SPECIALIZED_SKILLS_NAME', 'COMMON_SKILLS', 'COMMON_SKILLS_NAME', 'SOFTWARE_SKILLS', 'SOFTWARE_SKILLS_NAME']"
+    "text": "This section applies Natural Language Processing (NLP) techniques to analyze job postings and extract meaningful insights about skills, requirements, and industry trends. By processing structured skills data, we can uncover patterns about the most in-demand competencies.\nData Loading Summary:\nThe dataset contains 59,220 job postings with 56 columns. The analysis identified several skills-related columns including: SKILLS, SKILLS_NAME, SPECIALIZED_SKILLS, SPECIALIZED_SKILLS_NAME, COMMON_SKILLS_NAME, and SOFTWARE_SKILLS_NAME."
   },
   {
     "objectID": "nlp.html#text-preprocessing",
@@ -144,7 +144,7 @@
     "href": "nlp.html#keyword-extraction",
     "title": "Natural Language Processing Methods",
     "section": "3 2. Keyword Extraction",
-    "text": "3 2. Keyword Extraction\n\n3.1 2.1 Top 10 Most Common Skills\n\n\n\n\n\n\n\n\n\nTop 10 Skills Insight:\nSAP Applications dominates with 1,114 postings, reflecting the strong demand for enterprise resource planning expertise in large organizations. Oracle Cloud (667) and Microsoft Office (637) follow, showing that cloud platforms and productivity tools remain essential. Communication (532) appears as the top soft skill, emphasizing that technical roles require strong interpersonal abilities. The data reveals a mix of enterprise software (SAP, Oracle Cloud), business analysis capabilities (Data Analysis, Dashboard, Project Management), and emerging areas like Cyber Security and UX Design. Job seekers should prioritize SAP expertise if targeting enterprise roles, while building a foundation in Microsoft Office, data analysis, and communication skills for broader market appeal."
+    "text": "3 2. Keyword Extraction\n\n3.1 2.1 Top 10 Most Common Skills\n\n\n\n\n\n\n\n\n\nNote: An extreme outlier skill was identified and excluded from the top 10 visualization to provide a more meaningful analysis of the remaining skills distribution.\nTop 10 Skills Insight:\nSAP Applications dominates with 1,114 postings, reflecting the strong demand for enterprise resource planning expertise in large organizations. Oracle Cloud (667) and Microsoft Office (637) follow, showing that cloud platforms and productivity tools remain essential. Communication (532) appears as the top soft skill, emphasizing that technical roles require strong interpersonal abilities. The data reveals a mix of enterprise software (SAP, Oracle Cloud), business analysis capabilities (Data Analysis, Dashboard, Project Management), and emerging areas like Cyber Security and UX Design. Job seekers should prioritize SAP expertise if targeting enterprise roles, while building a foundation in Microsoft Office, data analysis, and communication skills for broader market appeal."
   },
   {
     "objectID": "nlp.html#technical-skills-analysis",
@@ -396,7 +396,7 @@
     "href": "nlp.html#data-preparation",
     "title": "Natural Language Processing Methods",
     "section": "2 1. Data Preparation",
-    "text": "2 1. Data Preparation\n\n2.1 1.1 Skills Data Overview\n\n\n✓ Successfully processed: 59,220 job postings with skills\n✓ Average skills text length: 1204 characters\n\n✓ Sample skills: [\n  \"Merchandising\",\n  \"Mathematics\",\n  \"Presentations\",\n  \"Predictive Modeling\",\n  \"Data Modeling\",\n  \"Advanced Analytics\",\n  \"Data Extraction\",\n  \"Statistical Analysis\",\n  \"Data Mining\",\n  \"Business..."
+    "text": "2 1. Data Preparation\n\n2.1 1.1 Skills Data Overview\nSkills Processing Summary:\nSuccessfully processed all 59,220 job postings with skills data. The average skills text length is 1,204 characters per posting."
   },
   {
     "objectID": "nlp.html#specialized-skills-analysis",

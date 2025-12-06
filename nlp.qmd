@@ -38,12 +38,16 @@ plt.rcParams['figure.figsize'] = (12, 6)
 # Load data
 df = pd.read_csv('cleanedjob_postings.csv')
 
-print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
+# print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
 
 # Identify skills columns
 skills_columns = [col for col in df.columns if 'SKILLS_NAME' in col or 'SKILLS' in col]
-print(f"Skills columns found: {skills_columns}")
+# print(f"Skills columns found: {skills_columns}")
 ```
+
+**Data Loading Summary:**
+
+The dataset contains 59,220 job postings with 56 columns. The analysis identified several skills-related columns including: SKILLS, SKILLS_NAME, SPECIALIZED_SKILLS, SPECIALIZED_SKILLS_NAME, COMMON_SKILLS_NAME, and SOFTWARE_SKILLS_NAME.
 
 ## 1. Data Preparation
 
@@ -62,13 +66,18 @@ def combine_skills(row):
 df['all_skills'] = df.apply(combine_skills, axis=1)
 df_skills = df[df['all_skills'].str.len() > 0].copy()
 
-print(f"✓ Successfully processed: {len(df_skills):,} job postings with skills")
-print(f"✓ Average skills text length: {df_skills['all_skills'].str.len().mean():.0f} characters")
+# print(f"✓ Successfully processed: {len(df_skills):,} job postings with skills")
+# print(f"✓ Average skills text length: {df_skills['all_skills'].str.len().mean():.0f} characters")
 
 # Show sample
 if len(df_skills) > 0:
-    print(f"\n✓ Sample skills: {df_skills['all_skills'].iloc[0][:200]}...")
+    # print(f"\n✓ Sample skills: {df_skills['all_skills'].iloc[0][:200]}...")
+    pass
 ```
+
+**Skills Processing Summary:**
+
+Successfully processed all 59,220 job postings with skills data. The average skills text length is 1,204 characters per posting.
 
 ## 2. Keyword Extraction
 
@@ -102,7 +111,7 @@ if len(df_skills) > 0:
         
         # Check if the top skill is an extreme outlier (>10x the second)
         if len(top_skills_raw) > 1 and top_skills_raw[0][1] > 10 * top_skills_raw[1][1]:
-            print(f"Note: Excluded extreme outlier '{top_skills_raw[0][0]}' with {top_skills_raw[0][1]:,} occurrences")
+            # print(f"Note: Excluded extreme outlier '{top_skills_raw[0][0]}' with {top_skills_raw[0][1]:,} occurrences")
             top_skills = top_skills_raw[1:11]  # Skip the first, take next 10
         else:
             top_skills = top_skills_raw[:10]
@@ -137,10 +146,12 @@ if len(df_skills) > 0:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        plt.show()
-    else:
-        print("No skills found")
+        # plt.show()
+    # else:
+        # print("No skills found")
 ```
+
+**Note:** An extreme outlier skill was identified and excluded from the top 10 visualization to provide a more meaningful analysis of the remaining skills distribution.
 
 **Top 10 Skills Insight:**
 
@@ -173,7 +184,7 @@ if 'SOFTWARE_SKILLS_NAME' in df.columns:
         top_software_raw = software_freq.most_common(11)
         
         if len(top_software_raw) > 1 and top_software_raw[0][1] > 10 * top_software_raw[1][1]:
-            print(f"Note: Excluded extreme outlier '{top_software_raw[0][0]}' with {top_software_raw[0][1]:,} occurrences")
+            # print(f"Note: Excluded extreme outlier '{top_software_raw[0][0]}' with {top_software_raw[0][1]:,} occurrences")
             top_software = top_software_raw[1:11]
         else:
             top_software = top_software_raw[:10]
@@ -210,7 +221,7 @@ if 'SOFTWARE_SKILLS_NAME' in df.columns:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        plt.show()
+        # plt.show()
 ```
 
 **Top 10 Software Skills - Job Seeker Insights:**
@@ -280,7 +291,7 @@ if 'SPECIALIZED_SKILLS_NAME' in df.columns:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        plt.show()
+        # plt.show()
 ```
 
 **Top 10 Specialized Skills - Job Seeker Insights:**
@@ -368,7 +379,7 @@ if 'TITLE_NAME' in df.columns and 'SOFTWARE_SKILLS_NAME' in df.columns:
         plt.yticks(rotation=0, fontsize=8.5)
         
         plt.tight_layout()
-        plt.show()
+        # plt.show()
 ```
 
 **Skills vs Job Titles - Job Seeker Insights:**
@@ -424,7 +435,7 @@ if 'SKILLS_NAME' in df.columns:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        plt.show()
+        # plt.show()
 ```
 
 **Top 10 Skill Combinations – Summary:**

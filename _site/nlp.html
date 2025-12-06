@@ -4058,42 +4058,22 @@ height: auto !important;
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>This section applies Natural Language Processing (NLP) techniques to analyze job postings and extract meaningful insights about skills, requirements, and industry trends. By processing structured skills data, we can uncover patterns about the most in-demand competencies.</p>
-<div id="96507493" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-stdout">
-<pre><code>Dataset loaded: 59,220 rows, 56 columns
-Skills columns found: [&#39;SKILLS&#39;, &#39;SKILLS_NAME&#39;, &#39;SPECIALIZED_SKILLS&#39;, &#39;SPECIALIZED_SKILLS_NAME&#39;, &#39;COMMON_SKILLS&#39;, &#39;COMMON_SKILLS_NAME&#39;, &#39;SOFTWARE_SKILLS&#39;, &#39;SOFTWARE_SKILLS_NAME&#39;]</code></pre>
-</div>
-</div>
+<p><strong>Data Loading Summary:</strong></p>
+<p>The dataset contains 59,220 job postings with 56 columns. The analysis identified several skills-related columns including: SKILLS, SKILLS_NAME, SPECIALIZED_SKILLS, SPECIALIZED_SKILLS_NAME, COMMON_SKILLS_NAME, and SOFTWARE_SKILLS_NAME.</p>
 </section>
 <section id="data-preparation" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">2</span> 1. Data Preparation</h2>
 <section id="skills-data-overview" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="skills-data-overview"><span class="header-section-number">2.1</span> 1.1 Skills Data Overview</h3>
-<div id="eaa1f560" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-stdout">
-<pre><code>✓ Successfully processed: 59,220 job postings with skills
-✓ Average skills text length: 1204 characters
-
-✓ Sample skills: [
-  &quot;Merchandising&quot;,
-  &quot;Mathematics&quot;,
-  &quot;Presentations&quot;,
-  &quot;Predictive Modeling&quot;,
-  &quot;Data Modeling&quot;,
-  &quot;Advanced Analytics&quot;,
-  &quot;Data Extraction&quot;,
-  &quot;Statistical Analysis&quot;,
-  &quot;Data Mining&quot;,
-  &quot;Business...</code></pre>
-</div>
-</div>
+<p><strong>Skills Processing Summary:</strong></p>
+<p>Successfully processed all 59,220 job postings with skills data. The average skills text length is 1,204 characters per posting.</p>
 </section>
 </section>
 <section id="keyword-extraction" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="keyword-extraction"><span class="header-section-number">3</span> 2. Keyword Extraction</h2>
 <section id="top-10-most-common-skills" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="top-10-most-common-skills"><span class="header-section-number">3.1</span> 2.1 Top 10 Most Common Skills</h3>
-<div id="3241c271" class="cell" data-execution_count="3">
+<div id="de9ca98b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4102,6 +4082,7 @@ Skills columns found: [&#39;SKILLS&#39;, &#39;SKILLS_NAME&#39;, &#39;SPECIALIZED
 </div>
 </div>
 </div>
+<p><strong>Note:</strong> An extreme outlier skill was identified and excluded from the top 10 visualization to provide a more meaningful analysis of the remaining skills distribution.</p>
 <p><strong>Top 10 Skills Insight:</strong></p>
 <p>SAP Applications dominates with 1,114 postings, reflecting the strong demand for enterprise resource planning expertise in large organizations. Oracle Cloud (667) and Microsoft Office (637) follow, showing that cloud platforms and productivity tools remain essential. Communication (532) appears as the top soft skill, emphasizing that technical roles require strong interpersonal abilities. The data reveals a mix of enterprise software (SAP, Oracle Cloud), business analysis capabilities (Data Analysis, Dashboard, Project Management), and emerging areas like Cyber Security and UX Design. Job seekers should prioritize SAP expertise if targeting enterprise roles, while building a foundation in Microsoft Office, data analysis, and communication skills for broader market appeal.</p>
 </section>
@@ -4110,7 +4091,7 @@ Skills columns found: [&#39;SKILLS&#39;, &#39;SKILLS_NAME&#39;, &#39;SPECIALIZED
 <h2 data-number="4" class="anchored" data-anchor-id="technical-skills-analysis"><span class="header-section-number">4</span> 3. Technical Skills Analysis</h2>
 <section id="top-10-software-technical-skills" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="top-10-software-technical-skills"><span class="header-section-number">4.1</span> 3.1 Top 10 Software &amp; Technical Skills</h3>
-<div id="b1e278d2" class="cell" data-execution_count="4">
+<div id="f4906fe7" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4127,7 +4108,7 @@ Skills columns found: [&#39;SKILLS&#39;, &#39;SKILLS_NAME&#39;, &#39;SPECIALIZED
 <h2 data-number="5" class="anchored" data-anchor-id="specialized-skills-analysis"><span class="header-section-number">5</span> 4. Specialized Skills Analysis</h2>
 <section id="top-10-specialized-skills" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="top-10-specialized-skills"><span class="header-section-number">5.1</span> 4.1 Top 10 Specialized Skills</h3>
-<div id="6a63e536" class="cell" data-execution_count="5">
+<div id="bb1f77c9" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4144,7 +4125,7 @@ Skills columns found: [&#39;SKILLS&#39;, &#39;SKILLS_NAME&#39;, &#39;SPECIALIZED
 <h2 data-number="6" class="anchored" data-anchor-id="skill-requirements-by-job-title"><span class="header-section-number">6</span> 5. Skill Requirements by Job Title</h2>
 <section id="skills-vs-top-job-titles---heatmap" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="skills-vs-top-job-titles---heatmap"><span class="header-section-number">6.1</span> 5.1 Skills vs Top Job Titles - Heatmap</h3>
-<div id="ba3cb910" class="cell" data-execution_count="6">
+<div id="3721e278" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
