@@ -33,21 +33,17 @@ warnings.filterwarnings('ignore')
 # Set seaborn style
 sns.set_style("whitegrid")
 sns.set_palette("husl")
-plt.rcParams['figure.figsize'] = (12, 6)
+plt.rcParams['figure.figsize'] = (8, 5)
 
 # Load data
 df = pd.read_csv('cleanedjob_postings.csv')
 
-# print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
+print(f"Dataset loaded: {df.shape[0]:,} rows, {df.shape[1]} columns")
 
 # Identify skills columns
 skills_columns = [col for col in df.columns if 'SKILLS_NAME' in col or 'SKILLS' in col]
-# print(f"Skills columns found: {skills_columns}")
+print(f"Skills columns found: {skills_columns}")
 ```
-
-**Data Loading Summary:**
-
-The dataset contains 59,220 job postings with 56 columns. The analysis identified several skills-related columns including: SKILLS, SKILLS_NAME, SPECIALIZED_SKILLS, SPECIALIZED_SKILLS_NAME, COMMON_SKILLS_NAME, and SOFTWARE_SKILLS_NAME.
 
 ## 1. Data Preparation
 
@@ -66,18 +62,9 @@ def combine_skills(row):
 df['all_skills'] = df.apply(combine_skills, axis=1)
 df_skills = df[df['all_skills'].str.len() > 0].copy()
 
-# print(f"✓ Successfully processed: {len(df_skills):,} job postings with skills")
-# print(f"✓ Average skills text length: {df_skills['all_skills'].str.len().mean():.0f} characters")
-
-# Show sample
-if len(df_skills) > 0:
-    # print(f"\n✓ Sample skills: {df_skills['all_skills'].iloc[0][:200]}...")
-    pass
+print(f"✓ Successfully processed: {len(df_skills):,} job postings with skills")
+print(f"✓ Average skills text length: {df_skills['all_skills'].str.len().mean():.0f} characters")
 ```
-
-**Skills Processing Summary:**
-
-Successfully processed all 59,220 job postings with skills data. The average skills text length is 1,204 characters per posting.
 
 ## 2. Keyword Extraction
 
@@ -111,7 +98,7 @@ if len(df_skills) > 0:
         
         # Check if the top skill is an extreme outlier (>10x the second)
         if len(top_skills_raw) > 1 and top_skills_raw[0][1] > 10 * top_skills_raw[1][1]:
-            # print(f"Note: Excluded extreme outlier '{top_skills_raw[0][0]}' with {top_skills_raw[0][1]:,} occurrences")
+            print(f"Note: Excluded extreme outlier '{top_skills_raw[0][0]}' with {top_skills_raw[0][1]:,} occurrences")
             top_skills = top_skills_raw[1:11]  # Skip the first, take next 10
         else:
             top_skills = top_skills_raw[:10]
@@ -131,27 +118,25 @@ if len(df_skills) > 0:
         skill_df['Skill'] = skill_df['Skill'].apply(lambda x: x.split(',')[0].strip() if ',' in x else x)
         skill_df['Skill'] = skill_df['Skill'].str.title()
         
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(8, 5))
         bars = sns.barplot(data=skill_df, y='Skill', x='Frequency', palette='Blues_r', ax=ax)
-        ax.set_title('Top 10 Most Common Skills in Job Postings', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Frequency', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Skill', fontsize=12, fontweight='bold')
+        ax.set_title('Top 10 Most Common Skills in Job Postings', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Frequency', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Skill', fontsize=11, fontweight='bold')
         
         # Add value labels
         for i, v in enumerate(skill_df['Frequency']):
             ax.text(v + max(skill_df['Frequency'])*0.02, i, f'{int(v):,}', 
-                   va='center', fontweight='bold', fontsize=10)
+                   va='center', fontweight='bold', fontsize=9)
         
         # Improve layout
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        # plt.show()
-    # else:
-        # print("No skills found")
+        plt.show()
+    else:
+        print("No skills found")
 ```
-
-**Note:** An extreme outlier skill was identified and excluded from the top 10 visualization to provide a more meaningful analysis of the remaining skills distribution.
 
 **Top 10 Skills Insight:**
 
@@ -184,7 +169,7 @@ if 'SOFTWARE_SKILLS_NAME' in df.columns:
         top_software_raw = software_freq.most_common(11)
         
         if len(top_software_raw) > 1 and top_software_raw[0][1] > 10 * top_software_raw[1][1]:
-            # print(f"Note: Excluded extreme outlier '{top_software_raw[0][0]}' with {top_software_raw[0][1]:,} occurrences")
+            print(f"Note: Excluded extreme outlier '{top_software_raw[0][0]}' with {top_software_raw[0][1]:,} occurrences")
             top_software = top_software_raw[1:11]
         else:
             top_software = top_software_raw[:10]
@@ -203,17 +188,17 @@ if 'SOFTWARE_SKILLS_NAME' in df.columns:
         software_df['Software'] = software_df['Software'].apply(lambda x: x.split(',')[0].strip() if ',' in x else x)
         software_df['Software'] = software_df['Software'].str.title()
         
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(8, 5))
         sns.barplot(data=software_df, y='Software', x='Count', palette='viridis_r', ax=ax)
-        ax.set_title('Top 10 Software Skills in Job Postings', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Number of Job Postings', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Software Skill', fontsize=12, fontweight='bold')
+        ax.set_title('Top 10 Software Skills in Job Postings', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Number of Job Postings', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Software Skill', fontsize=11, fontweight='bold')
         
         # Add value labels at the end of each bar
         max_val = software_df['Count'].max()
         for i, v in enumerate(software_df['Count']):
             ax.text(v + max_val*0.01, i, f'{int(v):,}', 
-                   va='center', fontweight='bold', fontsize=10)
+                   va='center', fontweight='bold', fontsize=9)
         
         # Set x-axis limit to prevent cutoff
         ax.set_xlim(0, max_val * 1.15)
@@ -221,7 +206,7 @@ if 'SOFTWARE_SKILLS_NAME' in df.columns:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        # plt.show()
+        plt.show()
 ```
 
 **Top 10 Software Skills - Job Seeker Insights:**
@@ -269,17 +254,17 @@ if 'SPECIALIZED_SKILLS_NAME' in df.columns:
         spec_df['Skill'] = spec_df['Skill'].apply(lambda x: x[:35] + '...' if len(x) > 35 else x)
         spec_df['Skill'] = spec_df['Skill'].str.title()
         
-        fig, ax = plt.subplots(figsize=(10, 7))
+        fig, ax = plt.subplots(figsize=(8, 6))
         sns.barplot(data=spec_df, y='Skill', x='Count', palette='rocket_r', ax=ax)
-        ax.set_title('Top 10 Specialized Skills in Job Postings', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Number of Job Postings', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Specialized Skill', fontsize=12, fontweight='bold')
+        ax.set_title('Top 10 Specialized Skills in Job Postings', fontsize=14, fontweight='bold', pad=15)
+        ax.set_xlabel('Number of Job Postings', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Specialized Skill', fontsize=11, fontweight='bold')
         
         # Add value labels
         max_val = spec_df['Count'].max()
         for i, v in enumerate(spec_df['Count']):
             ax.text(v + max_val*0.01, i, f'{int(v):,}', 
-                   va='center', fontweight='bold', fontsize=10)
+                   va='center', fontweight='bold', fontsize=9)
         
         # Set x-axis limit
         ax.set_xlim(0, max_val * 1.15)
@@ -291,7 +276,7 @@ if 'SPECIALIZED_SKILLS_NAME' in df.columns:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.tight_layout()
-        # plt.show()
+        plt.show()
 ```
 
 **Top 10 Specialized Skills - Job Seeker Insights:**
@@ -305,8 +290,11 @@ User Experience (UX) Design leads with 260 postings, highlighting the critical i
 ```{python}
 # Cross-tabulate skills by top job titles
 if 'TITLE_NAME' in df.columns and 'SOFTWARE_SKILLS_NAME' in df.columns:
+    print("Creating heatmap...")
+    
     # Get top 8 job titles
     top_titles = df['TITLE_NAME'].value_counts().head(8).index
+    print(f"Top job titles: {list(top_titles)}")
     
     # Get top 8 software skills (excluding extreme outlier and empty strings)
     all_software = []
@@ -335,6 +323,8 @@ if 'TITLE_NAME' in df.columns and 'SOFTWARE_SKILLS_NAME' in df.columns:
     else:
         top_8_software = [s[0] for s in filtered_software[:8]]
     
+    print(f"Top software skills: {top_8_software}")
+    
     # Build matrix
     skill_title_matrix = []
     
@@ -360,87 +350,40 @@ if 'TITLE_NAME' in df.columns and 'SOFTWARE_SKILLS_NAME' in df.columns:
         skill_title_matrix.append(skill_row)
     
     if skill_title_matrix:
+        print(f"Matrix created with {len(skill_title_matrix)} rows")
         skill_matrix_df = pd.DataFrame(skill_title_matrix)
         skill_matrix_df = skill_matrix_df.set_index('Title')
+        
+        print(f"Dataframe shape: {skill_matrix_df.shape}")
+        print(f"Columns: {list(skill_matrix_df.columns)}")
         
         # Shorten job titles if too long
         skill_matrix_df.index = [title[:25] + '...' if len(title) > 25 else title 
                                   for title in skill_matrix_df.index]
         
-        fig, ax = plt.subplots(figsize=(9, 4.5))
+        fig, ax = plt.subplots(figsize=(8, 4))
         sns.heatmap(skill_matrix_df, annot=True, fmt='.1f', cmap='YlOrRd', 
                     cbar_kws={'label': '% of Postings'}, 
-                    ax=ax, linewidths=0.5, linecolor='white', annot_kws={'size': 8})
+                    ax=ax, linewidths=0.5, linecolor='white', annot_kws={'size': 7.5})
         ax.set_title('Software Skill Requirements by Job Title', 
-                     fontsize=13, fontweight='bold', pad=12)
+                     fontsize=12, fontweight='bold', pad=10)
         ax.set_xlabel('Software Skill', fontsize=10, fontweight='bold')
         ax.set_ylabel('Job Title', fontsize=10, fontweight='bold')
-        plt.xticks(rotation=45, ha='right', fontsize=8.5)
-        plt.yticks(rotation=0, fontsize=8.5)
+        plt.xticks(rotation=45, ha='right', fontsize=8)
+        plt.yticks(rotation=0, fontsize=8)
         
         plt.tight_layout()
-        # plt.show()
+        plt.show()
+        print("Heatmap displayed successfully!")
+    else:
+        print("ERROR: No skill matrix data created")
+else:
+    print("ERROR: Required columns not found")
 ```
 
 **Skills vs Job Titles - Job Seeker Insights:**
 
 The heatmap reveals distinct skill patterns across job roles. Unclassified positions show the highest demand for general software skills (37.2% require SAP Applications), suggesting broad technical requirements. Oracle Cloud HCM Consultants have specialized focus with 11.1% requiring Oracle Cloud expertise. Data Governance Analysts need the most diverse skillset with strong SQL Programming Language (13.8%) and moderate requirements across Dashboard, Microsoft Office, and SAP. Enterprise Architects and Solutions Architects show concentrated needs in SAP (10.5% and 8.5% respectively) with minimal other software requirements. Data Modelers uniquely emphasize SQL Programming (2.1%) over other tools. The low percentages overall indicate that most roles don't mandate specific software, creating opportunities for candidates to differentiate through technical mastery. Job seekers should target SAP for enterprise roles, Oracle Cloud for HCM consulting, and SQL for data-focused positions.
-
-## 6. Skill Co-occurrence Analysis
-
-### 6.1 Top 10 Skill Combinations
-
-```{python}
-# Find commonly co-occurring skills
-if 'SKILLS_NAME' in df.columns:
-    skill_pairs = []
-    
-    for skills_text in df['SKILLS_NAME'].dropna():
-        skills = [s.strip().lower() for s in str(skills_text).split('|') if len(s.strip()) > 0]
-        
-        # Get all pairs
-        if len(skills) > 1:
-            for i in range(len(skills)):
-                for j in range(i+1, len(skills)):
-                    pair = tuple(sorted([skills[i], skills[j]]))
-                    skill_pairs.append(pair)
-    
-    if len(skill_pairs) > 0:
-        pair_freq = Counter(skill_pairs)
-        top_pairs = pair_freq.most_common(10)
-        
-        # Format pair names with line breaks for readability
-        pair_names = []
-        for p in top_pairs:
-            name1 = p[0][0].title()[:25]
-            name2 = p[0][1].title()[:25]
-            pair_names.append(f"{name1}\n+\n{name2}")
-        
-        pair_counts = [p[1] for p in top_pairs]
-        
-        pair_df = pd.DataFrame({'Skill Pair': pair_names, 'Co-occurrence': pair_counts})
-        pair_df = pair_df.sort_values('Co-occurrence')
-        
-        fig, ax = plt.subplots(figsize=(10, 8))
-        sns.barplot(data=pair_df, y='Skill Pair', x='Co-occurrence', palette='coolwarm', ax=ax)
-        ax.set_title('Top 10 Skill Combinations in Job Postings', fontsize=16, fontweight='bold', pad=20)
-        ax.set_xlabel('Co-occurrence Count', fontsize=12, fontweight='bold')
-        ax.set_ylabel('Skill Pair', fontsize=12, fontweight='bold')
-        
-        # Add value labels
-        for i, v in enumerate(pair_df['Co-occurrence']):
-            ax.text(v + max(pair_df['Co-occurrence'])*0.02, i, f'{int(v):,}', 
-                   va='center', fontweight='bold', fontsize=10)
-        
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        plt.tight_layout()
-        # plt.show()
-```
-
-**Top 10 Skill Combinations – Summary:**
-
-Skill combinations reveal which competencies employers expect candidates to have together. These pairs show complementary skills that are frequently required in the same job posting. Job seekers should develop these skills in tandem, as having both skills in a pair makes you more attractive to employers. Focus on building skill combinations rather than isolated competencies to maximize your marketability.
 
 ## Summary
 
@@ -454,7 +397,6 @@ Skill combinations reveal which competencies employers expect candidates to have
 - ✓ Extracted and ranked top 10 software/technical skills
 - ✓ Analyzed top 10 specialized skills for advanced roles
 - ✓ Cross-referenced skills with job title requirements via heatmap
-- ✓ Discovered top 10 commonly co-occurring skill combinations
 
 *Key Insights:*
 
@@ -462,7 +404,6 @@ Skill combinations reveal which competencies employers expect candidates to have
 - Software skills are critical technical differentiators
 - Specialized skills offer opportunities for premium positioning
 - Skills requirements vary significantly by job title
-- Certain skill pairs frequently appear together, indicating complementary competencies
 
 *Recommendations for Job Seekers:*
 
