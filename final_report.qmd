@@ -1,0 +1,175 @@
+---
+title: "Evaluating Personal Job Market Prospects in 2024"
+subtitle: "Final Report - Business Analytics Project"
+author:
+  - name: Tuba Anwar
+    affiliations:
+      - ref: bu
+  - name: Kriti Singh
+    affiliations:
+      - ref: bu
+  - name: Soham Deshkhaire
+    affiliations:
+      - ref: bu
+affiliations:
+  - id: bu
+    name: Boston University
+    city: Boston
+    state: MA
+date: 2025-12-06
+date-modified: today
+date-format: long
+format: 
+  docx:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    highlight-style: github
+    fig-width: 7
+    fig-height: 5
+---
+
+# Executive Summary
+
+This report presents a comprehensive analysis of the job market prospects for data analytics and related roles in 2024. Using a dataset of over 70,000 job postings, we conducted exploratory data analysis, natural language processing of job descriptions, skill gap analysis, and predictive modeling to understand current market trends and identify opportunities for career development.
+
+**Key Findings:**
+
+- SAP Applications, Oracle Cloud, and Microsoft Office are the most in-demand software skills
+- Data Analysis capabilities appear in over 25,000 job postings
+- Significant skill gaps exist in enterprise software (SAP, Oracle) and cloud platforms (AWS, Azure)
+- Machine learning models achieved XX% accuracy in predicting job categories
+- Salary predictions show strong correlation with experience level and technical skill proficiency
+
+# Introduction
+
+{{< include index.qmd >}}
+
+# Data Cleaning and Preparation
+
+{{< include data_cleaning.qmd >}}
+
+# Exploratory Data Analysis
+
+{{< include eda.qmd >}}
+
+# Data Analysis Methods
+
+{{< include data_analysis.qmd >}}
+
+# Natural Language Processing Analysis
+
+{{< include nlp.qmd >}}
+
+# Skill Gap Analysis
+
+{{< include Skill_Gap_Analysis.qmd >}}
+
+# Machine Learning Methods
+
+{{< include ml.qmd >}}
+
+# Conclusions and Recommendations
+
+## Summary of Findings
+
+Our comprehensive analysis of the 2024 job market reveals several critical insights for job seekers in data analytics and related fields:
+
+### Market Demand
+
+1. **Enterprise Software Dominance**: SAP Applications (1,114 postings) and Oracle Cloud (667 postings) lead the market, indicating strong demand for enterprise system expertise
+2. **Foundational Skills**: Microsoft Office (637), Data Analysis (343), and SQL (357) remain essential across all role types
+3. **Emerging Specializations**: Cloud computing, UX design, and specialized analytics tools show growing importance
+
+### Skill Requirements by Role
+
+Our analysis identified distinct skill patterns across job categories:
+
+- **Data Analysts**: Strong emphasis on SQL (7.6%), Excel, and visualization tools
+- **Business Intelligence Analysts**: Focus on dashboard creation and BI platforms
+- **Enterprise Architects**: Concentrated need for SAP (10.5%) and enterprise system knowledge
+- **Data Scientists**: Requirements span machine learning, Python, and statistical analysis
+
+### Skill Gap Findings
+
+Comparing team member skills against market requirements revealed:
+
+- **Critical Gaps**: Enterprise software (SAP, Oracle), advanced cloud platforms
+- **Strengths to Leverage**: SQL, Python, data analysis fundamentals
+- **Development Priorities**: Cloud certifications, BI tool proficiency, specialized domain knowledge
+
+## Recommendations for Job Seekers
+
+Based on our analysis, we recommend the following strategies:
+
+### Immediate Actions
+
+1. **Build Enterprise Software Skills**: Pursue SAP or Oracle Cloud certifications to access high-demand roles
+2. **Master Core Tools**: Ensure proficiency in SQL, Excel, and at least one BI platform (Power BI or Tableau)
+3. **Develop Cloud Competency**: Gain hands-on experience with AWS or Azure
+4. **Strengthen Communication Skills**: The appearance of "Communication" in top skills emphasizes soft skill importance
+
+### Medium-Term Development
+
+1. **Specialize Strategically**: Choose a specialization aligned with career goals (UX Design, Cloud Architecture, ML Engineering)
+2. **Build Portfolio Projects**: Demonstrate skills through practical projects using enterprise-relevant tools
+3. **Pursue Relevant Certifications**: Industry certifications significantly boost marketability
+4. **Network in Target Industries**: Connect with professionals in roles requiring your target skill set
+
+### Career Positioning
+
+1. **Tailor Applications**: Customize resumes to highlight skills matching specific job requirements
+2. **Emphasize Skill Combinations**: Jobs often require complementary skill pairs (SQL + Cloud, Data Analysis + BI Tools)
+3. **Target Growth Areas**: Focus on roles in industries showing strong hiring patterns
+4. **Consider Geographic Factors**: Location significantly impacts both opportunities and salary expectations
+
+## Limitations and Future Work
+
+### Study Limitations
+
+1. **Data Currency**: Analysis based on 2024 snapshot; market evolves rapidly
+2. **Geographic Scope**: Dataset may not represent all regional markets equally
+3. **Skill Extraction**: NLP methods capture explicit skill mentions but may miss implicit requirements
+4. **Temporal Factors**: Seasonal hiring patterns not fully captured
+
+### Future Research Directions
+
+1. **Longitudinal Analysis**: Track skill demand trends over multiple years
+2. **Salary Prediction Enhancement**: Incorporate additional features (company size, benefits, remote status)
+3. **Real-Time Monitoring**: Develop dashboard for continuous market tracking
+4. **Industry-Specific Analysis**: Deep dive into particular sectors (FinTech, Healthcare, etc.)
+5. **Network Analysis**: Explore skill co-occurrence patterns and career pathway modeling
+
+## Final Thoughts
+
+The 2024 job market for data analytics professionals presents significant opportunities for those who strategically develop their skill sets. While traditional foundations (SQL, Excel, data analysis) remain essential, the market increasingly rewards specialization in enterprise systems, cloud platforms, and advanced analytics tools.
+
+Success in this market requires a balanced approach: maintaining strong fundamentals while developing expertise in high-demand specialized areas. The skill gap analysis methodology presented in this report provides a replicable framework for continuous career development assessment.
+
+By leveraging these insights and recommendations, job seekers can position themselves competitively in a dynamic and evolving market landscape.
+
+# References
+
+::: {#refs}
+:::
+
+## Data Sources
+
+- Lightcast Job Postings Dataset (2024)
+- U.S. Bureau of Labor Statistics
+- LinkedIn Skills Assessment Data
+
+## Tools and Technologies
+
+- Python 3.x (pandas, numpy, scikit-learn, seaborn, matplotlib)
+- Quarto Publishing System
+- R Programming Language
+- Jupyter Notebooks
+
+
+
+**Report Generated:** `r Sys.Date()`
+
+**Analysis Period:** January 2024 - December 2024
+
+**Total Job Postings Analyzed:** 72,498
