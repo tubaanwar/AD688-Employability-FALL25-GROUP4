@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/final_report.html</loc>
-    <lastmod>2025-12-07T03:57:01.351Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/ml.html</loc>
-    <lastmod>2025-12-05T04:30:45.084Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/Skill_Gap_Analysis.html</loc>
-    <lastmod>2025-12-05T04:30:44.952Z</lastmod>
-  </url>
-  <url>
     <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/eda.html</loc>
-    <lastmod>2025-12-05T04:30:45.082Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/data_cleaning.html</loc>
-    <lastmod>2025-12-05T04:30:45.082Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/index.html</loc>
-    <lastmod>2025-12-05T04:30:45.083Z</lastmod>
+    <lastmod>2025-12-07T04:35:08.604Z</lastmod>
   </url>
   <url>
     <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/nlp.html</loc>
-    <lastmod>2025-12-07T04:09:03.980Z</lastmod>
+    <lastmod>2025-12-07T04:35:08.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/final_report.html</loc>
+    <lastmod>2025-12-07T04:35:08.607Z</lastmod>
   </url>
   <url>
     <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/data_analysis.html</loc>
-    <lastmod>2025-12-05T04:30:45.082Z</lastmod>
+    <lastmod>2025-12-07T04:35:08.570Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/ml.html</loc>
+    <lastmod>2025-12-07T04:35:08.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/index.html</loc>
+    <lastmod>2025-12-07T04:35:08.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/Skill_Gap_Analysis.html</loc>
+    <lastmod>2025-12-07T04:35:08.545Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tubaanwar.github.io/AD688-Employability-FALL25-GROUP4/data_cleaning.html</loc>
+    <lastmod>2025-12-07T04:35:08.571Z</lastmod>
   </url>
 </urlset>
